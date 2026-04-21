@@ -101,7 +101,7 @@ function OrderPage() {
                 <p className="mt-2 text-sm font-light leading-[1.78] text-white/65">{svc.helps}</p>
                 <div className="mt-5 text-[10px] font-bold uppercase tracking-[2.5px] text-amber">What's included</div>
                 <div className="mt-2 flex flex-col gap-2">
-                  {svc.benefits.map((b) => (
+                  {svc.benefits.map((b: string) => (
                     <div key={b} className="flex gap-2 text-sm font-light text-white/65">
                       <span className="mt-0.5 text-emerald-400">✓</span><span>{b}</span>
                     </div>
