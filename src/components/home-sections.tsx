@@ -504,7 +504,7 @@ export function Services() {
 }
 
 /* ─────────────────────────  FAQ  ───────────────────────── */
-const FAQ = [
+const FAQ_ITEMS = [
   { q: "Is the AI diagnosis really free?", a: "Yes — completely. No login, no card, no email capture. We make money only when you choose to hire our team to execute the recommended fix. You can take the diagnosis and apply it yourself, free forever." },
   { q: "How is this different from ChatGPT?", a: "ChatGPT gives generic global advice. HIPROFEET is trained specifically on Nigerian SMB patterns — Lagos buying behaviour, WhatsApp commerce, naira-economy pricing, and the gaps we've fixed for 200+ businesses. It also recommends a specific service and price, not just suggestions." },
   { q: "How fast can your team execute?", a: "Most services deliver in 2–5 working days. Logo & branding ships in 1–2 days. Sales support starts within 24 hours. Every service has a clear delivery window on its order page." },
@@ -527,7 +527,7 @@ export function FAQ() {
           </h2>
         </div>
         <div className="mx-auto mt-12 max-w-3xl space-y-3">
-          {FAQ.map((item) => (
+          {FAQ_ITEMS.map((item) => (
             <details key={item.q} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition open:border-amber/30 open:bg-white/[0.05]">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[16px] font-bold text-white">
                 {item.q}
