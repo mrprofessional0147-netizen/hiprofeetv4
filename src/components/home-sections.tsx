@@ -678,33 +678,35 @@ export function FinalCTA() {
     <section className="relative overflow-hidden bg-ink px-5 py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_70%_at_65%_40%,oklch(0.45_0.20_265/.32)_0%,transparent_70%),radial-gradient(ellipse_40%_40%_at_20%_80%,oklch(0.68_0.17_55/.12)_0%,transparent_60%)]" />
       <div className="container-page relative grid gap-12 md:grid-cols-2 md:items-center">
-        <div className="relative">
-          <div className="aspect-[4/5] overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.18_0.04_260/.55),0_0_0_1px_rgba(255,255,255,.06)]">
+        <Reveal y={40} className="relative">
+          <div className="tilt aspect-[4/5] overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.18_0.04_260/.55),0_0_0_1px_rgba(255,255,255,.06)]">
             <img src={founder4} alt="" loading="lazy" width={512} height={512} className="h-full w-full object-cover" />
           </div>
           <div className="float-card absolute -bottom-5 -right-4 hidden rounded-2xl bg-white px-5 py-4 shadow-2xl sm:block">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-t-soft">Diagnosed today</div>
             <div className="font-display text-2xl font-bold text-t-dark">17 founders</div>
             <div className="mt-1 flex items-center gap-1.5 text-[11px] text-emerald-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500" />
               AI online · respond in 2s
             </div>
           </div>
-        </div>
-        <div>
+        </Reveal>
+        <Reveal delay={0.15}>
           <div className="mb-4 inline-flex items-center gap-2.5">
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
             <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Stop Waiting</div>
           </div>
           <h2 className="font-display text-[clamp(32px,5vw,50px)] font-bold leading-[1.1] text-white">
-            Every day you wait<br />is another day your<br /><em className="text-amber">competitors win.</em>
+            Every day you wait<br />is another day your<br /><em className="text-gradient-animate bg-gradient-to-r from-amber via-sky-2 to-amber bg-clip-text not-italic text-transparent">competitors win.</em>
           </h2>
           <p className="mt-5 text-lg font-light leading-[1.78] text-white/65">
             A 3-minute conversation today. A 5-day expert sprint this week. A different trajectory by next month.
           </p>
-          <Link to="/advisor" className="cta-pulse mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)] transition active:scale-[0.97]">
-            Start Free — Talk to the AI →
-          </Link>
+          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="mt-8 inline-block">
+            <Link to="/advisor" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
+              Start Free — Talk to the AI <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+            </Link>
+          </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
             {["Always free to diagnose", "No signup required", "Expert work from ₦8,000", "Results in 2–5 days"].map((c) => (
               <div key={c} className="flex items-center gap-2 text-sm font-light text-white/65">
