@@ -127,6 +127,11 @@
 @keyframes ticker { from { transform: translateX(0);} to { transform: translateX(-50%);} }
 @keyframes grid-drift { from { background-position: 0 0;} to { background-position: 52px 52px;} }
 @keyframes pop-in { 0% { transform: scale(.3); opacity: 0;} 70% { transform: scale(1.1);} 100% { transform: scale(1); opacity: 1;} }
+@keyframes shimmer { 0% { background-position: -200% 0;} 100% { background-position: 200% 0;} }
+@keyframes gradient-shift { 0%,100% { background-position: 0% 50%;} 50% { background-position: 100% 50%;} }
+@keyframes aurora { 0% { transform: translate3d(0,0,0) rotate(0deg);} 50% { transform: translate3d(2%, -2%, 0) rotate(180deg);} 100% { transform: translate3d(0,0,0) rotate(360deg);} }
+@keyframes glow-breathe { 0%,100% { opacity: .55; filter: blur(40px);} 50% { opacity: .9; filter: blur(60px);} }
+@keyframes caret-blink { 0%,49% { opacity: 1;} 50%,100% { opacity: 0;} }
 
 .pulse-dot { animation: pulse-dot 2.5s infinite; }
 .float-card { animation: float-card 4s ease-in-out infinite; }
@@ -142,3 +147,41 @@
   animation: grid-drift 20s linear infinite;
 }
 .pop-in { animation: pop-in .5s ease; }
+
+/* Premium motion utilities */
+.text-gradient-animate {
+  background-size: 200% auto;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+.aurora-blob { animation: aurora 22s ease-in-out infinite; }
+.glow-breathe { animation: glow-breathe 5s ease-in-out infinite; }
+.caret-blink::after { content: "▌"; margin-left: 2px; animation: caret-blink 1s steps(1) infinite; color: inherit; }
+
+.shimmer-border { position: relative; }
+.shimmer-border::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(110deg, transparent 30%, oklch(0.86 0.09 225 / .8) 50%, transparent 70%);
+  background-size: 200% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: shimmer 3.5s linear infinite;
+  pointer-events: none;
+}
+
+/* Hover lift used across cards */
+.lift { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s, background-color .35s; }
+.lift:hover { transform: translateY(-4px); }
+
+/* Subtle tilt on image cards */
+.tilt { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.tilt:hover { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1.015); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot, .float-card, .cta-pulse, .ticker-track, .hero-grid-bg,
+  .text-gradient-animate, .aurora-blob, .glow-breathe, .caret-blink::after,
+  .shimmer-border::before { animation: none !important; }
+  .lift:hover, .tilt:hover { transform: none !important; }
+}
