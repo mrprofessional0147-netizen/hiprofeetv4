@@ -433,9 +433,9 @@ export function HowItWorks() {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_75%_50%,oklch(0.45_0.20_265/.18)_0%,transparent_70%)]" />
       <div className="container-page relative">
         <div className="grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-center">
-          <div className="relative order-2 lg:order-1">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.18_0.04_260/.55),0_0_0_1px_rgba(255,255,255,.06)]">
-              <img src={founder3} alt="Nigerian fashion entrepreneur" loading="lazy" width={1024} height={1280} className="h-full w-full object-cover" />
+          <Reveal y={40} className="relative order-2 lg:order-1">
+            <div className="tilt relative aspect-[4/5] overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.18_0.04_260/.55),0_0_0_1px_rgba(255,255,255,.06)]">
+              <img src={founder3} alt="Nigerian fashion entrepreneur" loading="lazy" width={1024} height={1280} className="h-full w-full object-cover transition duration-700 hover:scale-105" />
             </div>
             <div className="absolute -bottom-6 -right-4 hidden w-56 overflow-hidden rounded-2xl border-4 border-ink shadow-2xl sm:block">
               <img src={founder2} alt="" loading="lazy" width={768} height={896} className="aspect-square w-full object-cover" />
@@ -445,29 +445,36 @@ export function HowItWorks() {
               <div className="font-display text-2xl font-bold text-t-dark">2.4 min</div>
               <div className="text-[10px] text-t-soft">to a real diagnosis</div>
             </div>
-          </div>
+          </Reveal>
 
           <div className="order-1 lg:order-2">
-            <div className="mb-4 inline-flex items-center gap-2.5">
-              <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-              <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">How It Works</div>
-            </div>
-            <h2 className="font-display text-[clamp(32px,5vw,48px)] font-bold leading-[1.12] text-white">
-              From one conversation<br />to <em className="text-amber">real results.</em>
-            </h2>
-            <div className="mt-8 space-y-3">
+            <Reveal>
+              <div className="mb-4 inline-flex items-center gap-2.5">
+                <div className="h-[2.5px] w-5 rounded-full bg-amber" />
+                <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">How It Works</div>
+              </div>
+              <h2 className="font-display text-[clamp(32px,5vw,48px)] font-bold leading-[1.12] text-white">
+                From one conversation<br />to <em className="text-amber">real results.</em>
+              </h2>
+            </Reveal>
+            <Stagger className="mt-8 space-y-3">
               {STEPS.map((s) => (
-                <div key={s.num} className="group flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:-translate-y-0.5 hover:border-amber/30 hover:bg-white/[0.06]">
-                  <div className="grid h-12 w-12 flex-none place-items-center rounded-xl border border-amber/30 bg-amber/10 font-display text-base font-bold text-amber">
+                <MotionItem
+                  key={s.num}
+                  variants={itemVariants}
+                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                  className="group flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-amber/30 hover:bg-white/[0.06]"
+                >
+                  <div className="grid h-12 w-12 flex-none place-items-center rounded-xl border border-amber/30 bg-amber/10 font-display text-base font-bold text-amber transition group-hover:scale-110 group-hover:bg-amber/25">
                     {s.num}
                   </div>
                   <div>
                     <div className="font-display text-[16px] font-bold text-white">{s.title}</div>
                     <div className="mt-1 text-[13px] font-light leading-[1.7] text-white/55">{s.body}</div>
                   </div>
-                </div>
+                </MotionItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </div>
       </div>
