@@ -516,18 +516,27 @@ export function Testimonials() {
           <p className="text-base text-white/55 md:max-w-sm md:text-right">Diagnosed by the same AI you'll use — then fixed by our team.</p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4">
+        <Stagger className="mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4" stagger={0.1}>
           {STATS.map((s, i) => (
-            <div key={s.l} className={`p-6 text-center ${i < STATS.length - 1 ? "border-b border-r border-white/10 sm:border-b-0" : "border-b border-white/10 sm:border-b-0"} ${i === 1 ? "border-r-0 sm:border-r" : ""}`}>
+            <MotionItem
+              key={s.l}
+              variants={itemVariants}
+              className={`p-6 text-center ${i < STATS.length - 1 ? "border-b border-r border-white/10 sm:border-b-0" : "border-b border-white/10 sm:border-b-0"} ${i === 1 ? "border-r-0 sm:border-r" : ""}`}
+            >
               <div className="font-display text-3xl font-bold leading-none text-white">{s.n}</div>
               <div className="mt-2 text-[10px] font-semibold uppercase tracking-[1.5px] text-white/40">{s.l}</div>
-            </div>
+            </MotionItem>
           ))}
-        </div>
+        </Stagger>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <Stagger className="mt-10 grid gap-5 md:grid-cols-3">
           {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-md transition hover:-translate-y-1 hover:border-amber/30 hover:bg-white/[0.08]">
+            <MotionItem
+              key={t.name}
+              variants={itemVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-md transition hover:border-amber/30 hover:bg-white/[0.08]"
+            >
               <div className="flex items-baseline gap-3">
                 <div className="font-display text-[40px] font-bold leading-none text-emerald-400">{t.num}</div>
                 <div className="text-[10px] uppercase tracking-[1.5px] text-white/40">{t.lbl}</div>
@@ -535,16 +544,16 @@ export function Testimonials() {
               <div className="mt-3 tracking-wider text-amber">★★★★★</div>
               <p className="mt-3 flex-1 text-[14px] font-light leading-[1.78] text-white/75">"{t.text}"</p>
               <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-                <img src={t.img} alt={t.name} className="h-11 w-11 rounded-full object-cover ring-2 ring-amber/40" loading="lazy" />
+                <img src={t.img} alt={t.name} className="h-11 w-11 rounded-full object-cover ring-2 ring-amber/40 transition group-hover:ring-amber" loading="lazy" />
                 <div>
                   <div className="text-[14px] font-semibold text-white">{t.name}</div>
                   <div className="text-[11px] text-white/45">{t.biz}</div>
                 </div>
                 <span className="ml-auto rounded-full bg-emerald-500/20 px-2.5 py-1 text-[10px] font-bold text-emerald-300">{t.tag}</span>
               </div>
-            </div>
+            </MotionItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );
