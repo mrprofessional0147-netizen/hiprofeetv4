@@ -351,20 +351,20 @@ export function ProductPreview() {
 function ChatBubble({ role, children, highlight }: { role: "ai" | "user"; children: React.ReactNode; highlight?: boolean }) {
   if (role === "user") {
     return (
-      <div className="flex justify-end">
+      <motion.div variants={itemVariants} className="flex justify-end">
         <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-amber/95 px-4 py-3 text-[14px] leading-relaxed text-white shadow-lg">
           {children}
         </div>
-      </div>
+      </motion.div>
     );
   }
   return (
-    <div className="flex gap-3">
+    <motion.div variants={itemVariants} className="flex gap-3">
       <div className="grid h-8 w-8 flex-none place-items-center rounded-full bg-gradient-to-br from-brand to-brand-2 font-display text-[11px] font-bold text-white">AI</div>
       <div className={`max-w-[80%] rounded-2xl rounded-tl-sm px-4 py-3 text-[14px] leading-relaxed ${highlight ? "border border-amber/40 bg-amber/10 text-white" : "bg-white/[0.06] text-white/80"}`}>
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
