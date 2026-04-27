@@ -590,37 +590,42 @@ export function Services() {
           <span><strong className="font-bold">The AI diagnosis is always free.</strong> These services are optional — only if you want our team to execute. The AI recommends the right one after your chat.</span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
           {SERVICE_LIST.map((s) => (
-            <Link
+            <MotionItem
               key={s.id}
-              to="/order/$id"
-              params={{ id: s.id }}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-brand/10 bg-white shadow-sm transition hover:-translate-y-1 hover:border-brand/30 hover:shadow-xl"
+              variants={itemVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
             >
-              <div className="relative h-36 overflow-hidden">
-                <img src={s.img} alt={s.name} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/55" />
-                <span className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider ${BADGE_CLASS[s.badge]}`}>{s.badgeTxt}</span>
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <div className="text-2xl">{s.icon}</div>
-                <div className="mt-1 font-display text-base font-bold leading-tight text-t-dark">{s.name}</div>
-                <div className="mt-1 text-xs font-light leading-relaxed text-t-mid">{s.tag}</div>
-                <div className="mt-3 rounded-md border border-ember/15 bg-ember/5 p-2 text-[11px] leading-relaxed text-ember">
-                  ⚠ {s.pain}
+              <Link
+                to="/order/$id"
+                params={{ id: s.id }}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand/10 bg-white shadow-sm transition hover:border-brand/30 hover:shadow-2xl"
+              >
+                <div className="relative h-36 overflow-hidden">
+                  <img src={s.img} alt={s.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink/55" />
+                  <span className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider ${BADGE_CLASS[s.badge]}`}>{s.badgeTxt}</span>
                 </div>
-                <div className="mt-3 flex items-center justify-between border-t border-brand/10 pt-3">
-                  <div>
-                    <div className="font-display text-base font-bold text-t-dark">{s.price}</div>
-                    <div className="text-[10px] text-t-soft">{s.period}</div>
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="text-2xl transition duration-300 group-hover:scale-110">{s.icon}</div>
+                  <div className="mt-1 font-display text-base font-bold leading-tight text-t-dark">{s.name}</div>
+                  <div className="mt-1 text-xs font-light leading-relaxed text-t-mid">{s.tag}</div>
+                  <div className="mt-3 rounded-md border border-ember/15 bg-ember/5 p-2 text-[11px] leading-relaxed text-ember">
+                    ⚠ {s.pain}
                   </div>
-                  <span className="rounded-full bg-t-dark px-3.5 py-2 text-[11px] font-bold text-white transition group-hover:bg-brand">Order →</span>
+                  <div className="mt-3 flex items-center justify-between border-t border-brand/10 pt-3">
+                    <div>
+                      <div className="font-display text-base font-bold text-t-dark">{s.price}</div>
+                      <div className="text-[10px] text-t-soft">{s.period}</div>
+                    </div>
+                    <span className="rounded-full bg-t-dark px-3.5 py-2 text-[11px] font-bold text-white transition group-hover:gap-2 group-hover:bg-brand">Order →</span>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </MotionItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );
