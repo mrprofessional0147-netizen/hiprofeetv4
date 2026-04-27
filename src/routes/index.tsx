@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer, FloatingChatCTA } from "@/components/layout";
+import { ScrollProgress } from "@/components/motion";
 import { Hero, Ticker, TrustBar, ProductPreview, Features, HowItWorks, Testimonials, Services, FAQ, FinalCTA } from "@/components/home-sections";
 
 export const Route = createFileRoute("/")({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <main>
         <Hero />
