@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { motion, useReducedMotion } from "framer-motion";
+import { Reveal, Stagger, itemVariants, MotionItem } from "@/components/motion";
 import { SERVICE_LIST } from "@/data/services";
 import heroFounder from "@/assets/hero-founder.jpg";
 import founder2 from "@/assets/founder-2.jpg";
