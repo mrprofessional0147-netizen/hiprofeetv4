@@ -383,7 +383,7 @@ export function Features() {
     <section className="bg-ink-2 px-5 py-24">
       <div className="container-page">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
+          <Reveal>
             <div className="mb-4 inline-flex items-center gap-2.5">
               <div className="h-[2.5px] w-5 rounded-full bg-amber" />
               <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Why HIPROFEET</div>
@@ -396,18 +396,23 @@ export function Features() {
             <p className="mt-5 text-base font-light leading-[1.78] text-white/60">
               Generic Western marketing tools don't understand Lagos traffic, WhatsApp orders, or BVN trust. HIPROFEET does — because it was built here, for here.
             </p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2">
+          </Reveal>
+          <Stagger className="grid gap-3 sm:grid-cols-2">
             {FEATURES.map((f) => (
-              <div key={f.title} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-amber/30 hover:bg-white/[0.06]">
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber/15 text-xl transition group-hover:bg-amber/25">
+              <MotionItem
+                key={f.title}
+                variants={itemVariants}
+                whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-amber/30 hover:bg-white/[0.06]"
+              >
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber/15 text-xl transition group-hover:scale-110 group-hover:bg-amber/25">
                   {f.icon}
                 </div>
                 <div className="mt-4 font-display text-[17px] font-bold leading-tight text-white">{f.title}</div>
                 <div className="mt-2 text-[13px] font-light leading-[1.7] text-white/55">{f.body}</div>
-              </div>
+              </MotionItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </div>
     </section>
