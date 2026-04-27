@@ -13,81 +13,127 @@ const TICKER = ["Free Diagnosis", "Facebook Ads", "Instagram Ads", "TikTok Ads",
 
 /* ─────────────────────────  HERO  ───────────────────────── */
 export function Hero() {
+  const reduce = useReducedMotion();
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-ink px-5 pt-28 pb-20">
       <div aria-hidden className="hero-grid-bg pointer-events-none absolute inset-0" />
-      {/* Sky-blue luxury glow */}
-      <div aria-hidden className="pointer-events-none absolute -top-40 -right-32 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.13_230/.28)_0%,transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute top-1/3 -left-40 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,oklch(0.45_0.20_265/.22)_0%,transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-24 right-1/4 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,oklch(0.68_0.17_55/.10)_0%,transparent_70%)]" />
+      {/* Sky-blue luxury aurora glows */}
+      <div aria-hidden className="aurora-blob glow-breathe pointer-events-none absolute -top-40 -right-32 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.13_230/.28)_0%,transparent_70%)]" />
+      <div aria-hidden className="aurora-blob pointer-events-none absolute top-1/3 -left-40 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,oklch(0.45_0.20_265/.22)_0%,transparent_70%)]" style={{ animationDelay: "-8s" }} />
+      <div aria-hidden className="aurora-blob pointer-events-none absolute -bottom-24 right-1/4 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,oklch(0.68_0.17_55/.10)_0%,transparent_70%)]" style={{ animationDelay: "-14s" }} />
 
       <div className="container-page relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[3px] text-sky">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[3px] text-sky"
+          >
             <span className="pulse-dot inline-block h-[6px] w-[6px] rounded-full bg-sky" />
             AI Growth Partner · Built for Nigeria
-          </div>
+          </motion.div>
           <h1 className="font-display text-[clamp(40px,8vw,76px)] font-bold leading-[1.05] tracking-tight text-white">
-            Grow your business<br />
-            <span className="bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent">two simple ways.</span>
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.7 }}
+              className="block"
+            >
+              Grow your business
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.7 }}
+              className="text-gradient-animate bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent"
+            >
+              two simple ways.
+            </motion.span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.7 }}
+            className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70"
+          >
             Talk to our AI advisor for a free diagnosis of what's slowing your sales — or jump straight in and order the exact service you need. Done in days, not months.
-          </p>
+          </motion.p>
 
           {/* TWO CLEAR PATHS */}
-          <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:max-w-2xl">
-            {/* Path 1 — AI advisor */}
-            <Link
-              to="/advisor"
-              className="group relative overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 transition hover:border-sky hover:from-sky/30"
-            >
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
-                <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · No signup
-              </div>
-              <div className="mt-2 font-display text-xl font-bold text-white">💬 Chat with AI Advisor</div>
-              <div className="mt-1 text-[13px] leading-snug text-white/65">
-                Not sure what you need? Describe your problem — get a real diagnosis in 60 seconds.
-              </div>
-              <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 group-hover:gap-2.5 transition-all">
-                Start Free Diagnosis →
-              </div>
-            </Link>
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.55 } } }}
+            className="mt-9 grid gap-3 sm:grid-cols-2 sm:max-w-2xl"
+          >
+            <motion.div variants={itemVariants}>
+              <Link
+                to="/advisor"
+                className="shimmer-border lift group relative block overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 hover:border-sky hover:from-sky/30"
+              >
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
+                  <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · No signup
+                </div>
+                <div className="mt-2 font-display text-xl font-bold text-white">💬 Chat with AI Advisor</div>
+                <div className="mt-1 text-[13px] leading-snug text-white/65">
+                  Not sure what you need? Describe your problem — get a real diagnosis in 60 seconds.
+                </div>
+                <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 transition-all group-hover:gap-2.5">
+                  Start Free Diagnosis <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
+                </div>
+              </Link>
+            </motion.div>
 
-            {/* Path 2 — Browse services */}
-            <a
-              href="#services"
-              className="group relative overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 transition hover:border-amber hover:from-amber/30"
-            >
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Order in 2 minutes
-              </div>
-              <div className="mt-2 font-display text-xl font-bold text-white">🛒 Browse Services</div>
-              <div className="mt-1 text-[13px] leading-snug text-white/65">
-                Already know what you need? Pick a service from ₦8,000 — delivered in 2–5 days.
-              </div>
-              <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber group-hover:gap-2.5 transition-all">
-                See All Services →
-              </div>
-            </a>
-          </div>
+            <motion.div variants={itemVariants}>
+              <a
+                href="#services"
+                className="lift group relative block overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
+              >
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Order in 2 minutes
+                </div>
+                <div className="mt-2 font-display text-xl font-bold text-white">🛒 Browse Services</div>
+                <div className="mt-1 text-[13px] leading-snug text-white/65">
+                  Already know what you need? Pick a service from ₦8,000 — delivered in 2–5 days.
+                </div>
+                <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber transition-all group-hover:gap-2.5">
+                  See All Services →
+                </div>
+              </a>
+            </motion.div>
+          </motion.div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55"
+          >
             {["No card required", "Pay by bank transfer", "Built for Nigeria"].map((c) => (
               <div key={c} className="flex items-center gap-2">
                 <span className="text-sky">✓</span>
                 {c}
               </div>
             ))}
-          </div>
-          <div className="mt-10 flex items-center gap-4">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.05, duration: 0.6 }}
+            className="mt-10 flex items-center gap-4"
+          >
             <div className="flex">
               {[heroFounder, founder2, founder3, founder5].map((src, i) => (
                 <img
                   key={src}
                   src={src}
                   alt=""
-                  className={`h-10 w-10 rounded-full border-2 border-ink object-cover ${i ? "-ml-3" : ""}`}
+                  className={`h-10 w-10 rounded-full border-2 border-ink object-cover transition hover:scale-110 hover:z-10 ${i ? "-ml-3" : ""}`}
                 />
               ))}
             </div>
@@ -98,12 +144,21 @@ export function Hero() {
               </div>
               <div className="mt-0.5">from <strong className="text-white/85">200+</strong> Nigerian founders</div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Hero visual */}
-        <div className="relative">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.78_0.13_230/.35),0_0_0_1px_oklch(0.78_0.13_230/.15)]">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="relative"
+        >
+          <motion.div
+            animate={reduce ? {} : { y: [0, -10, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="tilt relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.78_0.13_230/.35),0_0_0_1px_oklch(0.78_0.13_230/.15)]"
+          >
             <img
               src={heroFounder}
               alt="Nigerian founder using HIPROFEET"
@@ -115,37 +170,53 @@ export function Hero() {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-sky/10" />
 
             {/* Diagnosis card overlay */}
-            <div className="absolute left-4 right-4 bottom-4 rounded-2xl border border-sky/25 bg-ink/80 p-4 backdrop-blur-xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="absolute left-4 right-4 bottom-4 rounded-2xl border border-sky/25 bg-ink/80 p-4 backdrop-blur-xl"
+            >
               <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-sky">
                 <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 AI Diagnosis · Live
               </div>
-              <div className="mt-2 font-display text-[15px] font-bold leading-snug text-white">
+              <div className="mt-2 font-display text-[15px] font-bold leading-snug text-white caret-blink">
                 "Your retention gap is costing ₦340K/month. Fix in 2 days."
               </div>
               <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[11px]">
                 <span className="text-white/55">Email Automation · ₦20,000</span>
                 <span className="rounded-full bg-amber px-2.5 py-1 font-bold text-white">Recommended</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Floating stats */}
-          <div className="float-card absolute -left-2 top-10 hidden rounded-2xl border border-sky/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.1, duration: 0.6 }}
+            className="float-card absolute -left-2 top-10 hidden rounded-2xl border border-sky/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3"
+          >
             <div className="grid h-9 w-9 place-items-center rounded-full bg-sky/20 text-base">📈</div>
             <div>
               <div className="font-display text-lg font-bold leading-none text-t-dark">3.2×</div>
               <div className="mt-1 text-[10px] text-t-soft">Avg revenue lift</div>
             </div>
-          </div>
-          <div className="float-card absolute -right-2 bottom-24 hidden rounded-2xl border border-amber/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3" style={{ animationDelay: "1.6s" }}>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.25, duration: 0.6 }}
+            className="float-card absolute -right-2 bottom-24 hidden rounded-2xl border border-amber/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3"
+            style={{ animationDelay: "1.6s" }}
+          >
             <div className="grid h-9 w-9 place-items-center rounded-full bg-amber/15 text-base">⚡</div>
             <div>
               <div className="font-display text-lg font-bold leading-none text-t-dark">2–5d</div>
               <div className="mt-1 text-[10px] text-t-soft">Expert delivery</div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
