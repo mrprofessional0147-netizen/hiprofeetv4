@@ -714,7 +714,7 @@ export function FinalCTA() {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
