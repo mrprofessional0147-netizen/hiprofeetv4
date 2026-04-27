@@ -266,7 +266,7 @@ export function ProductPreview() {
     <section className="relative overflow-hidden bg-ink px-5 py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,oklch(0.45_0.20_265/.16)_0%,transparent_70%)]" />
       <div className="container-page relative">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2.5">
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
             <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">The Product</div>
@@ -279,10 +279,10 @@ export function ProductPreview() {
           <p className="mt-4 text-base font-light leading-[1.78] text-white/65">
             No forms. No surveys. Just talk to the AI like you would a trusted business partner — in pidgin, English, formal or casual. It listens, asks the right questions, and delivers a precise diagnosis.
           </p>
-        </div>
+        </Reveal>
 
         {/* Mock chat product UI */}
-        <div className="mt-14 mx-auto max-w-4xl overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] shadow-[0_40px_120px_oklch(0.18_0.04_260/.6)]">
+        <Reveal y={40} delay={0.1} className="mt-14 mx-auto max-w-4xl overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] shadow-[0_40px_120px_oklch(0.18_0.04_260/.6)]">
           {/* Top bar */}
           <div className="flex items-center justify-between border-b border-white/10 bg-ink-2/80 px-5 py-3">
             <div className="flex items-center gap-2">
@@ -299,7 +299,7 @@ export function ProductPreview() {
 
           {/* Chat */}
           <div className="grid gap-0 md:grid-cols-[1fr_320px]">
-            <div className="space-y-4 p-6 sm:p-8">
+            <Stagger className="space-y-4 p-6 sm:p-8" stagger={0.18}>
               <ChatBubble role="ai">Hi! I'm your free business growth partner. Tell me — what kind of business do you run, and what's frustrating you most right now?</ChatBubble>
               <ChatBubble role="user">I sell women's fashion on Instagram in Lagos. I post every day but sales are slow. Just ₦180k last month.</ChatBubble>
               <ChatBubble role="ai">Got it. Quick question — when someone DMs asking about a dress, how long before you reply, and do you follow up if they don't respond?</ChatBubble>
@@ -308,20 +308,20 @@ export function ProductPreview() {
                 <strong className="block font-display text-amber">Diagnosis</strong>
                 You're losing ~68% of warm leads in the follow-up gap. That's roughly ₦380K/month leaving the table. The fix is a 3-step automated sequence + paid Instagram traffic to scale it. Estimated lift: 2.5–3.5×.
               </ChatBubble>
-              <div className="flex flex-wrap gap-2 pt-2">
-                <button type="button" className="rounded-full bg-amber px-4 py-2 text-[12px] font-bold text-white">
+              <MotionItem variants={itemVariants} className="flex flex-wrap gap-2 pt-2">
+                <button type="button" className="rounded-full bg-amber px-4 py-2 text-[12px] font-bold text-white transition hover:scale-105 active:scale-95">
                   📋 See recommended fix
                 </button>
-                <button type="button" className="rounded-full border border-white/20 px-4 py-2 text-[12px] font-semibold text-white/75">
+                <button type="button" className="rounded-full border border-white/20 px-4 py-2 text-[12px] font-semibold text-white/75 transition hover:border-white/40">
                   Ask a follow-up
                 </button>
-              </div>
-            </div>
+              </MotionItem>
+            </Stagger>
 
             {/* Side panel */}
             <div className="border-t border-white/10 bg-white/[0.02] p-6 md:border-t-0 md:border-l">
               <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Recommended Service</div>
-              <div className="mt-3 rounded-xl border border-amber/30 bg-amber/10 p-4">
+              <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-amber/30 bg-amber/10 p-4">
                 <div className="text-2xl">✉️</div>
                 <div className="mt-2 font-display text-base font-bold text-white">Email + DM Automation</div>
                 <div className="mt-1 text-[11px] text-white/55">Win back the 68% you're losing.</div>
@@ -332,7 +332,7 @@ export function ProductPreview() {
                   </div>
                   <span className="rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold text-white">Order</span>
                 </div>
-              </div>
+              </motion.div>
               <div className="mt-5 space-y-2 text-[12px] text-white/55">
                 {["Confidential, no logins", "Switch language anytime", "Save your full report"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
@@ -342,7 +342,7 @@ export function ProductPreview() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
