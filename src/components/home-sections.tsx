@@ -14,37 +14,66 @@ export function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-ink px-5 pt-28 pb-20">
       <div aria-hidden className="hero-grid-bg pointer-events-none absolute inset-0" />
-      <div aria-hidden className="pointer-events-none absolute -top-40 -right-32 h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,oklch(0.45_0.20_265/.22)_0%,transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-24 -left-20 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,oklch(0.68_0.17_55/.10)_0%,transparent_70%)]" />
+      {/* Sky-blue luxury glow */}
+      <div aria-hidden className="pointer-events-none absolute -top-40 -right-32 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.13_230/.28)_0%,transparent_70%)]" />
+      <div aria-hidden className="pointer-events-none absolute top-1/3 -left-40 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,oklch(0.45_0.20_265/.22)_0%,transparent_70%)]" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-24 right-1/4 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,oklch(0.68_0.17_55/.10)_0%,transparent_70%)]" />
 
       <div className="container-page relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[3px] text-amber">
-            <span className="pulse-dot inline-block h-[6px] w-[6px] rounded-full bg-amber" />
-            New · AI Business Diagnosis · 100% Free
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[3px] text-sky">
+            <span className="pulse-dot inline-block h-[6px] w-[6px] rounded-full bg-sky" />
+            AI Growth Partner · Built for Nigeria
           </div>
           <h1 className="font-display text-[clamp(40px,8vw,76px)] font-bold leading-[1.05] tracking-tight text-white">
-            The growth team<br />every Nigerian<br />
-            <span className="italic text-amber">business deserves.</span>
+            Grow your business<br />
+            <span className="bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent">two simple ways.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70">
-            HIPROFEET is the AI growth partner that diagnoses what's quietly killing your revenue — then deploys an expert team to fix it. In days, not months.
+            Talk to our AI advisor for a free diagnosis of what's slowing your sales — or jump straight in and order the exact service you need. Done in days, not months.
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:max-w-lg">
+
+          {/* TWO CLEAR PATHS */}
+          <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:max-w-2xl">
+            {/* Path 1 — AI advisor */}
             <Link
               to="/advisor"
-              className="cta-pulse flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)] transition active:scale-[0.97]"
+              className="group relative overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 transition hover:border-sky hover:from-sky/30"
             >
-              Start Free Diagnosis →
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
+                <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · No signup
+              </div>
+              <div className="mt-2 font-display text-xl font-bold text-white">💬 Chat with AI Advisor</div>
+              <div className="mt-1 text-[13px] leading-snug text-white/65">
+                Not sure what you need? Describe your problem — get a real diagnosis in 60 seconds.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 group-hover:gap-2.5 transition-all">
+                Start Free Diagnosis →
+              </div>
             </Link>
-            <Link to="/advisor" className="flex items-center justify-center rounded-2xl border border-white/25 px-7 py-4 text-base font-medium text-white/80 transition hover:border-white/50 hover:bg-white/5 hover:text-white">
-              See Live Demo
-            </Link>
+
+            {/* Path 2 — Browse services */}
+            <a
+              href="#services"
+              className="group relative overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 transition hover:border-amber hover:from-amber/30"
+            >
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Order in 2 minutes
+              </div>
+              <div className="mt-2 font-display text-xl font-bold text-white">🛒 Browse Services</div>
+              <div className="mt-1 text-[13px] leading-snug text-white/65">
+                Already know what you need? Pick a service from ₦8,000 — delivered in 2–5 days.
+              </div>
+              <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber group-hover:gap-2.5 transition-all">
+                See All Services →
+              </div>
+            </a>
           </div>
+
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55">
-            {["No card required", "3-min setup", "Built for Nigeria"].map((c) => (
+            {["No card required", "Pay by bank transfer", "Built for Nigeria"].map((c) => (
               <div key={c} className="flex items-center gap-2">
-                <span className="text-amber">✓</span>
+                <span className="text-sky">✓</span>
                 {c}
               </div>
             ))}
@@ -72,7 +101,7 @@ export function Hero() {
 
         {/* Hero visual */}
         <div className="relative">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.18_0.04_260/.6),0_0_0_1px_rgba(255,255,255,.08)]">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[28px] shadow-[0_40px_100px_oklch(0.78_0.13_230/.35),0_0_0_1px_oklch(0.78_0.13_230/.15)]">
             <img
               src={heroFounder}
               alt="Nigerian founder using HIPROFEET"
@@ -81,11 +110,11 @@ export function Hero() {
               height={1280}
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-sky/10" />
 
             {/* Diagnosis card overlay */}
-            <div className="absolute left-4 right-4 bottom-4 rounded-2xl border border-white/15 bg-ink/80 p-4 backdrop-blur-xl">
-              <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-amber">
+            <div className="absolute left-4 right-4 bottom-4 rounded-2xl border border-sky/25 bg-ink/80 p-4 backdrop-blur-xl">
+              <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-sky">
                 <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 AI Diagnosis · Live
               </div>
@@ -100,14 +129,14 @@ export function Hero() {
           </div>
 
           {/* Floating stats */}
-          <div className="float-card absolute -left-2 top-10 hidden rounded-2xl border border-white/15 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-emerald-500/15 text-base">📈</div>
+          <div className="float-card absolute -left-2 top-10 hidden rounded-2xl border border-sky/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3">
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-sky/20 text-base">📈</div>
             <div>
               <div className="font-display text-lg font-bold leading-none text-t-dark">3.2×</div>
               <div className="mt-1 text-[10px] text-t-soft">Avg revenue lift</div>
             </div>
           </div>
-          <div className="float-card absolute -right-2 bottom-24 hidden rounded-2xl border border-white/15 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3" style={{ animationDelay: "1.6s" }}>
+          <div className="float-card absolute -right-2 bottom-24 hidden rounded-2xl border border-amber/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3" style={{ animationDelay: "1.6s" }}>
             <div className="grid h-9 w-9 place-items-center rounded-full bg-amber/15 text-base">⚡</div>
             <div>
               <div className="font-display text-lg font-bold leading-none text-t-dark">2–5d</div>
