@@ -45,6 +45,8 @@
   --color-ink-2: var(--ink-2);
   --color-brand: var(--brand);
   --color-brand-2: var(--brand-2);
+  --color-sky: var(--sky);
+  --color-sky-2: var(--sky-2);
   --color-amber: var(--amber);
   --color-ember: var(--ember);
   --color-success: var(--success);
@@ -61,8 +63,10 @@
   /* Brand palette — converted from #hex */
   --ink:      oklch(0.18 0.04 260);    /* #080F1E */
   --ink-2:    oklch(0.22 0.04 260);    /* #0D1828 */
-  --brand:    oklch(0.45 0.20 265);    /* #1A47CC blue */
-  --brand-2:  oklch(0.52 0.22 265);    /* #2255E8 hover */
+  --brand:    oklch(0.45 0.20 265);    /* deep blue */
+  --brand-2:  oklch(0.52 0.22 265);    /* hover */
+  --sky:      oklch(0.78 0.13 230);    /* luxury sky blue */
+  --sky-2:    oklch(0.86 0.09 225);    /* soft sky highlight */
   --amber:    oklch(0.68 0.17 55);     /* #E07B00 */
   --ember:    oklch(0.50 0.20 25);     /* #B91C1C */
   --success:  oklch(0.45 0.10 165);    /* #065F46 */
