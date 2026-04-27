@@ -1,6 +1,46 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Nav } from "@/components/layout";
+import { SERVICES } from "@/data/services";
+
+// Parse "👉 Order Name (₦price): /order/ID" into clickable CTA cards.
+// Returns text with link lines stripped + array of detected service IDs (in order).
+function parseReply(text: string): { body: string; ctas: { id: string; label: string }[] } {
+  const ctas: { id: string; label: string }[] = [];
+  const seen = new Set<string>();
+  const linkRe = /\/order\/([a-z]+)/gi;
+
+  // Split by lines, drop lines that are pure CTA lines (start with 👉 or contain /order/)
+  const keptLines: string[] = [];
+  for (const line of text.split("\n")) {
+    let m;
+    let foundInLine = false;
+    while ((m = linkRe.exec(line)) !== null) {
+      const id = m[1].toLowerCase();
+      if (SERVICES[id] && !seen.has(id)) {
+        seen.add(id);
+        ctas.push({ id, label: SERVICES[id].name });
+      }
+      foundInLine = true;
+    }
+    linkRe.lastIndex = 0;
+    const isPureCta = foundInLine && /^[\s👉➡️→\-•*]*Order/i.test(line.trim());
+    if (!isPureCta) keptLines.push(line);
+  }
+
+  // Also catch service mentions by name when no link was provided
+  if (ctas.length === 0) {
+    for (const s of Object.values(SERVICES)) {
+      if (text.toLowerCase().includes(s.name.toLowerCase()) && !seen.has(s.id)) {
+        seen.add(s.id);
+        ctas.push({ id: s.id, label: s.name });
+        break; // only one CTA max
+      }
+    }
+  }
+
+  return { body: keptLines.join("\n").replace(/\n{3,}/g, "\n\n").trim(), ctas };
+}
 
 export const Route = createFileRoute("/advisor")({
   head: () => ({ meta: [{ title: "Free AI Business Advisor — HIPROFEET" }] }),
@@ -63,13 +103,42 @@ function AdvisorPage() {
           </div>
 
           <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-white p-4">
-            {msgs.map((m, i) => (
-              <div key={i} className={`flex ${m.role === "u" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed ${m.role === "ai" ? "rounded-bl-sm bg-[oklch(0.95_0.012_85)] text-t-dark" : "rounded-br-sm bg-brand text-white"}`}>
-                  {m.text}
+            {msgs.map((m, i) => {
+              if (m.role === "u") {
+                return (
+                  <div key={i} className="flex justify-end">
+                    <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-brand px-4 py-2.5 text-[15px] leading-relaxed text-white whitespace-pre-wrap">
+                      {m.text}
+                    </div>
+                  </div>
+                );
+              }
+              const { body, ctas } = parseReply(m.text);
+              return (
+                <div key={i} className="flex flex-col items-start gap-2">
+                  <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-[oklch(0.95_0.012_85)] px-4 py-2.5 text-[15px] leading-relaxed text-t-dark whitespace-pre-wrap">
+                    {body}
+                  </div>
+                  {ctas.map((c) => {
+                    const s = SERVICES[c.id];
+                    return (
+                      <Link
+                        key={c.id}
+                        to="/order/$id"
+                        params={{ id: c.id }}
+                        className="group inline-flex max-w-[85%] items-center gap-3 rounded-2xl border border-brand/20 bg-white px-4 py-3 shadow-sm transition hover:border-brand hover:bg-brand/5"
+                      >
+                        <span className="text-2xl">{s.icon}</span>
+                        <span className="flex flex-col">
+                          <span className="text-[13px] font-bold text-t-dark">{s.name}</span>
+                          <span className="text-[12px] text-t-soft">{s.price} · Tap to order →</span>
+                        </span>
+                      </Link>
+                    );
+                  })}
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {loading && (
               <div className="flex gap-1 px-4 py-2">
                 {[0, 1, 2].map((i) => (
