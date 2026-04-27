@@ -654,17 +654,19 @@ export function FAQ() {
             Questions, <em className="text-amber">answered.</em>
           </h2>
         </div>
-        <div className="mx-auto mt-12 max-w-3xl space-y-3">
+        <Stagger className="mx-auto mt-12 max-w-3xl space-y-3" stagger={0.06}>
           {FAQ_ITEMS.map((item) => (
-            <details key={item.q} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition open:border-amber/30 open:bg-white/[0.05]">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[16px] font-bold text-white">
-                {item.q}
-                <span className="grid h-7 w-7 flex-none place-items-center rounded-full border border-white/15 text-amber transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="mt-3 text-[14px] font-light leading-[1.78] text-white/65">{item.a}</p>
-            </details>
+            <MotionItem key={item.q} variants={itemVariants}>
+              <details className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition open:border-amber/30 open:bg-white/[0.05] hover:border-amber/20">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[16px] font-bold text-white">
+                  {item.q}
+                  <span className="grid h-7 w-7 flex-none place-items-center rounded-full border border-white/15 text-amber transition duration-300 group-open:rotate-45 group-open:bg-amber/20">+</span>
+                </summary>
+                <p className="mt-3 text-[14px] font-light leading-[1.78] text-white/65">{item.a}</p>
+              </details>
+            </MotionItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );
