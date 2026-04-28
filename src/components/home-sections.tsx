@@ -537,6 +537,7 @@ export function Testimonials() {
               key={t.name}
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.98, y: -3 }}
               className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-md transition hover:border-amber/30 hover:bg-white/[0.08]"
             >
               <div className="flex items-baseline gap-3">
