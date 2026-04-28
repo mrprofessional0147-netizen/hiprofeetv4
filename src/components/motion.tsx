@@ -1,5 +1,5 @@
-import { motion, useScroll, useSpring, useReducedMotion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useScroll, useSpring, useReducedMotion, useTransform, type Variants, type MotionValue } from "framer-motion";
+import { useRef, type ReactNode } from "react";
 
 /* Scroll-linked progress bar shown at the very top of the page */
 export function ScrollProgress() {
