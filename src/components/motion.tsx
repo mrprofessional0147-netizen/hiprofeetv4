@@ -93,7 +93,7 @@ export function Stagger({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.05, margin: "0px 0px -8% 0px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger, delayChildren: 0.05 } },
