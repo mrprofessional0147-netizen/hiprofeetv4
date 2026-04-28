@@ -195,25 +195,25 @@ export function Hero() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.1, duration: 0.6 }}
-            className="float-card absolute -left-2 top-10 hidden rounded-2xl border border-sky/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3"
+            className="float-card absolute left-1 top-6 flex items-center gap-2 rounded-2xl border border-sky/20 bg-white/95 px-3 py-2 shadow-2xl sm:-left-2 sm:top-10 sm:gap-3 sm:px-4 sm:py-3"
           >
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-sky/20 text-base">📈</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky/20 text-sm sm:h-9 sm:w-9 sm:text-base">📈</div>
             <div>
-              <div className="font-display text-lg font-bold leading-none text-t-dark">3.2×</div>
-              <div className="mt-1 text-[10px] text-t-soft">Avg revenue lift</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">3.2×</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Avg revenue lift</div>
             </div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.25, duration: 0.6 }}
-            className="float-card absolute -right-2 bottom-24 hidden rounded-2xl border border-amber/20 bg-white/95 px-4 py-3 shadow-2xl sm:flex sm:items-center sm:gap-3"
+            className="float-card absolute right-1 bottom-20 flex items-center gap-2 rounded-2xl border border-amber/20 bg-white/95 px-3 py-2 shadow-2xl sm:-right-2 sm:bottom-24 sm:gap-3 sm:px-4 sm:py-3"
             style={{ animationDelay: "1.6s" }}
           >
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-amber/15 text-base">⚡</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⚡</div>
             <div>
-              <div className="font-display text-lg font-bold leading-none text-t-dark">2–5d</div>
-              <div className="mt-1 text-[10px] text-t-soft">Expert delivery</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2–5d</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Expert delivery</div>
             </div>
           </motion.div>
         </motion.div>
@@ -403,6 +403,7 @@ export function Features() {
                 key={f.title}
                 variants={itemVariants}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                whileTap={{ scale: 0.97, y: -2 }}
                 className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-amber/30 hover:bg-white/[0.06]"
               >
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber/15 text-xl transition group-hover:scale-110 group-hover:bg-amber/25">
@@ -463,6 +464,7 @@ export function HowItWorks() {
                   key={s.num}
                   variants={itemVariants}
                   whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98, x: 2 }}
                   className="group flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-amber/30 hover:bg-white/[0.06]"
                 >
                   <div className="grid h-12 w-12 flex-none place-items-center rounded-xl border border-amber/30 bg-amber/10 font-display text-base font-bold text-amber transition group-hover:scale-110 group-hover:bg-amber/25">
@@ -535,6 +537,7 @@ export function Testimonials() {
               key={t.name}
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.98, y: -3 }}
               className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-md transition hover:border-amber/30 hover:bg-white/[0.08]"
             >
               <div className="flex items-baseline gap-3">
@@ -596,6 +599,7 @@ export function Services() {
               key={s.id}
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.97, y: -3 }}
             >
               <Link
                 to="/order/$id"

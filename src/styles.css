@@ -171,17 +171,26 @@
   pointer-events: none;
 }
 
-/* Hover lift used across cards */
+/* Hover lift used across cards. Touch devices get an :active "press" so motion is alive on mobile too. */
 .lift { transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s, background-color .35s; }
 .lift:hover { transform: translateY(-4px); }
+.lift:active { transform: translateY(-2px) scale(0.985); }
 
 /* Subtle tilt on image cards */
 .tilt { transition: transform .5s cubic-bezier(.22,1,.36,1); }
 .tilt:hover { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1.015); }
 
+/* Mobile-only ambient motion: gentle continuous breathing on hero visual since hover is unavailable */
+@keyframes mobile-breath { 0%,100% { transform: translateY(0) scale(1);} 50% { transform: translateY(-6px) scale(1.008);} }
+@media (hover: none) and (pointer: coarse) {
+  .tilt { animation: mobile-breath 6s ease-in-out infinite; }
+  .float-card { animation-duration: 5s; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pulse-dot, .float-card, .cta-pulse, .ticker-track, .hero-grid-bg,
   .text-gradient-animate, .aurora-blob, .glow-breathe, .caret-blink::after,
   .shimmer-border::before { animation: none !important; }
-  .lift:hover, .tilt:hover { transform: none !important; }
+  .lift:hover, .lift:active, .tilt:hover { transform: none !important; }
+  .tilt { animation: none !important; }
 }

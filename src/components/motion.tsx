@@ -1,5 +1,5 @@
-import { motion, useScroll, useSpring, useReducedMotion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useScroll, useSpring, useReducedMotion, useTransform, type Variants, type MotionValue } from "framer-motion";
+import { useRef, type ReactNode } from "react";
 
 /* Scroll-linked progress bar shown at the very top of the page */
 export function ScrollProgress() {
@@ -45,12 +45,37 @@ export function Reveal({
     <MotionTag
       initial="hidden"
       whileInView="show"
-      viewport={{ once, amount: 0.2 }}
+      viewport={{ once, amount: 0.05, margin: "0px 0px -10% 0px" }}
       variants={variants}
       className={className}
     >
       {children}
     </MotionTag>
+  );
+}
+
+/* Parallax wrapper — subtle scroll-driven Y shift. Works on mobile + desktop. */
+export function Parallax({
+  children,
+  className,
+  range = 40,
+}: {
+  children: ReactNode;
+  className?: string;
+  range?: number;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [range, -range]);
+  const smoothY = useSpring(y, { stiffness: 80, damping: 20, mass: 0.4 }) as MotionValue<number>;
+  return (
+    <div ref={ref} className={className}>
+      <motion.div style={reduce ? undefined : { y: smoothY }}>{children}</motion.div>
+    </div>
   );
 }
 
@@ -68,7 +93,7 @@ export function Stagger({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.05, margin: "0px 0px -8% 0px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger, delayChildren: 0.05 } },
