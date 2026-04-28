@@ -464,6 +464,7 @@ export function HowItWorks() {
                   key={s.num}
                   variants={itemVariants}
                   whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98, x: 2 }}
                   className="group flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-amber/30 hover:bg-white/[0.06]"
                 >
                   <div className="grid h-12 w-12 flex-none place-items-center rounded-xl border border-amber/30 bg-amber/10 font-display text-base font-bold text-amber transition group-hover:scale-110 group-hover:bg-amber/25">
