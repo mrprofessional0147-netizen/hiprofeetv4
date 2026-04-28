@@ -45,12 +45,37 @@ export function Reveal({
     <MotionTag
       initial="hidden"
       whileInView="show"
-      viewport={{ once, amount: 0.2 }}
+      viewport={{ once, amount: 0.05, margin: "0px 0px -10% 0px" }}
       variants={variants}
       className={className}
     >
       {children}
     </MotionTag>
+  );
+}
+
+/* Parallax wrapper — subtle scroll-driven Y shift. Works on mobile + desktop. */
+export function Parallax({
+  children,
+  className,
+  range = 40,
+}: {
+  children: ReactNode;
+  className?: string;
+  range?: number;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [range, -range]);
+  const smoothY = useSpring(y, { stiffness: 80, damping: 20, mass: 0.4 }) as MotionValue<number>;
+  return (
+    <div ref={ref} className={className}>
+      <motion.div style={reduce ? undefined : { y: smoothY }}>{children}</motion.div>
+    </div>
   );
 }
 
