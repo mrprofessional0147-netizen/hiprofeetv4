@@ -599,6 +599,7 @@ export function Services() {
               key={s.id}
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.97, y: -3 }}
             >
               <Link
                 to="/order/$id"
