@@ -403,6 +403,7 @@ export function Features() {
                 key={f.title}
                 variants={itemVariants}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                whileTap={{ scale: 0.97, y: -2 }}
                 className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-amber/30 hover:bg-white/[0.06]"
               >
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber/15 text-xl transition group-hover:scale-110 group-hover:bg-amber/25">
