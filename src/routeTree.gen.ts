@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderIdRouteImport } from './routes/order.$id'
@@ -18,6 +20,16 @@ import { Route as ApiAdvisorRouteImport } from './routes/api.advisor'
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdvisorRoute = AdvisorRouteImport.update({
@@ -44,6 +56,8 @@ const ApiAdvisorRoute = ApiAdvisorRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/advisor': typeof AdvisorRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/order/$id': typeof OrderIdRoute
@@ -51,6 +65,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/advisor': typeof AdvisorRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/order/$id': typeof OrderIdRoute
@@ -59,21 +75,47 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/advisor': typeof AdvisorRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/order/$id': typeof OrderIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/advisor' | '/success' | '/api/advisor' | '/order/$id'
+  fullPaths:
+    | '/'
+    | '/advisor'
+    | '/auth'
+    | '/reset-password'
+    | '/success'
+    | '/api/advisor'
+    | '/order/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/advisor' | '/success' | '/api/advisor' | '/order/$id'
-  id: '__root__' | '/' | '/advisor' | '/success' | '/api/advisor' | '/order/$id'
+  to:
+    | '/'
+    | '/advisor'
+    | '/auth'
+    | '/reset-password'
+    | '/success'
+    | '/api/advisor'
+    | '/order/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/advisor'
+    | '/auth'
+    | '/reset-password'
+    | '/success'
+    | '/api/advisor'
+    | '/order/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdvisorRoute: typeof AdvisorRoute
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SuccessRoute: typeof SuccessRoute
   ApiAdvisorRoute: typeof ApiAdvisorRoute
   OrderIdRoute: typeof OrderIdRoute
@@ -86,6 +128,20 @@ declare module '@tanstack/react-router' {
       path: '/success'
       fullPath: '/success'
       preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/advisor': {
@@ -122,6 +178,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdvisorRoute: AdvisorRoute,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SuccessRoute: SuccessRoute,
   ApiAdvisorRoute: ApiAdvisorRoute,
   OrderIdRoute: OrderIdRoute,
