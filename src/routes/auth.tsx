@@ -7,9 +7,9 @@ import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    redirect: (search.redirect as string) || "/",
-    mode: (search.mode as "signin" | "signup") || "signin",
+  validateSearch: (search: Record<string, unknown>): { redirect?: string; mode?: "signin" | "signup" } => ({
+    redirect: (search.redirect as string) || undefined,
+    mode: (search.mode as "signin" | "signup") || undefined,
   }),
   head: () => ({
     meta: [
