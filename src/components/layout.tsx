@@ -6,7 +6,7 @@ export function Nav() {
   const loc = useLocation();
   const onChat = loc.pathname.startsWith("/advisor");
   const onAuth = loc.pathname.startsWith("/auth") || loc.pathname.startsWith("/reset-password");
-  const { user, profile, loading, signOut } = useAuth();
+  const { user, profile, loading, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -71,13 +71,29 @@ export function Nav() {
                       <div className="truncate text-sm font-semibold text-white">{displayName}</div>
                       <div className="truncate text-xs text-white/50">{user.email}</div>
                     </div>
+                    <Link
+                      to="/advisor"
+                      onClick={() => setMenuOpen(false)}
+                      className="block w-full px-4 py-2.5 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-white"
+                    >
+                      💬 My chats
+                    </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setMenuOpen(false)}
+                        className="block w-full border-t border-white/5 px-4 py-2.5 text-left text-sm text-amber transition hover:bg-white/5"
+                      >
+                        ⚡ Admin dashboard
+                      </Link>
+                    )}
                     <button
                       onClick={async () => {
                         setMenuOpen(false);
                         await signOut();
                         navigate({ to: "/" });
                       }}
-                      className="block w-full px-4 py-2.5 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-white"
+                      className="block w-full border-t border-white/5 px-4 py-2.5 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-white"
                     >
                       Sign out
                     </button>
