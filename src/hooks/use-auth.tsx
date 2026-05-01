@@ -16,6 +16,7 @@ type AuthContextValue = {
   session: Session | null;
   user: User | null;
   profile: Profile | null;
+  isAdmin: boolean;
   loading: boolean;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
@@ -27,11 +28,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadProfile = async (uid: string) => {
     const { data } = await supabase.from("profiles").select("*").eq("id", uid).maybeSingle();
     setProfile(data as Profile | null);
+  };
+
+  const loadRole = async (uid: string) => {
+    const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
+    setIsAdmin(!!data);
   };
 
   useEffect(() => {
@@ -40,17 +47,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(newSession);
       setUser(newSession?.user ?? null);
       if (newSession?.user) {
-        // defer profile fetch to avoid deadlocks
-        setTimeout(() => loadProfile(newSession.user.id), 0);
+        // defer fetches to avoid deadlocks
+        setTimeout(() => {
+          loadProfile(newSession.user.id);
+          loadRole(newSession.user.id);
+        }, 0);
       } else {
         setProfile(null);
+        setIsAdmin(false);
       }
     });
 
     supabase.auth.getSession().then(({ data: { session: existing } }) => {
       setSession(existing);
       setUser(existing?.user ?? null);
-      if (existing?.user) loadProfile(existing.user.id);
+      if (existing?.user) {
+        loadProfile(existing.user.id);
+        loadRole(existing.user.id);
+      }
       setLoading(false);
     });
 
@@ -61,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     session,
     user,
     profile,
+    isAdmin,
     loading,
     signOut: async () => {
       await supabase.auth.signOut();
