@@ -29,18 +29,20 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const redirectTo = search.redirect ?? "/";
+
   // Redirect away if already signed in
   useEffect(() => {
     if (!authLoading && user) {
-      navigate({ to: search.redirect as "/" });
+      navigate({ to: redirectTo as "/" });
     }
-  }, [user, authLoading, navigate, search.redirect]);
+  }, [user, authLoading, navigate, redirectTo]);
 
   const handleGoogle = async () => {
     setSubmitting(true);
     try {
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + search.redirect,
+        redirect_uri: window.location.origin + redirectTo,
       });
       if (result.error) {
         toast.error("Couldn't sign in with Google. Try again.");
