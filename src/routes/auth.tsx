@@ -24,7 +24,7 @@ function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup" | "forgot" | "check-email">(search.mode);
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot" | "check-email">(search.mode ?? "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
