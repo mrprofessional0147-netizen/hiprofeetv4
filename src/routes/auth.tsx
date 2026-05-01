@@ -63,7 +63,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}${search.redirect}` },
+          options: { emailRedirectTo: `${window.location.origin}${redirectTo}` },
         });
         if (error) throw error;
         setMode("check-email");
