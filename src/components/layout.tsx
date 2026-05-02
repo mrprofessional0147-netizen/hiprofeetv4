@@ -72,9 +72,16 @@ export function Nav() {
                       <div className="truncate text-xs text-white/50">{user.email}</div>
                     </div>
                     <Link
-                      to="/advisor"
+                      to="/orders"
                       onClick={() => setMenuOpen(false)}
                       className="block w-full px-4 py-2.5 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-white"
+                    >
+                      🛒 My orders
+                    </Link>
+                    <Link
+                      to="/advisor"
+                      onClick={() => setMenuOpen(false)}
+                      className="block w-full border-t border-white/5 px-4 py-2.5 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-white"
                     >
                       💬 My chats
                     </Link>

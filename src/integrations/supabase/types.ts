@@ -76,6 +76,60 @@ export type Database = {
           },
         ]
       }
+      orders: {
+        Row: {
+          admin_notes: string | null
+          amount: number
+          business_name: string | null
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          platform: string | null
+          quantity: number | null
+          receipt_url: string | null
+          service_id: string
+          service_name: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount: number
+          business_name?: string | null
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          platform?: string | null
+          quantity?: number | null
+          receipt_url?: string | null
+          service_id: string
+          service_name: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number
+          business_name?: string | null
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          platform?: string | null
+          quantity?: number | null
+          receipt_url?: string | null
+          service_id?: string
+          service_name?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

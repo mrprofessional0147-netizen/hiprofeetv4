@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -26,6 +27,11 @@ const SuccessRoute = SuccessRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/orders'
     | '/reset-password'
     | '/success'
     | '/api/advisor'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/orders'
     | '/reset-password'
     | '/success'
     | '/api/advisor'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/orders'
     | '/reset-password'
     | '/success'
     | '/api/advisor'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdvisorRoute: typeof AdvisorRoute
   AuthRoute: typeof AuthRoute
+  OrdersRoute: typeof OrdersRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SuccessRoute: typeof SuccessRoute
   ApiAdvisorRoute: typeof ApiAdvisorRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdvisorRoute: AdvisorRoute,
   AuthRoute: AuthRoute,
+  OrdersRoute: OrdersRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SuccessRoute: SuccessRoute,
   ApiAdvisorRoute: ApiAdvisorRoute,
