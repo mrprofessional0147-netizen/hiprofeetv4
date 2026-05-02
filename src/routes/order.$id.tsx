@@ -32,14 +32,26 @@ export const Route = createFileRoute("/order/$id")({
 function OrderPage() {
   const { svc } = Route.useLoaderData();
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
   const [folQty, setFolQty] = useState(500);
   const [folPlat, setFolPlat] = useState("Instagram");
   const [revQty, setRevQty] = useState(10);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [biz, setBiz] = useState("");
-  const [receipt, setReceipt] = useState<string | null>(null);
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
+  const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Pre-fill from profile
+  useEffect(() => {
+    if (profile) {
+      if (profile.full_name && !name) setName(profile.full_name);
+      if (profile.phone && !phone) setPhone(profile.phone);
+      if (profile.business_name && !biz) setBiz(profile.business_name);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
   const total = useMemo(() => {
     if (svc.isFollowers) return folQty * svc.amt;
@@ -52,8 +64,9 @@ function OrderPage() {
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
+    setReceiptFile(f);
     const r = new FileReader();
-    r.onload = () => setReceipt(r.result as string);
+    r.onload = () => setReceiptPreview(r.result as string);
     r.readAsDataURL(f);
   };
 
@@ -62,18 +75,55 @@ function OrderPage() {
     toast.success("Account number copied");
   };
 
-  const submit = () => {
-    if (!name || !phone || !receipt) {
+  const submit = async () => {
+    if (!name || !phone || !receiptFile) {
       toast.error("Please fill all required fields and upload receipt");
       return;
     }
+    if (!user) {
+      const redirect = `/order/${svc.id}`;
+      toast.info("Sign in to track your order");
+      navigate({ to: "/auth", search: { redirect } });
+      return;
+    }
+
     setSubmitting(true);
-    const qty = svc.isFollowers ? `${folQty} ${folPlat} followers` : svc.isReviews ? `${revQty} ${svc.platform} reviews` : svc.name;
-    const msg = `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
-    const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    setTimeout(() => {
+    try {
+      // Upload receipt to storage (path: <user_id>/<timestamp>-<filename>)
+      const ext = receiptFile.name.split(".").pop() || "jpg";
+      const path = `${user.id}/${Date.now()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from("receipts").upload(path, receiptFile, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+      if (upErr) throw upErr;
+
+      // Insert order
+      const quantity = svc.isFollowers ? folQty : svc.isReviews ? revQty : null;
+      const platform = svc.isFollowers ? folPlat : svc.isReviews ? svc.platform || null : null;
+      const { error: insErr } = await supabase.from("orders").insert({
+        user_id: user.id,
+        service_id: svc.id,
+        service_name: svc.name,
+        quantity,
+        platform,
+        amount: total,
+        customer_name: name,
+        customer_phone: phone,
+        business_name: biz || null,
+        receipt_url: path,
+        status: "pending",
+      });
+      if (insErr) throw insErr;
+
+      const qty = svc.isFollowers ? `${folQty} ${folPlat} followers` : svc.isReviews ? `${revQty} ${svc.platform} reviews` : svc.name;
+      const msg = `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
+      const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
       navigate({ to: "/success", search: { wa } });
-    }, 400);
+    } catch (e: any) {
+      toast.error(e.message || "Could not submit order. Please try again.");
+      setSubmitting(false);
+    }
   };
 
   return (
