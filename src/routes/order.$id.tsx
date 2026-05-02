@@ -215,7 +215,7 @@ function OrderPage() {
 
               <div className="mt-4">
                 <label className="mb-1.5 block text-[13px] font-semibold text-t-dark">Payment Screenshot *</label>
-                {!receipt ? (
+                {!receiptPreview ? (
                   <label className="relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-brand/20 bg-off p-7 text-center transition hover:border-brand hover:bg-brand/[0.03]">
                     <input type="file" accept="image/*" onChange={onFile} className="absolute inset-0 cursor-pointer opacity-0" />
                     <div className="text-2xl">📎</div>
@@ -224,9 +224,9 @@ function OrderPage() {
                   </label>
                 ) : (
                   <div className="text-center">
-                    <img src={receipt} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
+                    <img src={receiptPreview} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
                     <div className="mt-2 text-xs font-bold text-success">✓ Uploaded</div>
-                    <button onClick={() => setReceipt(null)} className="mt-1 text-xs text-t-soft underline">Replace</button>
+                    <button onClick={() => { setReceiptPreview(null); setReceiptFile(null); }} className="mt-1 text-xs text-t-soft underline">Replace</button>
                   </div>
                 )}
               </div>
