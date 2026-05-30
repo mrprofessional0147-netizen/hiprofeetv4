@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Nav } from "@/components/layout";
-import { SERVICES, BANK, WHATSAPP_NUMBER } from "@/data/services";
+import { SERVICES, BANK, WHATSAPP_NUMBER, FOLLOWER_PRICES } from "@/data/services";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -36,12 +36,16 @@ function OrderPage() {
   const [folQty, setFolQty] = useState(500);
   const [folPlat, setFolPlat] = useState("Instagram");
   const [revQty, setRevQty] = useState(10);
+  const [viewQty, setViewQty] = useState(500);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [biz, setBiz] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; percent_off: number; id: string } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
 
   // Pre-fill from profile
   useEffect(() => {
@@ -53,13 +57,21 @@ function OrderPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
-  const total = useMemo(() => {
-    if (svc.isFollowers) return folQty * svc.amt;
+  const platformForCoupon = svc.isFollowers ? folPlat : svc.platform || null;
+
+  const subtotal = useMemo(() => {
+    if (svc.isFollowers) return folQty * (FOLLOWER_PRICES[folPlat] ?? svc.amt);
     if (svc.isReviews) return revQty * svc.amt;
+    if (svc.isViewers) return viewQty * svc.amt;
     return svc.amt;
-  }, [svc, folQty, revQty]);
+  }, [svc, folQty, folPlat, revQty, viewQty]);
+
+  const discount = appliedCoupon ? Math.floor((subtotal * appliedCoupon.percent_off) / 100) : 0;
+  const total = Math.max(0, subtotal - discount);
+  const isFree = total === 0;
 
   const totalDisplay = `₦${total.toLocaleString()}`;
+  const subtotalDisplay = `₦${subtotal.toLocaleString()}`;
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -75,9 +87,42 @@ function OrderPage() {
     toast.success("Account number copied");
   };
 
+  const applyCoupon = async () => {
+    const code = couponInput.trim();
+    if (!code) return;
+    if (!user) {
+      toast.info("Sign in to apply a coupon");
+      navigate({ to: "/auth", search: { redirect: `/order/${svc.id}` } });
+      return;
+    }
+    setApplyingCoupon(true);
+    // Preview only — verify code matches an active coupon with remaining uses.
+    // Actual atomic claim happens via redeem_coupon RPC at submit time.
+    const { data, error } = await supabase
+      .from("coupons")
+      .select("id, code, percent_off, max_uses, used_count, service_id, platform")
+      .ilike("code", code)
+      .eq("active", true)
+      .maybeSingle();
+    setApplyingCoupon(false);
+    if (error || !data) { toast.error("Invalid coupon code"); return; }
+    if (data.service_id && data.service_id !== svc.id) { toast.error("Coupon not valid for this service"); return; }
+    if (data.platform && data.platform !== platformForCoupon) {
+      toast.error(`Coupon only valid for ${data.platform}${svc.isFollowers ? " followers" : ""}`);
+      return;
+    }
+    if (data.used_count >= data.max_uses) { toast.error("Coupon fully claimed — too late!"); return; }
+    setAppliedCoupon({ id: data.id, code: data.code, percent_off: data.percent_off });
+    toast.success(`${data.percent_off}% off applied!`);
+  };
+
   const submit = async () => {
-    if (!name || !phone || !receiptFile) {
-      toast.error("Please fill all required fields and upload receipt");
+    if (!name || !phone) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+    if (!isFree && !receiptFile) {
+      toast.error("Please upload your payment receipt");
       return;
     }
     if (!user) {
@@ -89,18 +134,30 @@ function OrderPage() {
 
     setSubmitting(true);
     try {
-      // Upload receipt to storage (path: <user_id>/<timestamp>-<filename>)
-      const ext = receiptFile.name.split(".").pop() || "jpg";
-      const path = `${user.id}/${Date.now()}.${ext}`;
-      const { error: upErr } = await supabase.storage.from("receipts").upload(path, receiptFile, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-      if (upErr) throw upErr;
+      // Atomically claim coupon FIRST (prevents race past max_uses).
+      if (appliedCoupon) {
+        const { error: redeemErr } = await supabase.rpc("redeem_coupon", {
+          _code: appliedCoupon.code,
+          _service_id: svc.id,
+          _platform: platformForCoupon,
+        });
+        if (redeemErr) throw new Error(redeemErr.message || "Coupon could not be claimed");
+      }
 
-      // Insert order
-      const quantity = svc.isFollowers ? folQty : svc.isReviews ? revQty : null;
-      const platform = svc.isFollowers ? folPlat : svc.isReviews ? svc.platform || null : null;
+      // Upload receipt if there's a payment to verify
+      let path: string | null = null;
+      if (receiptFile && !isFree) {
+        const ext = receiptFile.name.split(".").pop() || "jpg";
+        path = `${user.id}/${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage.from("receipts").upload(path, receiptFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+        if (upErr) throw upErr;
+      }
+
+      const quantity = svc.isFollowers ? folQty : svc.isReviews ? revQty : svc.isViewers ? viewQty : null;
+      const platform = svc.isFollowers ? folPlat : (svc.isReviews || svc.isViewers) ? svc.platform || null : null;
       const { error: insErr } = await supabase.from("orders").insert({
         user_id: user.id,
         service_id: svc.id,
@@ -113,11 +170,19 @@ function OrderPage() {
         business_name: biz || null,
         receipt_url: path,
         status: "pending",
+        coupon_code: appliedCoupon?.code || null,
+        discount_amount: discount,
       });
       if (insErr) throw insErr;
 
-      const qty = svc.isFollowers ? `${folQty} ${folPlat} followers` : svc.isReviews ? `${revQty} ${svc.platform} reviews` : svc.name;
-      const msg = `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
+      const qty = svc.isFollowers ? `${folQty} ${folPlat} followers`
+        : svc.isReviews ? `${revQty} ${svc.platform} reviews`
+        : svc.isViewers ? `${viewQty} ${svc.platform} viewers`
+        : svc.name;
+      const couponLine = appliedCoupon ? `\n*Coupon:* ${appliedCoupon.code} (${appliedCoupon.percent_off}% off)` : "";
+      const msg = isFree
+        ? `Hi HIPROFEET, I just claimed the ${appliedCoupon?.code} giveaway:\n\n*Service:* ${qty}\n*Amount:* FREE${couponLine}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n\nPlease confirm and start.`
+        : `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}${couponLine}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
       const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
       navigate({ to: "/success", search: { wa } });
     } catch (e: any) {
@@ -175,11 +240,12 @@ function OrderPage() {
                   <div className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-brand">🎯 Choose Platform & Quantity</div>
                   <div className="mb-3 flex flex-wrap gap-2">
                     {["Instagram", "Facebook", "TikTok"].map((p) => (
-                      <button key={p} onClick={() => setFolPlat(p)} className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${folPlat === p ? "border-brand bg-brand text-white" : "border-brand/15 bg-white text-t-mid"}`}>
-                        {p}
+                      <button key={p} onClick={() => { setFolPlat(p); setAppliedCoupon(null); }} className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${folPlat === p ? "border-brand bg-brand text-white" : "border-brand/15 bg-white text-t-mid"}`}>
+                        {p} <span className="ml-1 text-[11px] opacity-70">₦{FOLLOWER_PRICES[p]}</span>
                       </button>
                     ))}
                   </div>
+                  <div className="mb-2 text-[12px] text-t-mid">₦{FOLLOWER_PRICES[folPlat]} per {folPlat} follower</div>
                   <QtyPicker value={folQty} setValue={setFolQty} step={100} min={100} />
                 </div>
               )}
@@ -192,55 +258,112 @@ function OrderPage() {
                 </div>
               )}
 
-              <div className="mt-5 rounded-2xl border border-brand/15 bg-gradient-to-br from-off to-off/85 p-4">
-                <div className="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-brand">💳 Payment Details</div>
-                <Row label="Bank" value={BANK.name} />
-                <Row label="Account Name" value={BANK.holder} />
-                <div className="flex items-center justify-between border-b border-brand/10 py-2.5">
-                  <span className="text-[13px] text-t-mid">Account No.</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold tracking-wider text-brand">{BANK.account}</span>
-                    <button onClick={copyAcct} className="rounded-full border border-brand/20 bg-brand/10 px-3 py-1 text-[11px] font-bold text-brand transition active:bg-brand active:text-white">Copy</button>
+              {svc.isViewers && (
+                <div className="mt-5 rounded-2xl border border-brand/15 bg-off p-4">
+                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-brand">▶️ Choose Number of Viewers</div>
+                  <div className="mb-3 text-[13px] text-t-mid">₦{svc.amt} per viewer · minimum 100</div>
+                  <QtyPicker value={viewQty} setValue={setViewQty} step={100} min={100} />
+                </div>
+              )}
+
+              {/* Coupon code */}
+              <div className="mt-5 rounded-2xl border border-amber/30 bg-amber/5 p-4">
+                <div className="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-amber">🎁 Have a coupon code?</div>
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-3 py-2.5">
+                    <div className="text-sm">
+                      <span className="font-bold text-emerald-700">{appliedCoupon.code}</span>
+                      <span className="ml-2 text-emerald-600">−{appliedCoupon.percent_off}%</span>
+                    </div>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-xs text-t-soft underline">Remove</button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="flex-1 rounded-xl border border-brand/15 bg-white px-3 py-2.5 text-sm uppercase tracking-wider text-t-dark outline-none focus:border-brand"
+                    />
+                    <button
+                      onClick={applyCoupon}
+                      disabled={applyingCoupon || !couponInput.trim()}
+                      className="rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50"
+                    >
+                      {applyingCoupon ? "..." : "Apply"}
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {!isFree && (
+                <div className="mt-5 rounded-2xl border border-brand/15 bg-gradient-to-br from-off to-off/85 p-4">
+                  <div className="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-brand">💳 Payment Details</div>
+                  <Row label="Bank" value={BANK.name} />
+                  <Row label="Account Name" value={BANK.holder} />
+                  <div className="flex items-center justify-between border-b border-brand/10 py-2.5">
+                    <span className="text-[13px] text-t-mid">Account No.</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-display text-lg font-bold tracking-wider text-brand">{BANK.account}</span>
+                      <button onClick={copyAcct} className="rounded-full border border-brand/20 bg-brand/10 px-3 py-1 text-[11px] font-bold text-brand transition active:bg-brand active:text-white">Copy</button>
+                    </div>
+                  </div>
+                  {appliedCoupon && (
+                    <div className="flex items-center justify-between border-b border-brand/10 py-2 text-[13px]">
+                      <span className="text-t-mid">Subtotal</span>
+                      <span className="text-t-soft line-through">{subtotalDisplay}</span>
+                    </div>
+                  )}
+                  <div className="mt-3 flex items-center justify-between rounded-xl bg-ink p-3.5">
+                    <span className="text-xs text-white/45">Total to pay</span>
+                    <span className="font-display text-xl font-bold text-amber">{totalDisplay}</span>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between rounded-xl bg-ink p-3.5">
-                  <span className="text-xs text-white/45">Total to pay</span>
-                  <span className="font-display text-xl font-bold text-amber">{totalDisplay}</span>
+              )}
+
+              {isFree && (
+                <div className="mt-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-4 text-center">
+                  <div className="text-[11px] font-bold uppercase tracking-[2px] text-emerald-700">🎉 You won the giveaway!</div>
+                  <div className="mt-1 font-display text-2xl font-bold text-emerald-800">100% FREE</div>
+                  <div className="mt-1 text-[12px] text-emerald-700">No payment needed. Submit the form to claim.</div>
                 </div>
-              </div>
+              )}
 
               <Field label="Full Name *" value={name} onChange={setName} placeholder="Your full name" autoComplete="name" />
               <Field label="WhatsApp Number *" value={phone} onChange={setPhone} placeholder="e.g. 08012345678" autoComplete="tel" type="tel" />
               <Field label="Business Name" value={biz} onChange={setBiz} placeholder="Your business name" />
 
-              <div className="mt-4">
-                <label className="mb-1.5 block text-[13px] font-semibold text-t-dark">Payment Screenshot *</label>
-                {!receiptPreview ? (
-                  <label className="relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-brand/20 bg-off p-7 text-center transition hover:border-brand hover:bg-brand/[0.03]">
-                    <input type="file" accept="image/*" onChange={onFile} className="absolute inset-0 cursor-pointer opacity-0" />
-                    <div className="text-2xl">📎</div>
-                    <div className="mt-2 text-sm font-semibold text-t-dark">Tap to upload receipt</div>
-                    <div className="text-xs text-t-soft">Screenshot of your bank transfer</div>
-                  </label>
-                ) : (
-                  <div className="text-center">
-                    <img src={receiptPreview} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
-                    <div className="mt-2 text-xs font-bold text-success">✓ Uploaded</div>
-                    <button onClick={() => { setReceiptPreview(null); setReceiptFile(null); }} className="mt-1 text-xs text-t-soft underline">Replace</button>
-                  </div>
-                )}
-              </div>
+              {!isFree && (
+                <div className="mt-4">
+                  <label className="mb-1.5 block text-[13px] font-semibold text-t-dark">Payment Screenshot *</label>
+                  {!receiptPreview ? (
+                    <label className="relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-brand/20 bg-off p-7 text-center transition hover:border-brand hover:bg-brand/[0.03]">
+                      <input type="file" accept="image/*" onChange={onFile} className="absolute inset-0 cursor-pointer opacity-0" />
+                      <div className="text-2xl">📎</div>
+                      <div className="mt-2 text-sm font-semibold text-t-dark">Tap to upload receipt</div>
+                      <div className="text-xs text-t-soft">Screenshot of your bank transfer</div>
+                    </label>
+                  ) : (
+                    <div className="text-center">
+                      <img src={receiptPreview} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
+                      <div className="mt-2 text-xs font-bold text-success">✓ Uploaded</div>
+                      <button onClick={() => { setReceiptPreview(null); setReceiptFile(null); }} className="mt-1 text-xs text-t-soft underline">Replace</button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <button
                 disabled={submitting}
                 onClick={submit}
                 className="mt-5 w-full rounded-2xl bg-amber py-4 text-base font-bold text-white transition active:scale-[0.98] disabled:bg-gray-300"
               >
-                {submitting ? "Submitting…" : "Submit Order & Get Started →"}
+                {submitting ? "Submitting…" : isFree ? "Claim Free Followers →" : "Submit Order & Get Started →"}
               </button>
               <p className="mt-2 text-center text-xs leading-relaxed text-t-soft">
                 WhatsApp opens after submission with your order details pre-filled. We start within 24 hours.
               </p>
+
             </div>
           </div>
         </div>
