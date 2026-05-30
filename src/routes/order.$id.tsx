@@ -36,12 +36,16 @@ function OrderPage() {
   const [folQty, setFolQty] = useState(500);
   const [folPlat, setFolPlat] = useState("Instagram");
   const [revQty, setRevQty] = useState(10);
+  const [viewQty, setViewQty] = useState(500);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [biz, setBiz] = useState("");
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; percent_off: number; id: string } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
 
   // Pre-fill from profile
   useEffect(() => {
@@ -53,13 +57,21 @@ function OrderPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
-  const total = useMemo(() => {
-    if (svc.isFollowers) return folQty * svc.amt;
+  const platformForCoupon = svc.isFollowers ? folPlat : svc.platform || null;
+
+  const subtotal = useMemo(() => {
+    if (svc.isFollowers) return folQty * (FOLLOWER_PRICES[folPlat] ?? svc.amt);
     if (svc.isReviews) return revQty * svc.amt;
+    if (svc.isViewers) return viewQty * svc.amt;
     return svc.amt;
-  }, [svc, folQty, revQty]);
+  }, [svc, folQty, folPlat, revQty, viewQty]);
+
+  const discount = appliedCoupon ? Math.floor((subtotal * appliedCoupon.percent_off) / 100) : 0;
+  const total = Math.max(0, subtotal - discount);
+  const isFree = total === 0;
 
   const totalDisplay = `₦${total.toLocaleString()}`;
+  const subtotalDisplay = `₦${subtotal.toLocaleString()}`;
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
