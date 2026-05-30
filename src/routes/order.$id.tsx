@@ -240,11 +240,12 @@ function OrderPage() {
                   <div className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-brand">🎯 Choose Platform & Quantity</div>
                   <div className="mb-3 flex flex-wrap gap-2">
                     {["Instagram", "Facebook", "TikTok"].map((p) => (
-                      <button key={p} onClick={() => setFolPlat(p)} className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${folPlat === p ? "border-brand bg-brand text-white" : "border-brand/15 bg-white text-t-mid"}`}>
-                        {p}
+                      <button key={p} onClick={() => { setFolPlat(p); setAppliedCoupon(null); }} className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${folPlat === p ? "border-brand bg-brand text-white" : "border-brand/15 bg-white text-t-mid"}`}>
+                        {p} <span className="ml-1 text-[11px] opacity-70">₦{FOLLOWER_PRICES[p]}</span>
                       </button>
                     ))}
                   </div>
+                  <div className="mb-2 text-[12px] text-t-mid">₦{FOLLOWER_PRICES[folPlat]} per {folPlat} follower</div>
                   <QtyPicker value={folQty} setValue={setFolQty} step={100} min={100} />
                 </div>
               )}
@@ -257,55 +258,112 @@ function OrderPage() {
                 </div>
               )}
 
-              <div className="mt-5 rounded-2xl border border-brand/15 bg-gradient-to-br from-off to-off/85 p-4">
-                <div className="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-brand">💳 Payment Details</div>
-                <Row label="Bank" value={BANK.name} />
-                <Row label="Account Name" value={BANK.holder} />
-                <div className="flex items-center justify-between border-b border-brand/10 py-2.5">
-                  <span className="text-[13px] text-t-mid">Account No.</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold tracking-wider text-brand">{BANK.account}</span>
-                    <button onClick={copyAcct} className="rounded-full border border-brand/20 bg-brand/10 px-3 py-1 text-[11px] font-bold text-brand transition active:bg-brand active:text-white">Copy</button>
+              {svc.isViewers && (
+                <div className="mt-5 rounded-2xl border border-brand/15 bg-off p-4">
+                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-brand">▶️ Choose Number of Viewers</div>
+                  <div className="mb-3 text-[13px] text-t-mid">₦{svc.amt} per viewer · minimum 100</div>
+                  <QtyPicker value={viewQty} setValue={setViewQty} step={100} min={100} />
+                </div>
+              )}
+
+              {/* Coupon code */}
+              <div className="mt-5 rounded-2xl border border-amber/30 bg-amber/5 p-4">
+                <div className="mb-2 text-[11px] font-bold uppercase tracking-[2px] text-amber">🎁 Have a coupon code?</div>
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-3 py-2.5">
+                    <div className="text-sm">
+                      <span className="font-bold text-emerald-700">{appliedCoupon.code}</span>
+                      <span className="ml-2 text-emerald-600">−{appliedCoupon.percent_off}%</span>
+                    </div>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-xs text-t-soft underline">Remove</button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="flex-1 rounded-xl border border-brand/15 bg-white px-3 py-2.5 text-sm uppercase tracking-wider text-t-dark outline-none focus:border-brand"
+                    />
+                    <button
+                      onClick={applyCoupon}
+                      disabled={applyingCoupon || !couponInput.trim()}
+                      className="rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50"
+                    >
+                      {applyingCoupon ? "..." : "Apply"}
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {!isFree && (
+                <div className="mt-5 rounded-2xl border border-brand/15 bg-gradient-to-br from-off to-off/85 p-4">
+                  <div className="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-brand">💳 Payment Details</div>
+                  <Row label="Bank" value={BANK.name} />
+                  <Row label="Account Name" value={BANK.holder} />
+                  <div className="flex items-center justify-between border-b border-brand/10 py-2.5">
+                    <span className="text-[13px] text-t-mid">Account No.</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-display text-lg font-bold tracking-wider text-brand">{BANK.account}</span>
+                      <button onClick={copyAcct} className="rounded-full border border-brand/20 bg-brand/10 px-3 py-1 text-[11px] font-bold text-brand transition active:bg-brand active:text-white">Copy</button>
+                    </div>
+                  </div>
+                  {appliedCoupon && (
+                    <div className="flex items-center justify-between border-b border-brand/10 py-2 text-[13px]">
+                      <span className="text-t-mid">Subtotal</span>
+                      <span className="text-t-soft line-through">{subtotalDisplay}</span>
+                    </div>
+                  )}
+                  <div className="mt-3 flex items-center justify-between rounded-xl bg-ink p-3.5">
+                    <span className="text-xs text-white/45">Total to pay</span>
+                    <span className="font-display text-xl font-bold text-amber">{totalDisplay}</span>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between rounded-xl bg-ink p-3.5">
-                  <span className="text-xs text-white/45">Total to pay</span>
-                  <span className="font-display text-xl font-bold text-amber">{totalDisplay}</span>
+              )}
+
+              {isFree && (
+                <div className="mt-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-4 text-center">
+                  <div className="text-[11px] font-bold uppercase tracking-[2px] text-emerald-700">🎉 You won the giveaway!</div>
+                  <div className="mt-1 font-display text-2xl font-bold text-emerald-800">100% FREE</div>
+                  <div className="mt-1 text-[12px] text-emerald-700">No payment needed. Submit the form to claim.</div>
                 </div>
-              </div>
+              )}
 
               <Field label="Full Name *" value={name} onChange={setName} placeholder="Your full name" autoComplete="name" />
               <Field label="WhatsApp Number *" value={phone} onChange={setPhone} placeholder="e.g. 08012345678" autoComplete="tel" type="tel" />
               <Field label="Business Name" value={biz} onChange={setBiz} placeholder="Your business name" />
 
-              <div className="mt-4">
-                <label className="mb-1.5 block text-[13px] font-semibold text-t-dark">Payment Screenshot *</label>
-                {!receiptPreview ? (
-                  <label className="relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-brand/20 bg-off p-7 text-center transition hover:border-brand hover:bg-brand/[0.03]">
-                    <input type="file" accept="image/*" onChange={onFile} className="absolute inset-0 cursor-pointer opacity-0" />
-                    <div className="text-2xl">📎</div>
-                    <div className="mt-2 text-sm font-semibold text-t-dark">Tap to upload receipt</div>
-                    <div className="text-xs text-t-soft">Screenshot of your bank transfer</div>
-                  </label>
-                ) : (
-                  <div className="text-center">
-                    <img src={receiptPreview} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
-                    <div className="mt-2 text-xs font-bold text-success">✓ Uploaded</div>
-                    <button onClick={() => { setReceiptPreview(null); setReceiptFile(null); }} className="mt-1 text-xs text-t-soft underline">Replace</button>
-                  </div>
-                )}
-              </div>
+              {!isFree && (
+                <div className="mt-4">
+                  <label className="mb-1.5 block text-[13px] font-semibold text-t-dark">Payment Screenshot *</label>
+                  {!receiptPreview ? (
+                    <label className="relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-brand/20 bg-off p-7 text-center transition hover:border-brand hover:bg-brand/[0.03]">
+                      <input type="file" accept="image/*" onChange={onFile} className="absolute inset-0 cursor-pointer opacity-0" />
+                      <div className="text-2xl">📎</div>
+                      <div className="mt-2 text-sm font-semibold text-t-dark">Tap to upload receipt</div>
+                      <div className="text-xs text-t-soft">Screenshot of your bank transfer</div>
+                    </label>
+                  ) : (
+                    <div className="text-center">
+                      <img src={receiptPreview} alt="" className="mx-auto max-h-36 rounded-xl border border-brand/15 object-contain" />
+                      <div className="mt-2 text-xs font-bold text-success">✓ Uploaded</div>
+                      <button onClick={() => { setReceiptPreview(null); setReceiptFile(null); }} className="mt-1 text-xs text-t-soft underline">Replace</button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <button
                 disabled={submitting}
                 onClick={submit}
                 className="mt-5 w-full rounded-2xl bg-amber py-4 text-base font-bold text-white transition active:scale-[0.98] disabled:bg-gray-300"
               >
-                {submitting ? "Submitting…" : "Submit Order & Get Started →"}
+                {submitting ? "Submitting…" : isFree ? "Claim Free Followers →" : "Submit Order & Get Started →"}
               </button>
               <p className="mt-2 text-center text-xs leading-relaxed text-t-soft">
                 WhatsApp opens after submission with your order details pre-filled. We start within 24 hours.
               </p>
+
             </div>
           </div>
         </div>
