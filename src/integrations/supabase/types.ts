@@ -41,6 +41,74 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_redemptions: {
+        Row: {
+          coupon_id: string
+          created_at: string
+          id: string
+          order_id: string | null
+          user_id: string
+        }
+        Insert: {
+          coupon_id: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          user_id: string
+        }
+        Update: {
+          coupon_id?: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_redemptions_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          id: string
+          max_uses: number
+          percent_off: number
+          platform: string | null
+          service_id: string | null
+          used_count: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          id?: string
+          max_uses: number
+          percent_off: number
+          platform?: string | null
+          service_id?: string | null
+          used_count?: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          id?: string
+          max_uses?: number
+          percent_off?: number
+          platform?: string | null
+          service_id?: string | null
+          used_count?: number
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -81,9 +149,11 @@ export type Database = {
           admin_notes: string | null
           amount: number
           business_name: string | null
+          coupon_code: string | null
           created_at: string
           customer_name: string
           customer_phone: string
+          discount_amount: number
           id: string
           platform: string | null
           quantity: number | null
@@ -98,9 +168,11 @@ export type Database = {
           admin_notes?: string | null
           amount: number
           business_name?: string | null
+          coupon_code?: string | null
           created_at?: string
           customer_name: string
           customer_phone: string
+          discount_amount?: number
           id?: string
           platform?: string | null
           quantity?: number | null
@@ -115,9 +187,11 @@ export type Database = {
           admin_notes?: string | null
           amount?: number
           business_name?: string | null
+          coupon_code?: string | null
           created_at?: string
           customer_name?: string
           customer_phone?: string
+          discount_amount?: number
           id?: string
           platform?: string | null
           quantity?: number | null
@@ -198,6 +272,13 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      redeem_coupon: {
+        Args: { _code: string; _platform: string; _service_id: string }
+        Returns: {
+          id: string
+          percent_off: number
+        }[]
       }
     }
     Enums: {
