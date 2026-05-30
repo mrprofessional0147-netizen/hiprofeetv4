@@ -87,9 +87,42 @@ function OrderPage() {
     toast.success("Account number copied");
   };
 
+  const applyCoupon = async () => {
+    const code = couponInput.trim();
+    if (!code) return;
+    if (!user) {
+      toast.info("Sign in to apply a coupon");
+      navigate({ to: "/auth", search: { redirect: `/order/${svc.id}` } });
+      return;
+    }
+    setApplyingCoupon(true);
+    // Preview only — verify code matches an active coupon with remaining uses.
+    // Actual atomic claim happens via redeem_coupon RPC at submit time.
+    const { data, error } = await supabase
+      .from("coupons")
+      .select("id, code, percent_off, max_uses, used_count, service_id, platform")
+      .ilike("code", code)
+      .eq("active", true)
+      .maybeSingle();
+    setApplyingCoupon(false);
+    if (error || !data) { toast.error("Invalid coupon code"); return; }
+    if (data.service_id && data.service_id !== svc.id) { toast.error("Coupon not valid for this service"); return; }
+    if (data.platform && data.platform !== platformForCoupon) {
+      toast.error(`Coupon only valid for ${data.platform}${svc.isFollowers ? " followers" : ""}`);
+      return;
+    }
+    if (data.used_count >= data.max_uses) { toast.error("Coupon fully claimed — too late!"); return; }
+    setAppliedCoupon({ id: data.id, code: data.code, percent_off: data.percent_off });
+    toast.success(`${data.percent_off}% off applied!`);
+  };
+
   const submit = async () => {
-    if (!name || !phone || !receiptFile) {
-      toast.error("Please fill all required fields and upload receipt");
+    if (!name || !phone) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+    if (!isFree && !receiptFile) {
+      toast.error("Please upload your payment receipt");
       return;
     }
     if (!user) {
@@ -101,18 +134,30 @@ function OrderPage() {
 
     setSubmitting(true);
     try {
-      // Upload receipt to storage (path: <user_id>/<timestamp>-<filename>)
-      const ext = receiptFile.name.split(".").pop() || "jpg";
-      const path = `${user.id}/${Date.now()}.${ext}`;
-      const { error: upErr } = await supabase.storage.from("receipts").upload(path, receiptFile, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-      if (upErr) throw upErr;
+      // Atomically claim coupon FIRST (prevents race past max_uses).
+      if (appliedCoupon) {
+        const { error: redeemErr } = await supabase.rpc("redeem_coupon", {
+          _code: appliedCoupon.code,
+          _service_id: svc.id,
+          _platform: platformForCoupon,
+        });
+        if (redeemErr) throw new Error(redeemErr.message || "Coupon could not be claimed");
+      }
 
-      // Insert order
-      const quantity = svc.isFollowers ? folQty : svc.isReviews ? revQty : null;
-      const platform = svc.isFollowers ? folPlat : svc.isReviews ? svc.platform || null : null;
+      // Upload receipt if there's a payment to verify
+      let path: string | null = null;
+      if (receiptFile && !isFree) {
+        const ext = receiptFile.name.split(".").pop() || "jpg";
+        path = `${user.id}/${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage.from("receipts").upload(path, receiptFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+        if (upErr) throw upErr;
+      }
+
+      const quantity = svc.isFollowers ? folQty : svc.isReviews ? revQty : svc.isViewers ? viewQty : null;
+      const platform = svc.isFollowers ? folPlat : (svc.isReviews || svc.isViewers) ? svc.platform || null : null;
       const { error: insErr } = await supabase.from("orders").insert({
         user_id: user.id,
         service_id: svc.id,
@@ -125,11 +170,19 @@ function OrderPage() {
         business_name: biz || null,
         receipt_url: path,
         status: "pending",
+        coupon_code: appliedCoupon?.code || null,
+        discount_amount: discount,
       });
       if (insErr) throw insErr;
 
-      const qty = svc.isFollowers ? `${folQty} ${folPlat} followers` : svc.isReviews ? `${revQty} ${svc.platform} reviews` : svc.name;
-      const msg = `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
+      const qty = svc.isFollowers ? `${folQty} ${folPlat} followers`
+        : svc.isReviews ? `${revQty} ${svc.platform} reviews`
+        : svc.isViewers ? `${viewQty} ${svc.platform} viewers`
+        : svc.name;
+      const couponLine = appliedCoupon ? `\n*Coupon:* ${appliedCoupon.code} (${appliedCoupon.percent_off}% off)` : "";
+      const msg = isFree
+        ? `Hi HIPROFEET, I just claimed the ${appliedCoupon?.code} giveaway:\n\n*Service:* ${qty}\n*Amount:* FREE${couponLine}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n\nPlease confirm and start.`
+        : `Hi HIPROFEET, I just placed an order:\n\n*Service:* ${qty}\n*Amount:* ${totalDisplay}${couponLine}\n*Name:* ${name}\n*WhatsApp:* ${phone}\n*Business:* ${biz || "—"}\n\nI've uploaded my payment receipt on the website. Please confirm and start.`;
       const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
       navigate({ to: "/success", search: { wa } });
     } catch (e: any) {
