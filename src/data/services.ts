@@ -15,7 +15,15 @@ export type Service = {
   benefits: string[];
   isFollowers?: boolean;
   isReviews?: boolean;
+  isViewers?: boolean;
   platform?: string;
+};
+
+// Per-platform pricing overrides (₦ per follower). Default uses Service.amt.
+export const FOLLOWER_PRICES: Record<string, number> = {
+  Instagram: 10,
+  Facebook: 10,
+  TikTok: 18,
 };
 
 export const SERVICES: Record<string, Service> = {
