@@ -237,15 +237,38 @@ function OrderPage() {
 
               {svc.isFollowers && (
                 <div className="mt-5 rounded-2xl border border-brand/15 bg-off p-4">
-                  <div className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-brand">🎯 Choose Platform & Quantity</div>
-                  <div className="mb-3 flex flex-wrap gap-2">
-                    {["Instagram", "Facebook", "TikTok"].map((p) => (
-                      <button key={p} onClick={() => { setFolPlat(p); setAppliedCoupon(null); }} className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${folPlat === p ? "border-brand bg-brand text-white" : "border-brand/15 bg-white text-t-mid"}`}>
-                        {p} <span className="ml-1 text-[11px] opacity-70">₦{FOLLOWER_PRICES[p]}</span>
-                      </button>
-                    ))}
+                  <div className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-brand">🎯 Pick your platform</div>
+                  <div className="mb-4 grid grid-cols-3 gap-2.5">
+                    {(
+                      [
+                        { id: "Instagram", logo: "📸", grad: "from-[#feda75] via-[#fa7e1e] to-[#d62976]" },
+                        { id: "Facebook",  logo: "f",  grad: "from-[#1877f2] to-[#0a5dc1]" },
+                        { id: "TikTok",    logo: "🎵", grad: "from-[#000000] via-[#25f4ee] to-[#fe2c55]" },
+                      ] as const
+                    ).map((p) => {
+                      const active = folPlat === p.id;
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={() => { setFolPlat(p.id); setAppliedCoupon(null); }}
+                          aria-pressed={active}
+                          className={`group relative flex flex-col items-center gap-1.5 rounded-2xl border-2 p-3 text-center transition ${active ? "border-brand bg-white shadow-md ring-2 ring-brand/25" : "border-brand/10 bg-white/70 hover:border-brand/40 hover:bg-white"}`}
+                        >
+                          <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${p.grad} text-lg font-black text-white shadow-sm`}>
+                            {p.logo}
+                          </span>
+                          <span className={`text-[13px] font-bold leading-tight ${active ? "text-brand" : "text-t-dark"}`}>{p.id}</span>
+                          <span className={`text-[11px] font-semibold ${active ? "text-brand" : "text-t-soft"}`}>₦{FOLLOWER_PRICES[p.id]}/follower</span>
+                          {active && (
+                            <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shadow">✓</span>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="mb-2 text-[12px] text-t-mid">₦{FOLLOWER_PRICES[folPlat]} per {folPlat} follower</div>
+                  <div className="mb-2 text-[12px] text-t-mid">
+                    <span className="font-bold text-t-dark">{folPlat}</span> selected · ₦{FOLLOWER_PRICES[folPlat]} per follower
+                  </div>
                   <QtyPicker value={folQty} setValue={setFolQty} step={100} min={100} />
                 </div>
               )}

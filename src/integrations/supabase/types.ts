@@ -276,8 +276,8 @@ export type Database = {
       redeem_coupon: {
         Args: { _code: string; _platform: string; _service_id: string }
         Returns: {
-          id: string
-          percent_off: number
+          coupon_id: string
+          coupon_percent_off: number
         }[]
       }
     }
