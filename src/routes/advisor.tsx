@@ -333,12 +333,12 @@ function AdvisorPage() {
                           key={c.id}
                           to="/order/$id"
                           params={{ id: c.id }}
-                          className="group inline-flex max-w-[85%] items-center gap-3 rounded-2xl border border-brand/20 bg-white px-4 py-3 shadow-sm transition hover:border-brand hover:bg-brand/5"
+                          className="group inline-flex max-w-[85%] items-center gap-3 rounded-2xl border-2 border-amber bg-amber px-4 py-3 font-bold text-ink shadow-lg shadow-amber/30 ring-2 ring-amber/30 transition hover:scale-[1.02] hover:bg-amber/90 active:scale-[0.98]"
                         >
-                          <span className="text-2xl">{s.icon}</span>
+                          <span className="text-2xl drop-shadow-sm">{s.icon}</span>
                           <span className="flex flex-col">
-                            <span className="text-[13px] font-bold text-t-dark">{s.name}</span>
-                            <span className="text-[12px] text-t-soft">{s.price} · Tap to order →</span>
+                            <span className="text-[14px] font-black leading-tight">{s.name}</span>
+                            <span className="text-[12px] font-semibold opacity-80">{s.price} · Tap to order →</span>
                           </span>
                         </Link>
                       );
