@@ -176,6 +176,21 @@ function OrderPage() {
       });
       if (insErr) throw insErr;
 
+      // Fire-and-forget admin notification email
+      notifyAdminOfOrder({
+        data: {
+          service: svc.name,
+          quantity,
+          platform,
+          amount: total,
+          customer_name: name,
+          customer_phone: phone,
+          business_name: biz || null,
+          coupon_code: appliedCoupon?.code || null,
+          is_free: isFree,
+        },
+      }).catch((err) => console.error("notifyAdminOfOrder failed", err));
+
       const qty = svc.isFollowers ? `${folQty} ${folPlat} followers`
         : svc.isReviews ? `${revQty} ${svc.platform} reviews`
         : svc.isViewers ? `${viewQty} ${svc.platform} viewers`
