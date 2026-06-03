@@ -5,6 +5,7 @@ import { Nav } from "@/components/layout";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { notifyCustomerOfStatus } from "@/lib/notify-customer.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
