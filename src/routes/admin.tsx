@@ -5,6 +5,7 @@ import { Nav } from "@/components/layout";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { notifyCustomerOfStatus } from "@/lib/notify-customer.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -146,6 +147,7 @@ function AdminPage() {
   );
 
   const updateOrder = async (id: string, patch: Partial<Order>) => {
+    const prevOrder = orders.find((o) => o.id === id);
     const { error: e } = await supabase.from("orders").update(patch).eq("id", id);
     if (e) {
       toast.error(e.message);
@@ -153,6 +155,11 @@ function AdminPage() {
     }
     setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, ...patch } : o)));
     toast.success("Order updated");
+    if (patch.status && prevOrder && patch.status !== prevOrder.status) {
+      notifyCustomerOfStatus({ data: { order_id: id, new_status: patch.status } })
+        .then((r) => { if (r?.ok) toast.success("Customer notified by email"); })
+        .catch((err) => console.error("notify customer failed", err));
+    }
   };
 
   const viewReceipt = async (path: string) => {
