@@ -5,6 +5,7 @@ import { SERVICES, BANK, WHATSAPP_NUMBER, FOLLOWER_PRICES } from "@/data/service
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { notifyAdminOfOrder } from "@/lib/notify-admin.functions";
 
 export const Route = createFileRoute("/order/$id")({
   loader: ({ params }) => {
@@ -174,6 +175,21 @@ function OrderPage() {
         discount_amount: discount,
       });
       if (insErr) throw insErr;
+
+      // Fire-and-forget admin notification email
+      notifyAdminOfOrder({
+        data: {
+          service: svc.name,
+          quantity,
+          platform,
+          amount: total,
+          customer_name: name,
+          customer_phone: phone,
+          business_name: biz || null,
+          coupon_code: appliedCoupon?.code || null,
+          is_free: isFree,
+        },
+      }).catch((err) => console.error("notifyAdminOfOrder failed", err));
 
       const qty = svc.isFollowers ? `${folQty} ${folPlat} followers`
         : svc.isReviews ? `${revQty} ${svc.platform} reviews`
