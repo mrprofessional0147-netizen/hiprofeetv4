@@ -5,6 +5,7 @@ import { SERVICES, BANK, WHATSAPP_NUMBER, FOLLOWER_PRICES } from "@/data/service
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { notifyAdminOfOrder } from "@/lib/notify-admin.functions";
 
 export const Route = createFileRoute("/order/$id")({
   loader: ({ params }) => {
