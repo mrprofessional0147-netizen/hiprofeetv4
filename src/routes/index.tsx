@@ -6,10 +6,10 @@ import { Hero, Ticker, TrustBar, ProductPreview, Features, HowItWorks, Testimoni
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HIPROFEET — Free AI Business Growth Partner" },
-      { name: "description", content: "Free AI business diagnosis for Nigerian entrepreneurs. Get clarity in 3 minutes — then expert execution from ₦8,000." },
-      { property: "og:title", content: "HIPROFEET — Free AI Business Growth Partner" },
-      { property: "og:description", content: "Free AI business diagnosis. Find what's limiting your growth — and how to fix it. Built for Nigerian entrepreneurs." },
+      { title: "HIPROFEET — Business Growth Intelligence for Nigerian Founders" },
+      { name: "description", content: "Strategic growth diagnostics for Nigerian businesses. Identify the exact bottleneck limiting your revenue — then deploy the right fix in 2–5 days." },
+      { property: "og:title", content: "HIPROFEET — Business Growth Intelligence for Nigerian Founders" },
+      { property: "og:description", content: "Diagnose the real constraint on your growth. Analytical, specific, naira-priced. Built for Nigerian operators." },
       { property: "og:type", content: "website" },
     ],
   }),
