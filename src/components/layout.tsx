@@ -30,7 +30,7 @@ export function Nav() {
         </Link>
         <div className="hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/45 md:flex">
           <span className="pulse-dot inline-block h-[7px] w-[7px] rounded-full bg-emerald-400" />
-          AI Advisor Online
+          Growth Advisor · Online
         </div>
         <div className="flex items-center gap-2">
           {!onChat && !onAuth && (
@@ -38,7 +38,7 @@ export function Nav() {
               href="/#services"
               className="hidden rounded-xl border border-white/15 px-4 py-2.5 text-[13px] font-semibold text-white/80 transition hover:border-sky/40 hover:text-white sm:inline-flex"
             >
-              Browse Services
+              Services
             </a>
           )}
           {!onChat && !onAuth && (
@@ -46,7 +46,7 @@ export function Nav() {
               to="/advisor"
               className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-sky to-brand px-4 py-2.5 text-[13px] font-bold text-white shadow-[0_4px_16px_oklch(0.78_0.13_230/.4)] transition active:scale-95"
             >
-              💬 Chat Free
+              Free Growth Audit
             </Link>
           )}
 
@@ -135,7 +135,7 @@ export function FloatingChatCTA() {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70 opacity-75" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
       </span>
-      <span>💬 Chat with AI — Free</span>
+      <span>Start your free growth audit</span>
     </Link>
   );
 }
@@ -145,7 +145,7 @@ export function Footer() {
     <footer className="border-t border-white/5 bg-[#050B18] px-5 py-8 text-center">
       <div className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></div>
       <p className="mt-2 text-xs leading-relaxed text-white/30">
-        Free AI Business Growth Partner + Expert Execution — Built for Nigerian entrepreneurs.
+        Business Growth Intelligence for Nigerian founders. Diagnose precisely. Execute professionally.
         <br />© 2025 HIPROFEET. All rights reserved.
       </p>
     </footer>

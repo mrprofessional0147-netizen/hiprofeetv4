@@ -9,7 +9,7 @@ import founder4 from "@/assets/founder-4.jpg";
 import founder5 from "@/assets/founder-5.jpg";
 import lagosSkyline from "@/assets/lagos-skyline.jpg";
 
-const TICKER = ["Free Diagnosis", "Facebook Ads", "Instagram Ads", "TikTok Ads", "Website Dev", "Google Reviews", "Facebook Reviews", "Video Testimonials", "Real Followers", "Marketing Consultant", "Email Automation", "Logo & Brand", "Sales Support"];
+const TICKER = ["Growth Diagnostics", "Strategy Consultation", "Facebook Ads", "Instagram Ads", "TikTok Ads", "Website Development", "Google Reviews", "Facebook Reviews", "Video Testimonials", "Audience Growth", "Email Automation", "Brand Identity", "Sales Support"];
 
 /* ─────────────────────────  HERO  ───────────────────────── */
 export function Hero() {
@@ -35,7 +35,7 @@ export function Hero() {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[3px] text-sky"
           >
             <span className="pulse-dot inline-block h-[6px] w-[6px] rounded-full bg-sky" />
-            AI Growth Partner · Built for Nigeria
+            Business Growth Intelligence · Nigeria
           </motion.div>
           <h1 className="font-display text-[clamp(40px,8vw,76px)] font-bold leading-[1.05] tracking-tight text-white">
             <motion.span
@@ -44,7 +44,7 @@ export function Hero() {
               transition={{ delay: 0.15, duration: 0.7 }}
               className="block"
             >
-              Grow your business
+              Diagnose what's
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 18 }}
@@ -52,7 +52,7 @@ export function Hero() {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-gradient-animate bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent"
             >
-              two simple ways.
+              limiting your growth.
             </motion.span>
           </h1>
           <motion.p
@@ -61,7 +61,7 @@ export function Hero() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70"
           >
-            Talk to our AI advisor for a free diagnosis of what's slowing your sales — or jump straight in and order the exact service you need. Done in days, not months.
+            A strategic growth audit, not a sales pitch. Tell our advisor about your business — get a specific finding, a number, and a clear next move. Then deploy the right service if it fits.
           </motion.p>
 
           {/* TWO CLEAR PATHS */}
@@ -77,14 +77,14 @@ export function Hero() {
                 className="shimmer-border lift group relative block overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 hover:border-sky hover:from-sky/30"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
-                  <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · No signup
+                  <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · Confidential
                 </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">💬 Chat with AI Advisor</div>
+                <div className="mt-2 font-display text-xl font-bold text-white">Growth Audit</div>
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  Not sure what you need? Describe your problem — get a real diagnosis in 60 seconds.
+                  A 3-minute conversation. A precise diagnosis of the bottleneck limiting your revenue.
                 </div>
                 <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 transition-all group-hover:gap-2.5">
-                  Start Free Diagnosis <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
+                  Begin Audit <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
                 </div>
               </Link>
             </motion.div>
@@ -95,14 +95,14 @@ export function Hero() {
                 className="lift group relative block overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Order in 2 minutes
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Execution
                 </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">🛒 Browse Services</div>
+                <div className="mt-2 font-display text-xl font-bold text-white">Growth Services</div>
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  Already know what you need? Pick a service from ₦8,000 — delivered in 2–5 days.
+                  Already know the gap? Deploy a specific service from ₦8,000. Delivered in 2–5 days.
                 </div>
                 <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber transition-all group-hover:gap-2.5">
-                  See All Services →
+                  View Services →
                 </div>
               </a>
             </motion.div>
@@ -114,7 +114,7 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 0.6 }}
             className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55"
           >
-            {["No card required", "Pay by bank transfer", "Built for Nigeria"].map((c) => (
+            {["No card required", "Naira-priced", "Built for Nigerian operators"].map((c) => (
               <div key={c} className="flex items-center gap-2">
                 <span className="text-sky">✓</span>
                 {c}
@@ -142,7 +142,7 @@ export function Hero() {
                 {"★★★★★".split("").map((s, i) => <span key={i}>{s}</span>)}
                 <span className="ml-1.5 font-semibold text-white">4.9/5</span>
               </div>
-              <div className="mt-0.5">from <strong className="text-white/85">200+</strong> Nigerian founders</div>
+              <div className="mt-0.5">from <strong className="text-white/85">200+</strong> Nigerian operators</div>
             </div>
           </motion.div>
         </motion.div>
@@ -178,10 +178,10 @@ export function Hero() {
             >
               <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[2px] text-sky">
                 <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                AI Diagnosis · Live
+                Growth Diagnosis · Live
               </div>
               <div className="mt-2 font-display text-[15px] font-bold leading-snug text-white caret-blink">
-                "Your retention gap is costing ₦340K/month. Fix in 2 days."
+                "Retention gap is costing ₦340K/month. Closeable in 2 days."
               </div>
               <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[11px]">
                 <span className="text-white/55">Email Automation · ₦20,000</span>
@@ -213,7 +213,7 @@ export function Hero() {
             <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⚡</div>
             <div>
               <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2–5d</div>
-              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Expert delivery</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Delivery window</div>
             </div>
           </motion.div>
         </motion.div>
@@ -246,7 +246,7 @@ export function TrustBar() {
     <section className="bg-ink-2 px-5 py-10">
       <div className="container-page">
         <p className="text-center text-[11px] font-semibold uppercase tracking-[3px] text-white/40">
-          Trusted by entrepreneurs across Nigeria
+          Working with operators across Nigeria
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           {cities.map((c) => (
@@ -269,15 +269,15 @@ export function ProductPreview() {
         <Reveal className="mx-auto max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2.5">
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">The Product</div>
+            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">The Method</div>
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
           </div>
           <h2 className="font-display text-[clamp(32px,5.5vw,52px)] font-bold leading-[1.1] text-white">
-            A real conversation.<br />
-            <em className="text-amber">A real plan.</em>
+            A structured conversation.<br />
+            <em className="text-amber">A clear finding.</em>
           </h2>
           <p className="mt-4 text-base font-light leading-[1.78] text-white/65">
-            No forms. No surveys. Just talk to the AI like you would a trusted business partner — in pidgin, English, formal or casual. It listens, asks the right questions, and delivers a precise diagnosis.
+            No forms. No surveys. A focused dialogue — in pidgin, English, formal or casual — with an advisor trained on Nigerian business patterns. It asks the right questions and returns a specific diagnosis with the cost of inaction.
           </p>
         </Reveal>
 
@@ -294,23 +294,23 @@ export function ProductPreview() {
               <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
               hiprofeet.ai / advisor
             </div>
-            <div className="text-[11px] text-white/30">Free · No login</div>
+            <div className="text-[11px] text-white/30">Confidential</div>
           </div>
 
           {/* Chat */}
           <div className="grid gap-0 md:grid-cols-[1fr_320px]">
             <Stagger className="space-y-4 p-6 sm:p-8" stagger={0.18}>
-              <ChatBubble role="ai">Hi! I'm your free business growth partner. Tell me — what kind of business do you run, and what's frustrating you most right now?</ChatBubble>
+              <ChatBubble role="ai">Welcome. I'm your HIPROFEET growth advisor. Briefly — what does your business do, and what's the single biggest constraint on revenue right now?</ChatBubble>
               <ChatBubble role="user">I sell women's fashion on Instagram in Lagos. I post every day but sales are slow. Just ₦180k last month.</ChatBubble>
-              <ChatBubble role="ai">Got it. Quick question — when someone DMs asking about a dress, how long before you reply, and do you follow up if they don't respond?</ChatBubble>
+              <ChatBubble role="ai">Understood. One question — when a buyer DMs about a dress, what's your average response time, and do you have a follow-up sequence if they go quiet?</ChatBubble>
               <ChatBubble role="user">Sometimes hours later. And no, I don't follow up.</ChatBubble>
               <ChatBubble role="ai" highlight>
                 <strong className="block font-display text-amber">Diagnosis</strong>
-                You're losing ~68% of warm leads in the follow-up gap. That's roughly ₦380K/month leaving the table. The fix is a 3-step automated sequence + paid Instagram traffic to scale it. Estimated lift: 2.5–3.5×.
+                Approximately 68% of warm leads are lost in the follow-up gap — roughly ₦380K of monthly revenue forfeited. The intervention: a three-step automated sequence, then paid Instagram traffic to scale qualified DMs. Projected lift: 2.5–3.5×.
               </ChatBubble>
               <MotionItem variants={itemVariants} className="flex flex-wrap gap-2 pt-2">
                 <button type="button" className="rounded-full bg-amber px-4 py-2 text-[12px] font-bold text-white transition hover:scale-105 active:scale-95">
-                  📋 See recommended fix
+                  Review the intervention
                 </button>
                 <button type="button" className="rounded-full border border-white/20 px-4 py-2 text-[12px] font-semibold text-white/75 transition hover:border-white/40">
                   Ask a follow-up
@@ -320,21 +320,21 @@ export function ProductPreview() {
 
             {/* Side panel */}
             <div className="border-t border-white/10 bg-white/[0.02] p-6 md:border-t-0 md:border-l">
-              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Recommended Service</div>
+              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Recommended Intervention</div>
               <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-amber/30 bg-amber/10 p-4">
                 <div className="text-2xl">✉️</div>
                 <div className="mt-2 font-display text-base font-bold text-white">Email + DM Automation</div>
-                <div className="mt-1 text-[11px] text-white/55">Win back the 68% you're losing.</div>
+                <div className="mt-1 text-[11px] text-white/55">Recover the 68% currently lost in follow-up.</div>
                 <div className="mt-3 flex items-end justify-between border-t border-white/10 pt-3">
                   <div>
                     <div className="font-display text-lg font-bold text-white">₦20,000</div>
                     <div className="text-[10px] text-white/45">2–3 days delivery</div>
                   </div>
-                  <span className="rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold text-white">Order</span>
+                  <span className="rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold text-white">Deploy</span>
                 </div>
               </motion.div>
               <div className="mt-5 space-y-2 text-[12px] text-white/55">
-                {["Confidential, no logins", "Switch language anytime", "Save your full report"].map((t) => (
+                {["Confidential by default", "English, pidgin, or formal", "Findings saved to your account"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
                     <span className="text-amber">✓</span>{t}
                   </div>
@@ -370,12 +370,12 @@ function ChatBubble({ role, children, highlight }: { role: "ai" | "user"; childr
 
 /* ─────────────────────────  FEATURES  ───────────────────────── */
 const FEATURES = [
-  { icon: "🧠", title: "Trained on Nigerian businesses", body: "200+ real diagnoses across fashion, food, logistics, ecommerce, services. It speaks your market." },
-  { icon: "🗣️", title: "Talks how you talk", body: "Pidgin, formal English, voice notes — the AI adapts. No jargon, no scripts, no awkward forms." },
-  { icon: "🎯", title: "Specific, not generic", body: "Every diagnosis names the exact bottleneck, the cost in ₦, and the right fix. No 'work harder' fluff." },
-  { icon: "⚡", title: "Done-for-you execution", body: "Like the diagnosis? Our experts execute in 2–5 days. From ₦8,000. Or take it and run yourself — your call." },
-  { icon: "🔒", title: "Private & confidential", body: "No login, no email capture, no spam. Your business numbers stay between you and the AI." },
-  { icon: "🇳🇬", title: "Naira-first pricing", body: "No dollar conversions, no hidden fees. Pay by transfer to a Nigerian bank. Built for our economy." },
+  { icon: "🧠", title: "Trained on Nigerian operators", body: "Pattern-matched against 200+ real diagnoses across fashion, food, logistics, ecommerce, and services. It understands the market you actually sell in." },
+  { icon: "🗣️", title: "Speaks the language you operate in", body: "Pidgin, formal English, voice notes — the advisor adapts. No jargon, no scripts, no friction." },
+  { icon: "🎯", title: "Specific, never generic", body: "Every diagnosis names the exact constraint, quantifies the monthly cost in naira, and prescribes the right intervention. No motivational filler." },
+  { icon: "⚡", title: "Execution on demand", body: "When you're ready, our team deploys the fix in 2–5 days from ₦8,000. Or take the diagnosis and execute it yourself — entirely your decision." },
+  { icon: "🔒", title: "Private and confidential", body: "Your business numbers are never shared, sold, or used for marketing. Conversations are yours to keep or delete." },
+  { icon: "🇳🇬", title: "Naira-priced, naira-paid", body: "No dollar conversions, no hidden fees, no foreign processors. Direct bank transfer in the currency you actually trade in." },
 ];
 
 export function Features() {
@@ -389,12 +389,12 @@ export function Features() {
               <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Why HIPROFEET</div>
             </div>
             <h2 className="font-display text-[clamp(32px,5vw,46px)] font-bold leading-[1.12] text-white">
-              Built for the way<br />
-              <em className="text-amber">Nigerians actually</em><br />
-              do business.
+              Intelligence built for<br />
+              <em className="text-amber">how Nigerians</em><br />
+              actually trade.
             </h2>
             <p className="mt-5 text-base font-light leading-[1.78] text-white/60">
-              Generic Western marketing tools don't understand Lagos traffic, WhatsApp orders, or BVN trust. HIPROFEET does — because it was built here, for here.
+              Imported playbooks ignore WhatsApp commerce, naira-economy pricing, and the real friction in your sales process. HIPROFEET was built locally — diagnostics calibrated to the market you operate in.
             </p>
           </Reveal>
           <Stagger className="grid gap-3 sm:grid-cols-2">
@@ -422,10 +422,10 @@ export function Features() {
 
 /* ─────────────────────────  HOW IT WORKS  ───────────────────────── */
 const STEPS = [
-  { num: "01", title: "Talk to the AI", body: "Describe your business in your own words. Pidgin, formal, brief or detailed — no scripts. Free, always." },
-  { num: "02", title: "Get a real diagnosis", body: "A specific finding: what's limiting growth, why, and what it's costing you each month." },
-  { num: "03", title: "Decide your move", body: "Apply the insight yourself — or let our experts execute it in 2–5 days from ₦8,000." },
-  { num: "04", title: "See the difference", body: "Businesses that act on the diagnosis grow faster. The gap won't close itself." },
+  { num: "01", title: "Describe your business", body: "Your words, your language. Pidgin, formal English, or somewhere between — no forms, no scripts. The audit is always free." },
+  { num: "02", title: "Receive a precise diagnosis", body: "A specific finding: the exact constraint limiting growth, why it exists, and what it costs you in naira each month." },
+  { num: "03", title: "Choose your next move", body: "Apply the recommendation yourself, or commission our team to deploy it in 2–5 days from ₦8,000." },
+  { num: "04", title: "Compound the result", body: "Operators who act on the diagnosis compound faster. The constraint will not close itself." },
 ];
 
 export function HowItWorks() {
@@ -442,9 +442,9 @@ export function HowItWorks() {
               <img src={founder2} alt="" loading="lazy" width={768} height={896} className="aspect-square w-full object-cover" />
             </div>
             <div className="float-card absolute -top-5 -left-3 hidden rounded-2xl bg-white px-4 py-3 shadow-2xl sm:block">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-t-soft">Avg time</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-t-soft">Median time</div>
               <div className="font-display text-2xl font-bold text-t-dark">2.4 min</div>
-              <div className="text-[10px] text-t-soft">to a real diagnosis</div>
+              <div className="text-[10px] text-t-soft">to a precise diagnosis</div>
             </div>
           </Reveal>
 
@@ -452,10 +452,10 @@ export function HowItWorks() {
             <Reveal>
               <div className="mb-4 inline-flex items-center gap-2.5">
                 <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-                <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">How It Works</div>
+                <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">The Process</div>
               </div>
               <h2 className="font-display text-[clamp(32px,5vw,48px)] font-bold leading-[1.12] text-white">
-                From one conversation<br />to <em className="text-amber">real results.</em>
+                One conversation.<br />A <em className="text-amber">measurable change.</em>
               </h2>
             </Reveal>
             <Stagger className="mt-8 space-y-3">
@@ -486,16 +486,16 @@ export function HowItWorks() {
 
 /* ─────────────────────────  TESTIMONIALS  ───────────────────────── */
 const STATS = [
-  { n: "200+", l: "Businesses Helped" },
-  { n: "₦340K", l: "Avg new revenue / mo" },
-  { n: "3.2×", l: "Avg revenue lift" },
-  { n: "2–5", l: "Days to execute" },
+  { n: "200+", l: "Businesses Diagnosed" },
+  { n: "₦340K", l: "Median monthly recovery" },
+  { n: "3.2×", l: "Average revenue lift" },
+  { n: "2–5", l: "Day execution window" },
 ];
 
 const TESTIMONIALS = [
-  { num: "3.2×", lbl: "Revenue increase", text: "The AI found it in 3 minutes — 6 months of posting with no system behind it. They set up my ads. Revenue tripled in 30 days.", name: "Amaka Okafor", biz: "Fashion · Lagos", tag: "Instagram Ads", img: founder3 },
-  { num: "₦840K", lbl: "New revenue, 90 days", text: "The AI diagnosed it instantly — no website meant clients searched and found nothing. HIPROFEET built it in 4 days. ₦840K in new deals that quarter.", name: "Chidi Nwosu", biz: "Logistics · Abuja", tag: "Website Dev", img: founder2 },
-  { num: "68%", lbl: "More repeat buyers", text: "I didn't know a retention gap existed until the AI showed me. Email automation now runs by itself and brings back 68% of past buyers every month.", name: "Ngozi Eze", biz: "Ecommerce · Port Harcourt", tag: "Email Automation", img: founder5 },
+  { num: "3.2×", lbl: "Revenue increase", text: "The advisor surfaced the real constraint in three minutes — six months of posting without a system underneath it. Their team set up the ads. Revenue tripled in 30 days.", name: "Amaka Okafor", biz: "Fashion · Lagos", tag: "Instagram Ads", img: founder3 },
+  { num: "₦840K", lbl: "New revenue, 90 days", text: "Diagnosis was immediate — no website meant prospects searched and found nothing. HIPROFEET built it in four days. ₦840K in new business that quarter.", name: "Chidi Nwosu", biz: "Logistics · Abuja", tag: "Website Dev", img: founder2 },
+  { num: "68%", lbl: "More repeat buyers", text: "I didn't know a retention gap existed until the advisor named it. Email automation now runs on its own and recovers 68% of past buyers each month.", name: "Ngozi Eze", biz: "Ecommerce · Port Harcourt", tag: "Email Automation", img: founder5 },
 ];
 
 export function Testimonials() {
@@ -508,14 +508,14 @@ export function Testimonials() {
       <div className="container-page relative">
         <div className="mb-4 inline-flex items-center gap-2.5">
           <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-          <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Real Results</div>
+          <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Case Studies</div>
         </div>
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <h2 className="font-display text-[clamp(32px,5.5vw,52px)] font-bold leading-[1.1] text-white">
-            Nigerian businesses.<br />
-            <em className="text-amber">Real growth.</em>
+            Nigerian operators.<br />
+            <em className="text-amber">Measured outcomes.</em>
           </h2>
-          <p className="text-base text-white/55 md:max-w-sm md:text-right">Diagnosed by the same AI you'll use — then fixed by our team.</p>
+          <p className="text-base text-white/55 md:max-w-sm md:text-right">Diagnosed by the same advisor you'll use. Executed by our team.</p>
         </div>
 
         <Stagger className="mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4" stagger={0.1}>
@@ -577,10 +577,10 @@ export function Services() {
           <div>
             <div className="mb-4 inline-flex items-center gap-2.5">
               <div className="h-[2.5px] w-5 rounded-full bg-brand" />
-              <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-brand">Expert Services</div>
+              <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-brand">Execution Services</div>
             </div>
             <h2 className="font-display text-[clamp(32px,5.5vw,52px)] font-bold leading-[1.1] text-t-dark">
-              When you're ready<br />to <em className="text-brand">execute.</em>
+              When the diagnosis<br />calls for <em className="text-brand">deployment.</em>
             </h2>
           </div>
           <Link to="/advisor" className="hidden rounded-full border border-t-dark px-5 py-2.5 text-[12px] font-bold uppercase tracking-wider text-t-dark transition hover:bg-t-dark hover:text-cream md:inline-flex">
@@ -590,7 +590,7 @@ export function Services() {
 
         <div className="my-8 flex items-start gap-3 rounded-2xl border border-success/25 bg-success/8 p-5 text-sm leading-relaxed text-success">
           <span className="text-lg">🎯</span>
-          <span><strong className="font-bold">The AI diagnosis is always free.</strong> These services are optional — only if you want our team to execute. The AI recommends the right one after your chat.</span>
+          <span><strong className="font-bold">The growth audit is always free.</strong> Services below are optional — for when you want our team to execute the recommendation. The advisor will name the right one after your audit.</span>
         </div>
 
         <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
@@ -637,11 +637,11 @@ export function Services() {
 
 /* ─────────────────────────  FAQ  ───────────────────────── */
 const FAQ_ITEMS = [
-  { q: "Is the AI diagnosis really free?", a: "Yes — completely. No login, no card, no email capture. We make money only when you choose to hire our team to execute the recommended fix. You can take the diagnosis and apply it yourself, free forever." },
-  { q: "How is this different from ChatGPT?", a: "ChatGPT gives generic global advice. HIPROFEET is trained specifically on Nigerian SMB patterns — Lagos buying behaviour, WhatsApp commerce, naira-economy pricing, and the gaps we've fixed for 200+ businesses. It also recommends a specific service and price, not just suggestions." },
-  { q: "How fast can your team execute?", a: "Most services deliver in 2–5 working days. Logo & branding ships in 1–2 days. Sales support starts within 24 hours. Every service has a clear delivery window on its order page." },
-  { q: "How do payments work?", a: "Bank transfer to our Nigerian Union Bank account. You upload the receipt, we verify within hours, and work begins. No international cards or dollar conversions." },
-  { q: "What if I don't want to buy anything?", a: "That's fine. The diagnosis is genuinely free with no follow-up pressure. Many founders use it for clarity before deciding their next move — that alone is valuable." },
+  { q: "Is the growth audit really free?", a: "Yes — entirely. No login, no card, no email capture required. Our revenue comes only from operators who choose to commission execution. You're welcome to take the diagnosis and apply it yourself; that path is free in perpetuity." },
+  { q: "How is this different from ChatGPT?", a: "General-purpose models give global, generic advice. HIPROFEET is calibrated on Nigerian SMB patterns — WhatsApp commerce, naira-economy pricing, local trust signals, and 200+ documented diagnoses. It also returns a specific intervention with a specific naira figure, not open-ended suggestions." },
+  { q: "How quickly does your team execute?", a: "Most services deliver within 2–5 working days. Brand identity ships in 1–2. Sales support engages within 24 hours. Every service page states the exact delivery window." },
+  { q: "How do payments work?", a: "Direct bank transfer to our Nigerian Union Bank account. Upload the receipt, we verify within hours, and execution begins. No international cards, no dollar conversions." },
+  { q: "What if I don't want to commission a service?", a: "Entirely acceptable. The audit is genuinely obligation-free. Many founders use it for clarity before deciding any next move — that alone is the point." },
 ];
 
 export function FAQ() {
@@ -651,11 +651,11 @@ export function FAQ() {
         <div className="mx-auto max-w-2xl text-center">
           <div className="mb-4 inline-flex items-center gap-2.5">
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">FAQ</div>
+            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Questions</div>
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
           </div>
           <h2 className="font-display text-[clamp(30px,5vw,44px)] font-bold leading-[1.14] text-white">
-            Questions, <em className="text-amber">answered.</em>
+            What operators <em className="text-amber">usually ask.</em>
           </h2>
         </div>
         <Stagger className="mx-auto mt-12 max-w-3xl space-y-3" stagger={0.06}>
@@ -688,31 +688,31 @@ export function FinalCTA() {
           </div>
           <div className="float-card absolute -bottom-5 -right-4 hidden rounded-2xl bg-white px-5 py-4 shadow-2xl sm:block">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-t-soft">Diagnosed today</div>
-            <div className="font-display text-2xl font-bold text-t-dark">17 founders</div>
+            <div className="font-display text-2xl font-bold text-t-dark">17 operators</div>
             <div className="mt-1 flex items-center gap-1.5 text-[11px] text-emerald-700">
               <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              AI online · respond in 2s
+              Advisor online · responds in seconds
             </div>
           </div>
         </Reveal>
         <Reveal delay={0.15}>
           <div className="mb-4 inline-flex items-center gap-2.5">
             <div className="h-[2.5px] w-5 rounded-full bg-amber" />
-            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Stop Waiting</div>
+            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">The Cost of Delay</div>
           </div>
           <h2 className="font-display text-[clamp(32px,5vw,50px)] font-bold leading-[1.1] text-white">
-            Every day you wait<br />is another day your<br /><em className="text-gradient-animate bg-gradient-to-r from-amber via-sky-2 to-amber bg-clip-text not-italic text-transparent">competitors win.</em>
+            Each week unmeasured<br />is another week your<br /><em className="text-gradient-animate bg-gradient-to-r from-amber via-sky-2 to-amber bg-clip-text not-italic text-transparent">constraint compounds.</em>
           </h2>
           <p className="mt-5 text-lg font-light leading-[1.78] text-white/65">
-            A 3-minute conversation today. A 5-day expert sprint this week. A different trajectory by next month.
+            A three-minute audit today. A five-day execution sprint this week. A measurably different trajectory next month.
           </p>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="mt-8 inline-block">
             <Link to="/advisor" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
-              Start Free — Talk to the AI <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+              Begin Free Growth Audit <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
             </Link>
           </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {["Always free to diagnose", "No signup required", "Expert work from ₦8,000", "Results in 2–5 days"].map((c) => (
+            {["Audit always free", "No signup required", "Execution from ₦8,000", "Delivered in 2–5 days"].map((c) => (
               <div key={c} className="flex items-center gap-2 text-sm font-light text-white/65">
                 <span className="text-[15px] font-bold text-amber">✓</span>{c}
               </div>

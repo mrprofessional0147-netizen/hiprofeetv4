@@ -14,7 +14,7 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in — HIPROFEET" },
-      { name: "description", content: "Sign in or create your free HIPROFEET account to chat with the AI advisor and order growth services." },
+      { name: "description", content: "Access your HIPROFEET account to save growth audits, track interventions, and commission execution." },
     ],
   }),
   component: AuthPage,
@@ -107,10 +107,10 @@ function AuthPage() {
             HIPRO<span>FEET</span>
           </Link>
           <p className="mt-2 text-sm text-white/50">
-            {mode === "signup" && "Create your free account"}
+            {mode === "signup" && "Create your operator account"}
             {mode === "signin" && "Welcome back"}
             {mode === "forgot" && "Reset your password"}
-            {mode === "check-email" && "Almost there"}
+            {mode === "check-email" && "One step remaining"}
           </p>
         </div>
 
@@ -204,7 +204,7 @@ function AuthPage() {
                   {submitting
                     ? "Please wait…"
                     : mode === "signup"
-                    ? "Create free account"
+                    ? "Create account"
                     : mode === "forgot"
                     ? "Send reset link"
                     : "Sign in"}
@@ -239,7 +239,7 @@ function AuthPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-white/30">
-          By continuing, you agree to our terms. We never share your data.
+          By continuing, you accept our terms. Your business information stays confidential.
         </p>
       </motion.div>
     </div>

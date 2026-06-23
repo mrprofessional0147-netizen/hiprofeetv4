@@ -43,7 +43,7 @@ function parseReply(text: string): { body: string; ctas: { id: string; label: st
 }
 
 export const Route = createFileRoute("/advisor")({
-  head: () => ({ meta: [{ title: "Free AI Business Advisor — HIPROFEET" }] }),
+  head: () => ({ meta: [{ title: "Growth Audit — HIPROFEET Advisor" }] }),
   component: AdvisorPage,
 });
 
@@ -52,7 +52,7 @@ type Conversation = { id: string; title: string; last_message_at: string };
 
 const WELCOME: Msg = {
   role: "ai",
-  text: "Hi 👋 I'm your HIPROFEET business advisor. Tell me — what's the biggest thing slowing your business down right now?",
+  text: "Welcome. I'm your HIPROFEET growth advisor. Briefly — what does your business do, and what's the single biggest constraint on revenue right now?",
 };
 
 function AdvisorPage() {
@@ -185,7 +185,7 @@ function AdvisorPage() {
     }
   };
 
-  const quick = ["Sales are slow", "Few followers", "No website", "Customers don't return"];
+  const quick = ["Revenue has plateaued", "Low audience credibility", "No website yet", "Customers don't return"];
 
   return (
     <>
@@ -298,14 +298,14 @@ function AdvisorPage() {
                 className="h-10 w-10 rounded-full border-2 border-white/15 object-cover"
               />
               <div className="min-w-0">
-                <div className="truncate text-sm font-bold text-white">HIPROFEET Business Advisor</div>
+                <div className="truncate text-sm font-bold text-white">HIPROFEET Growth Advisor</div>
                 <div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-white/45">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  {user ? "Saved to your account" : "Free · No signup · Real insight"}
+                  {user ? "Saved to your account" : "Confidential · No signup required"}
                 </div>
               </div>
               <div className="ml-auto rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-white/60">
-                🤝 Advisor
+                Advisor
               </div>
             </div>
 
@@ -358,7 +358,7 @@ function AdvisorPage() {
                   to="/auth"
                   className="self-center rounded-full border border-brand/30 bg-brand/5 px-4 py-1.5 text-[12px] font-semibold text-brand hover:bg-brand/10"
                 >
-                  💾 Sign in to save this chat
+                  Sign in to save this audit
                 </Link>
               )}
             </div>
@@ -380,7 +380,7 @@ function AdvisorPage() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send()}
-                placeholder="Tell me about your business…"
+                placeholder="Describe your business or the constraint you're facing…"
                 className="min-w-0 flex-1 rounded-2xl border border-brand/15 bg-off px-5 py-3 text-[15px] text-t-dark outline-none focus:border-brand focus:bg-white"
               />
               <button

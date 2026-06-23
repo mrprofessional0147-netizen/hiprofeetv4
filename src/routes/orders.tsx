@@ -81,17 +81,17 @@ function OrdersPage() {
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
               <div className="text-xs font-semibold uppercase tracking-widest text-amber">Account</div>
-              <h1 className="mt-1 font-display text-3xl font-bold sm:text-4xl">My orders</h1>
-              <p className="mt-1 text-sm text-white/50">Track every service you've ordered with HIPROFEET.</p>
+              <h1 className="mt-1 font-display text-3xl font-bold sm:text-4xl">Engagements</h1>
+              <p className="mt-1 text-sm text-white/50">A record of every service you've commissioned through HIPROFEET.</p>
             </div>
             <Link to="/" className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/80 hover:border-sky/40">Browse services</Link>
           </div>
 
           {orders.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-white/10 bg-ink-2 p-10 text-center">
-              <div className="text-4xl">🛒</div>
-              <div className="mt-3 font-display text-xl font-bold">No orders yet</div>
-              <p className="mt-1 text-sm text-white/50">When you place an order it will appear here.</p>
+              <div className="text-4xl">📋</div>
+              <div className="mt-3 font-display text-xl font-bold">No engagements yet</div>
+              <p className="mt-1 text-sm text-white/50">Commissioned services will appear here for tracking.</p>
               <Link to="/" className="mt-5 inline-block rounded-xl bg-amber px-5 py-2.5 text-sm font-bold text-white">Explore services</Link>
             </div>
           ) : (
