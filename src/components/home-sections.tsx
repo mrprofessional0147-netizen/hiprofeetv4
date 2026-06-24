@@ -278,7 +278,7 @@ export function ProductPreview() {
             A structured conversation.<br />
             <em className="text-amber">A clear finding.</em>
           </h2>
-          <p className="mt-4 text-base font-light leading-[1.78] text-white/65">
+          <p className="mt-4 text-xl font-light leading-[1.7] text-white/75 sm:text-[22px]">
             No forms. No surveys. A focused dialogue — in pidgin, English, formal or casual — with an advisor trained on Nigerian business patterns. It asks the right questions and returns a specific diagnosis with the cost of inaction.
           </p>
         </Reveal>
