@@ -79,12 +79,12 @@ export function Hero() {
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
                   <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · Confidential
                 </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">Growth Audit</div>
+                <div className="mt-2 font-display text-xl font-bold text-white">Find Out What's Holding My Business Back</div>
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  A 3-minute conversation. A precise diagnosis of the bottleneck limiting your revenue.
+                  Not getting the results you expected? Get a personalized business growth review and uncover the biggest factors limiting your growth.
                 </div>
                 <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 transition-all group-hover:gap-2.5">
-                  Begin Audit <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
+                  Find Out Now <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
                 </div>
               </Link>
             </motion.div>
@@ -95,14 +95,14 @@ export function Hero() {
                 className="lift group relative block overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Execution
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Work With Experts
                 </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">Growth Services</div>
+                <div className="mt-2 font-display text-xl font-bold text-white">Get Expert Help To Grow</div>
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  Already know the gap? Deploy a specific service from ₦8,000. Delivered in 2–5 days.
+                  Work with Hiprofeet growth experts to improve visibility, trust, customer acquisition, and business performance.
                 </div>
                 <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber transition-all group-hover:gap-2.5">
-                  View Services →
+                  Get Expert Help →
                 </div>
               </a>
             </motion.div>
