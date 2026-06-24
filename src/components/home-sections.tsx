@@ -44,7 +44,7 @@ export function Hero() {
               transition={{ delay: 0.15, duration: 0.7 }}
               className="block"
             >
-              Diagnose what's
+              Why isn't your business
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 18 }}
@@ -52,7 +52,7 @@ export function Hero() {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-gradient-animate bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent"
             >
-              limiting your growth.
+              growing as fast as it should?
             </motion.span>
           </h1>
           <motion.p
@@ -61,7 +61,7 @@ export function Hero() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70"
           >
-            A strategic growth audit, not a sales pitch. Tell our advisor about your business — get a specific finding, a number, and a clear next move. Then deploy the right service if it fits.
+            Most business owners don't have a growth problem. They have a clarity problem. Find out what's holding your business back — or get expert help to move forward with confidence.
           </motion.p>
 
           {/* TWO CLEAR PATHS */}
