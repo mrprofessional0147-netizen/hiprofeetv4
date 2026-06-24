@@ -59,7 +59,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="mt-6 max-w-xl text-lg font-light leading-[1.78] text-white/70"
+            className="mt-6 max-w-xl text-xl font-light leading-[1.7] text-white/75 sm:text-[22px]"
           >
             Most business owners don't have a growth problem. They have a clarity problem. Find out what's holding your business back — or get expert help to move forward with confidence.
           </motion.p>
@@ -69,12 +69,12 @@ export function Hero() {
             initial="hidden"
             animate="show"
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.55 } } }}
-            className="mt-9 grid gap-3 sm:grid-cols-2 sm:max-w-2xl"
+            className="mt-9 grid gap-4 sm:grid-cols-2 sm:max-w-2xl"
           >
             <motion.div variants={itemVariants}>
               <Link
                 to="/advisor"
-                className="shimmer-border lift group relative block overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 hover:border-sky hover:from-sky/30"
+                className="shimmer-border lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 hover:border-sky hover:from-sky/30"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
                   <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · Confidential
@@ -83,8 +83,9 @@ export function Hero() {
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
                   Not getting the results you expected? Get a personalized business growth review and uncover the biggest factors limiting your growth.
                 </div>
-                <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-sky-2 transition-all group-hover:gap-2.5">
-                  Find Out Now <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
+                <div className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky px-5 py-3 text-sm font-bold text-ink shadow-[0_8px_24px_oklch(0.78_0.13_230/.35)] transition-all group-hover:bg-sky-2 group-hover:shadow-[0_10px_30px_oklch(0.78_0.13_230/.5)]">
+                  Find Out Now
+                  <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
                 </div>
               </Link>
             </motion.div>
@@ -92,7 +93,7 @@ export function Hero() {
             <motion.div variants={itemVariants}>
               <a
                 href="#services"
-                className="lift group relative block overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
+                className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
               >
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Work With Experts
@@ -101,8 +102,9 @@ export function Hero() {
                 <div className="mt-1 text-[13px] leading-snug text-white/65">
                   Work with Hiprofeet growth experts to improve visibility, trust, customer acquisition, and business performance.
                 </div>
-                <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-bold text-amber transition-all group-hover:gap-2.5">
-                  Get Expert Help →
+                <div className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber px-5 py-3 text-sm font-bold text-white shadow-[0_8px_24px_oklch(0.68_0.17_55/.4)] transition-all group-hover:brightness-110 group-hover:shadow-[0_10px_30px_oklch(0.68_0.17_55/.55)]">
+                  Get Expert Help
+                  <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
                 </div>
               </a>
             </motion.div>
