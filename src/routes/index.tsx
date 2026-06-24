@@ -26,8 +26,6 @@ function Index() {
         <Ticker />
         <TrustBar />
         <ProductPreview />
-        <Features />
-        <HowItWorks />
         <Testimonials />
         <Services />
         <FAQ />
