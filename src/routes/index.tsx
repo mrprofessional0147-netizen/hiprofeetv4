@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer, FloatingChatCTA } from "@/components/layout";
 import { ScrollProgress } from "@/components/motion";
-import { Hero, Ticker, TrustBar, ProductPreview, Features, HowItWorks, Testimonials, Services, FAQ, FinalCTA } from "@/components/home-sections";
+import { Hero, Ticker, TrustBar, ProductPreview, Testimonials, Services, FAQ, FinalCTA } from "@/components/home-sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
