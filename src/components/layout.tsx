@@ -46,7 +46,7 @@ export function Nav() {
               to="/advisor"
               className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-sky to-brand px-4 py-2.5 text-[13px] font-bold text-white shadow-[0_4px_16px_oklch(0.78_0.13_230/.4)] transition active:scale-95"
             >
-              Free Growth Audit
+              Free Assessment
             </Link>
           )}
 
