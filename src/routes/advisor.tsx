@@ -185,7 +185,16 @@ function AdvisorPage() {
     }
   };
 
-  const quick = ["Revenue has plateaued", "Low audience credibility", "No website yet", "Customers don't return"];
+  const quick = [
+    "Getting more customers",
+    "Increasing sales",
+    "Building trust",
+    "Marketing effectively",
+    "Customers don't return",
+    "Revenue has plateaued",
+    "No website yet",
+    "Something else",
+  ];
 
   return (
     <>
