@@ -714,7 +714,7 @@ export function FinalCTA() {
             </Link>
           </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {["Audit always free", "No signup required", "Execution from ₦8,000", "Delivered in 2–5 days"].map((c) => (
+            {["Assessment always free", "No signup required", "Execution from ₦8,000", "Delivered in 2–5 days"].map((c) => (
               <div key={c} className="flex items-center gap-2 text-sm font-light text-white/65">
                 <span className="text-[15px] font-bold text-amber">✓</span>{c}
               </div>
