@@ -14,30 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
-      conversations: {
+      assessment_uploads: {
         Row: {
+          conversation_id: string | null
           created_at: string
           id: string
-          last_message_at: string
-          title: string
-          updated_at: string
-          user_id: string
+          kind: string
+          label: string | null
+          session_id: string | null
+          user_id: string | null
+          value: string
         }
         Insert: {
+          conversation_id?: string | null
           created_at?: string
           id?: string
-          last_message_at?: string
-          title?: string
-          updated_at?: string
-          user_id: string
+          kind: string
+          label?: string | null
+          session_id?: string | null
+          user_id?: string | null
+          value: string
         }
         Update: {
+          conversation_id?: string | null
           created_at?: string
           id?: string
+          kind?: string
+          label?: string | null
+          session_id?: string | null
+          user_id?: string | null
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_uploads_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          id: string
+          industry: string | null
+          last_message_at: string
+          route: string | null
+          session_id: string | null
+          title: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
           last_message_at?: string
+          route?: string | null
+          session_id?: string | null
           title?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          last_message_at?: string
+          route?: string | null
+          session_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -109,6 +162,50 @@ export type Database = {
         }
         Relationships: []
       }
+      growth_reviews: {
+        Row: {
+          business_name: string | null
+          conversation_id: string | null
+          created_at: string
+          email: string
+          id: string
+          industry: string | null
+          review_json: Json
+          sent_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          business_name?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          industry?: string | null
+          review_json: Json
+          sent_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          business_name?: string | null
+          conversation_id?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          industry?: string | null
+          review_json?: Json
+          sent_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "growth_reviews_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           content: string
@@ -116,7 +213,7 @@ export type Database = {
           created_at: string
           id: string
           role: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           content: string
@@ -124,7 +221,7 @@ export type Database = {
           created_at?: string
           id?: string
           role: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           content?: string
@@ -132,7 +229,7 @@ export type Database = {
           created_at?: string
           id?: string
           role?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
