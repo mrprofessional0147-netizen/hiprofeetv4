@@ -17,6 +17,7 @@ import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderIdRouteImport } from './routes/order.$id'
+import { Route as ApiGrowthReviewRouteImport } from './routes/api.growth-review'
 import { Route as ApiAdvisorRouteImport } from './routes/api.advisor'
 
 const SuccessRoute = SuccessRouteImport.update({
@@ -59,6 +60,11 @@ const OrderIdRoute = OrderIdRouteImport.update({
   path: '/order/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGrowthReviewRoute = ApiGrowthReviewRouteImport.update({
+  id: '/api/growth-review',
+  path: '/api/growth-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdvisorRoute = ApiAdvisorRouteImport.update({
   id: '/api/advisor',
   path: '/api/advisor',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/success': typeof SuccessRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/success'
     | '/api/advisor'
+    | '/api/growth-review'
     | '/order/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/success'
     | '/api/advisor'
+    | '/api/growth-review'
     | '/order/$id'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/success'
     | '/api/advisor'
+    | '/api/growth-review'
     | '/order/$id'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SuccessRoute: typeof SuccessRoute
   ApiAdvisorRoute: typeof ApiAdvisorRoute
+  ApiGrowthReviewRoute: typeof ApiGrowthReviewRoute
   OrderIdRoute: typeof OrderIdRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/growth-review': {
+      id: '/api/growth-review'
+      path: '/api/growth-review'
+      fullPath: '/api/growth-review'
+      preLoaderRoute: typeof ApiGrowthReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/advisor': {
       id: '/api/advisor'
       path: '/api/advisor'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SuccessRoute: SuccessRoute,
   ApiAdvisorRoute: ApiAdvisorRoute,
+  ApiGrowthReviewRoute: ApiGrowthReviewRoute,
   OrderIdRoute: OrderIdRoute,
 }
 export const routeTree = rootRouteImport
