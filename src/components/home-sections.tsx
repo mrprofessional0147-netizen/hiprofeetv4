@@ -710,7 +710,7 @@ export function FinalCTA() {
           </p>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="mt-8 inline-block">
             <Link to="/advisor" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
-              Begin Free Growth Audit <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+              Start Free Business Assessment <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
             </Link>
           </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
