@@ -372,17 +372,22 @@ function AdvisorPage() {
               )}
             </div>
 
-            <div className="flex flex-wrap gap-2 border-t border-brand/10 bg-white px-3 py-2.5">
-              {quick.map((q) => (
-                <button
-                  key={q}
-                  onClick={() => send(q)}
-                  disabled={loading}
-                  className="rounded-xl border border-brand/15 bg-cream px-4 py-2 text-sm font-medium text-t-dark transition hover:border-brand hover:bg-brand/10 hover:text-brand"
-                >
-                  {q}
-                </button>
-              ))}
+            <div className="border-t border-brand/10 bg-white px-3 pt-2.5">
+              <div className="px-1 pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-t-soft">
+                Choose what best describes your biggest challenge
+              </div>
+              <div className="flex flex-wrap gap-2 pb-2.5">
+                {quick.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => send(q)}
+                    disabled={loading}
+                    className="rounded-xl border border-brand/15 bg-cream px-4 py-2 text-sm font-medium text-t-dark transition hover:border-brand hover:bg-brand/10 hover:text-brand"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="flex gap-2 rounded-b-2xl border-t border-brand/10 bg-white p-3">
               <input
