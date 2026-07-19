@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "hiprofeet-mcp",
+      "version": "0.1.0",
+      "title": "HIPROFEET Growth Intelligence"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "List HIPROFEET services",
+        "description": "List every service HIPROFEET offers, with pricing in Naira, delivery timeline, and a short description. Use this to answer questions about what HIPROFEET sells or to recommend a fitting service.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "search": {
+              "description": "Optional case-insensitive substring filter matched against service name, tag, or id.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_service",
+        "title": "Get HIPROFEET service details",
+        "description": "Get full details for a single HIPROFEET service by id: the problem it solves, how it helps, what's included, price, timeline, and the order URL.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "service_id": {
+              "type": "string",
+              "description": "The service id, e.g. 'fb', 'ig', 'tt', 'website', 'followers', 'consultant'. Use list_services to discover ids."
+            }
+          },
+          "required": [
+            "service_id"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
