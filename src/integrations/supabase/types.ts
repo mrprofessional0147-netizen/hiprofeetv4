@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_config: {
+        Row: {
+          id: string
+          require_email_verification: boolean
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          require_email_verification?: boolean
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          require_email_verification?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       assessment_uploads: {
         Row: {
           conversation_id: string | null
@@ -51,6 +69,41 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consultation_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          diagnosis_id: string
+          id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          diagnosis_id: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          diagnosis_id?: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_requests_diagnosis_id_fkey"
+            columns: ["diagnosis_id"]
+            isOneToOne: false
+            referencedRelation: "diagnoses"
             referencedColumns: ["id"]
           },
         ]
@@ -161,6 +214,116 @@ export type Database = {
           used_count?: number
         }
         Relationships: []
+      }
+      diagnoses: {
+        Row: {
+          answers: Json
+          business_name: string | null
+          created_at: string
+          delivered_at: string | null
+          email: string | null
+          id: string
+          industry: string | null
+          ip: string | null
+          name: string | null
+          pillar_scores: Json | null
+          report: Json | null
+          report_token: string | null
+          revenue_band: string | null
+          score: number | null
+          session_token: string
+          source: string | null
+          status: string
+          updated_at: string
+          user_agent: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          answers?: Json
+          business_name?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          email?: string | null
+          id?: string
+          industry?: string | null
+          ip?: string | null
+          name?: string | null
+          pillar_scores?: Json | null
+          report?: Json | null
+          report_token?: string | null
+          revenue_band?: string | null
+          score?: number | null
+          session_token: string
+          source?: string | null
+          status?: string
+          updated_at?: string
+          user_agent?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          answers?: Json
+          business_name?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          email?: string | null
+          id?: string
+          industry?: string | null
+          ip?: string | null
+          name?: string | null
+          pillar_scores?: Json | null
+          report?: Json | null
+          report_token?: string | null
+          revenue_band?: string | null
+          score?: number | null
+          session_token?: string
+          source?: string | null
+          status?: string
+          updated_at?: string
+          user_agent?: string | null
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
+      email_verifications: {
+        Row: {
+          attempts: number
+          code_hash: string
+          created_at: string
+          diagnosis_id: string
+          email: string
+          expires_at: string
+          id: string
+          verified_at: string | null
+        }
+        Insert: {
+          attempts?: number
+          code_hash: string
+          created_at?: string
+          diagnosis_id: string
+          email: string
+          expires_at: string
+          id?: string
+          verified_at?: string | null
+        }
+        Update: {
+          attempts?: number
+          code_hash?: string
+          created_at?: string
+          diagnosis_id?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_verifications_diagnosis_id_fkey"
+            columns: ["diagnosis_id"]
+            isOneToOne: false
+            referencedRelation: "diagnoses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       growth_reviews: {
         Row: {

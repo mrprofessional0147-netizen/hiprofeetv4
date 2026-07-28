@@ -1,15 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav, Footer, FloatingChatCTA } from "@/components/layout";
 import { ScrollProgress } from "@/components/motion";
-import { Hero, Ticker, TrustBar, ProductPreview, Testimonials, Services, FAQ, FinalCTA } from "@/components/home-sections";
+import { Hero, Ticker, TrustBar, ProductPreview, Testimonials, HowItWorks, FAQ, FinalCTA } from "@/components/home-sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HIPROFEET — Business Growth Intelligence for Nigerian Founders" },
-      { name: "description", content: "Strategic growth diagnostics for Nigerian businesses. Identify the exact bottleneck limiting your revenue — then deploy the right fix in 2–5 days." },
-      { property: "og:title", content: "HIPROFEET — Business Growth Intelligence for Nigerian Founders" },
-      { property: "og:description", content: "Diagnose the real constraint on your growth. Analytical, specific, naira-priced. Built for Nigerian operators." },
+      { title: "HIPROFEET — Free Customer Acquisition Diagnosis for Nigerian Businesses" },
+      { name: "description", content: "Find out in 3 minutes why your business isn't getting enough customers. Free confidential diagnosis and personalized growth report — built for Nigerian operators." },
+      { property: "og:title", content: "HIPROFEET — Free Customer Acquisition Diagnosis" },
+      { property: "og:description", content: "Identify the exact bottleneck limiting your growth. Free 3-minute diagnosis and personalized report by HIPROFEET." },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -26,13 +26,17 @@ function Index() {
         <Ticker />
         <TrustBar />
         <ProductPreview />
+        <HowItWorks />
         <Testimonials />
-        <Services />
         <FAQ />
         <FinalCTA />
       </main>
       <Footer />
       <FloatingChatCTA />
+      {/* Discreet footer link for existing clients */}
+      <div className="sr-only">
+        <Link to="/services">Existing clients: browse growth services</Link>
+      </div>
     </>
   );
 }

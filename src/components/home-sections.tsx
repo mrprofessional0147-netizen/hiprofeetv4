@@ -44,7 +44,7 @@ export function Hero() {
               transition={{ delay: 0.15, duration: 0.7 }}
               className="block"
             >
-              Why isn't your business
+              Why aren't enough customers
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 18 }}
@@ -52,7 +52,7 @@ export function Hero() {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-gradient-animate bg-gradient-to-r from-sky-2 via-sky to-amber bg-clip-text italic text-transparent"
             >
-              growing as fast as it should?
+              finding your business?
             </motion.span>
           </h1>
           <motion.p
@@ -61,53 +61,29 @@ export function Hero() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="mt-6 max-w-xl text-xl font-light leading-[1.7] text-white/75 sm:text-[22px]"
           >
-            Most business owners don't have a growth problem. They have a clarity problem. Find out what's holding your business back — or get expert help to move forward with confidence.
+            In 3 minutes, HIPROFEET will diagnose the exact bottleneck limiting your customer acquisition — and show you what to fix, in what order, for your specific business. Free. Confidential. Nigerian-built.
           </motion.p>
 
-          {/* TWO CLEAR PATHS */}
+          {/* SINGLE DOMINANT CTA */}
           <motion.div
-            initial="hidden"
-            animate="show"
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.55 } } }}
-            className="mt-9 grid gap-4 sm:grid-cols-2 sm:max-w-2xl"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55, duration: 0.6 }}
+            className="mt-10 max-w-xl"
           >
-            <motion.div variants={itemVariants}>
-              <Link
-                to="/advisor"
-                className="shimmer-border lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-sky/40 bg-gradient-to-br from-sky/20 via-brand/15 to-transparent p-5 hover:border-sky hover:from-sky/30"
-              >
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-sky">
-                  <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-sky" /> Free · Confidential
-                </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">Find Out What's Holding My Business Back</div>
-                <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  Not getting the results you expected? Get a personalized business growth review and uncover the biggest factors limiting your growth.
-                </div>
-                <div className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky px-5 py-3 text-sm font-bold text-ink shadow-[0_8px_24px_oklch(0.78_0.13_230/.35)] transition-all group-hover:bg-sky-2 group-hover:shadow-[0_10px_30px_oklch(0.78_0.13_230/.5)]">
-                  Find Out Now
-                  <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
-                </div>
-              </Link>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <a
-                href="#services"
-                className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-amber/40 bg-gradient-to-br from-amber/20 via-amber/5 to-transparent p-5 hover:border-amber hover:from-amber/30"
-              >
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] text-amber">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber" /> Work With Experts
-                </div>
-                <div className="mt-2 font-display text-xl font-bold text-white">Get Expert Help To Grow</div>
-                <div className="mt-1 text-[13px] leading-snug text-white/65">
-                  Work with Hiprofeet growth experts to improve visibility, trust, customer acquisition, and business performance.
-                </div>
-                <div className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber px-5 py-3 text-sm font-bold text-white shadow-[0_8px_24px_oklch(0.68_0.17_55/.4)] transition-all group-hover:brightness-110 group-hover:shadow-[0_10px_30px_oklch(0.68_0.17_55/.55)]">
-                  Get Expert Help
-                  <motion.span animate={reduce ? {} : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>→</motion.span>
-                </div>
-              </a>
-            </motion.div>
+            <Link
+              to="/diagnosis"
+              className="shimmer-border lift group relative flex items-center justify-center gap-3 overflow-hidden rounded-2xl border border-sky/50 bg-gradient-to-r from-sky via-brand to-sky bg-[length:200%_100%] px-8 py-5 text-center font-bold text-white shadow-[0_16px_50px_oklch(0.78_0.13_230/.5)] transition hover:bg-[position:100%_0] hover:scale-[1.02] active:scale-[0.98]"
+              style={{ backgroundSize: "200% 100%" }}
+            >
+              <span className="text-[17px] sm:text-lg">Start Your Free Customer Acquisition Diagnosis</span>
+              <motion.span animate={reduce ? {} : { x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }} className="text-xl">→</motion.span>
+            </Link>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-white/50 sm:justify-start">
+              <span className="flex items-center gap-1.5"><span className="text-sky">✓</span> Takes 3 minutes</span>
+              <span className="flex items-center gap-1.5"><span className="text-sky">✓</span> No card, no signup</span>
+              <span className="flex items-center gap-1.5"><span className="text-sky">✓</span> Report by email</span>
+            </div>
           </motion.div>
 
           <motion.div
@@ -183,11 +159,11 @@ export function Hero() {
                 Growth Diagnosis · Live
               </div>
               <div className="mt-2 font-display text-[15px] font-bold leading-snug text-white caret-blink">
-                "Retention gap is costing ₦340K/month. Closeable in 2 days."
+                "Customer Acquisition Score: 42/100. Follow-up gap is the #1 leak."
               </div>
               <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3 text-[11px]">
-                <span className="text-white/55">Email Automation · ₦20,000</span>
-                <span className="rounded-full bg-amber px-2.5 py-1 font-bold text-white">Recommended</span>
+                <span className="text-white/55">Personalized report · 3 min</span>
+                <span className="rounded-full bg-amber px-2.5 py-1 font-bold text-white">Free</span>
               </div>
             </motion.div>
           </motion.div>

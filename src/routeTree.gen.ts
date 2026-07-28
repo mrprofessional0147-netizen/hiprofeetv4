@@ -10,23 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReportTokenRouteImport } from './routes/report.$token'
 import { Route as OrderIdRouteImport } from './routes/order.$id'
 import { Route as ApiGrowthReviewRouteImport } from './routes/api.growth-review'
 import { Route as ApiAdvisorRouteImport } from './routes/api.advisor'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as ApiDiagnosisSplatRouteImport } from './routes/api.diagnosis.$'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -42,6 +51,11 @@ const OrdersRoute = OrdersRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiagnosisRoute = DiagnosisRouteImport.update({
+  id: '/diagnosis',
+  path: '/diagnosis',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -62,6 +76,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportTokenRoute = ReportTokenRouteImport.update({
+  id: '/report/$token',
+  path: '/report/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderIdRoute = OrderIdRouteImport.update({
@@ -91,6 +110,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiDiagnosisSplatRoute = ApiDiagnosisSplatRouteImport.update({
+  id: '/api/diagnosis/$',
+  path: '/api/diagnosis/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -103,32 +127,40 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/mcp': typeof McpRoute
   '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/services': typeof ServicesRoute
   '/success': typeof SuccessRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
+  '/report/$token': typeof ReportTokenRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/mcp': typeof McpRoute
   '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/services': typeof ServicesRoute
   '/success': typeof SuccessRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
+  '/report/$token': typeof ReportTokenRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -136,16 +168,20 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/advisor': typeof AdvisorRoute
   '/auth': typeof AuthRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/mcp': typeof McpRoute
   '/orders': typeof OrdersRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/services': typeof ServicesRoute
   '/success': typeof SuccessRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/api/advisor': typeof ApiAdvisorRoute
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
+  '/report/$token': typeof ReportTokenRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -154,48 +190,60 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/diagnosis'
     | '/mcp'
     | '/orders'
     | '/reset-password'
+    | '/services'
     | '/success'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/api/advisor'
     | '/api/growth-review'
     | '/order/$id'
+    | '/report/$token'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/diagnosis'
     | '/mcp'
     | '/orders'
     | '/reset-password'
+    | '/services'
     | '/success'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/api/advisor'
     | '/api/growth-review'
     | '/order/$id'
+    | '/report/$token'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/advisor'
     | '/auth'
+    | '/diagnosis'
     | '/mcp'
     | '/orders'
     | '/reset-password'
+    | '/services'
     | '/success'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/api/advisor'
     | '/api/growth-review'
     | '/order/$id'
+    | '/report/$token'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,16 +251,20 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdvisorRoute: typeof AdvisorRoute
   AuthRoute: typeof AuthRoute
+  DiagnosisRoute: typeof DiagnosisRoute
   McpRoute: typeof McpRoute
   OrdersRoute: typeof OrdersRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ServicesRoute: typeof ServicesRoute
   SuccessRoute: typeof SuccessRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ApiAdvisorRoute: typeof ApiAdvisorRoute
   ApiGrowthReviewRoute: typeof ApiGrowthReviewRoute
   OrderIdRoute: typeof OrderIdRoute
+  ReportTokenRoute: typeof ReportTokenRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiDiagnosisSplatRoute: typeof ApiDiagnosisSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -222,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/success'
       fullPath: '/success'
       preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -243,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diagnosis': {
+      id: '/diagnosis'
+      path: '/diagnosis'
+      fullPath: '/diagnosis'
+      preLoaderRoute: typeof DiagnosisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -271,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report/$token': {
+      id: '/report/$token'
+      path: '/report/$token'
+      fullPath: '/report/$token'
+      preLoaderRoute: typeof ReportTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order/$id': {
@@ -308,6 +381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/diagnosis/$': {
+      id: '/api/diagnosis/$'
+      path: '/api/diagnosis/$'
+      fullPath: '/api/diagnosis/$'
+      preLoaderRoute: typeof ApiDiagnosisSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -323,9 +403,11 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdvisorRoute: AdvisorRoute,
   AuthRoute: AuthRoute,
+  DiagnosisRoute: DiagnosisRoute,
   McpRoute: McpRoute,
   OrdersRoute: OrdersRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ServicesRoute: ServicesRoute,
   SuccessRoute: SuccessRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
@@ -333,7 +415,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdvisorRoute: ApiAdvisorRoute,
   ApiGrowthReviewRoute: ApiGrowthReviewRoute,
   OrderIdRoute: OrderIdRoute,
+  ReportTokenRoute: ReportTokenRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiDiagnosisSplatRoute: ApiDiagnosisSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
