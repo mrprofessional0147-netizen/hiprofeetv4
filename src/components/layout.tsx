@@ -34,19 +34,19 @@ export function Nav() {
         </div>
         <div className="flex items-center gap-2">
           {!onChat && !onAuth && (
-            <a
-              href="/#services"
+            <Link
+              to="/services"
               className="hidden rounded-xl border border-white/15 px-4 py-2.5 text-[13px] font-semibold text-white/80 transition hover:border-sky/40 hover:text-white sm:inline-flex"
             >
               Services
-            </a>
+            </Link>
           )}
           {!onChat && !onAuth && (
             <Link
-              to="/advisor"
+              to="/diagnosis"
               className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-sky to-brand px-4 py-2.5 text-[13px] font-bold text-white shadow-[0_4px_16px_oklch(0.78_0.13_230/.4)] transition active:scale-95"
             >
-              Free Assessment
+              Start Diagnosis
             </Link>
           )}
 
@@ -125,29 +125,37 @@ export function Nav() {
 /* Floating "Chat with AI" pill — always reachable on every page except advisor/auth */
 export function FloatingChatCTA() {
   const loc = useLocation();
-  if (loc.pathname.startsWith("/advisor") || loc.pathname.startsWith("/auth") || loc.pathname.startsWith("/reset-password")) return null;
+  const hide = ["/diagnosis", "/advisor", "/auth", "/reset-password", "/report"].some((p) => loc.pathname.startsWith(p));
+  if (hide) return null;
   return (
     <Link
-      to="/advisor"
+      to="/diagnosis"
       className="group fixed bottom-5 right-5 z-40 inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-sky to-brand px-5 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_36px_oklch(0.78_0.13_230/.55)] transition hover:scale-105 active:scale-95 sm:bottom-6 sm:right-6"
     >
       <span className="relative flex h-2.5 w-2.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70 opacity-75" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
       </span>
-      <span>Start your free growth audit</span>
+      <span>Start Free Diagnosis</span>
     </Link>
   );
 }
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[#050B18] px-5 py-8 text-center">
+    <footer className="border-t border-white/5 bg-[#050B18] px-5 py-10 text-center">
       <div className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></div>
       <p className="mt-2 text-xs leading-relaxed text-white/30">
         Business Growth Intelligence for Nigerian founders. Diagnose precisely. Execute professionally.
-        <br />© 2025 HIPROFEET. All rights reserved.
       </p>
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/40">
+        <Link to="/diagnosis" className="hover:text-white">Free Diagnosis</Link>
+        <span className="text-white/10">·</span>
+        <Link to="/services" className="hover:text-white">Growth Services</Link>
+        <span className="text-white/10">·</span>
+        <a href="https://wa.me/2349014244117" target="_blank" rel="noopener" className="hover:text-white">WhatsApp Strategist</a>
+      </div>
+      <p className="mt-4 text-[11px] text-white/25">© 2025 HIPROFEET. All rights reserved.</p>
     </footer>
   );
 }
