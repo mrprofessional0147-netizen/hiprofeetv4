@@ -1,84 +1,149 @@
-# Advisor Experience v2 — Receptionist + Routed Consultation
+# HCAS V1 — Diagnosis to Consultation Funnel
 
-Goal: the AI on `/advisor` should feel like the receptionist + junior consultant of a real consulting firm — never a chatbot. The homepage's only job stays "get people into the AI".
+## What the site becomes
 
-## 1. New advisor flow (state machine)
+One purpose: **identify → qualify → educate → book a strategist.**
+Everything else (existing 12 services, orders, coupons) moves off the main path but stays reachable via a small "For existing clients" footer link.
 
-Replace the current single free-form chat on `/advisor` with a guided experience with clear phases. State stored in component + persisted per conversation:
+## User journey
 
 ```text
-welcome  →  route pick (A/B/C/D)  →  guided chat  →  (optional) share-something  →  finalize  →  progress screen  →  email capture  →  delivered
+Home ──► Diagnosis (conversational)
+          │
+          ├─► name + email
+          │      ↓
+          │   OTP code (Gmail)     ← toggleable in admin
+          │      ↓
+          │   verified
+          ▼
+    Personalized Report  ─(email w/ private link)→  /report/{token}
+                          │
+                          └─► "Book Strategy Session" → WhatsApp
+                                (+2349014244117, prefilled context)
 ```
 
-### Welcome screen
-- Big line: "Welcome to HIPROFEET. I'm your Business Growth Advisor. How can I help you today?"
-- 4 large tap cards (not chips):
-  - 📈 Understand why my business isn't growing → Route A
-  - 💬 Speak with a real Business Growth Expert → Route B
-  - 🛠 I know what I need — order a solution → Route C
-  - ❓ I have another business question → Route D
+## 1. Homepage (rebuild)
 
-### Route A — Assessment
-- AI preface: "I'll help you understand what may be limiting growth. I may ask for your website, social pages or screenshots."
-- Guided questions (business, goal, biggest challenge) then adaptive follow-ups.
-- AI may request assets; every request states WHY.
-- Ends with "Prepare my Growth Review" CTA → progress screen → email capture.
+Single dominant CTA: **"Start Your Free Customer Acquisition Diagnosis"**. Supporting sections:
+- Hero — one message: *"We help businesses build predictable customer acquisition systems."* Single primary button. No secondary "browse services" button.
+- Trust bar — outcomes, not logos ("Diagnosis in 5 min · Private · No signup required to start")
+- "How it works" — 3 steps: Diagnose → Report → Strategy Session
+- FAQ (4-5 questions max)
+- Footer with tiny "For existing HIPROFEET clients →" link to `/services`
 
-### Route B — Book a human expert
-- Warm framing, list of consultation topics (checklist visual).
-- Single CTA: "Book Consultation" → routes to existing order flow for the consultation service (create `consultation` service in `src/data/services.ts` if missing) with SNAPORA coupon still supported → WhatsApp handoff on `/success`.
+No services grid, no product previews, no testimonials of services delivered.
 
-### Route C — I know what I need
-- AI asks "What are you looking for?" with quick chips (Website, Branding, Content, Assessment, Marketing Strategy, Trust, Testimonials, Followers, Views, Other).
-- Maps intent to service(s) and drops the same high-contrast order CTA card already used today.
+## 2. Conversational diagnosis (`/diagnosis`)
 
-### Route D — Open question
-- Free chat. AI answers, then when it detects enough context, offers "Continue as full Assessment" or "Talk to a human expert".
+Feels like a chat, not a form. AI adapts follow-ups based on prior answers. Scored across 5 pillars (each 0-20 → total 0-100):
 
-### Global rules (system prompt update in `src/routes/api.advisor.ts`)
-- One clear next step at end of every reply.
-- Never force uploads — only when relevant, always with WHY.
-- Keep existing consultant tone + `/order/ID` CTA convention.
+1. **Awareness** — how customers currently find them
+2. **Acquisition** — active channels & consistency
+3. **Conversion** — website/DM-to-sale process
+4. **Retention** — follow-up & repeat purchase
+5. **Measurement** — tracking what works
 
-## 2. Persistent "📎 Share Something for Review"
-- Floating pill inside the chat panel, visible in every route.
-- Opens a sheet: paste URL(s) (website, FB, IG, TikTok, GBP, WhatsApp) and/or upload files (screenshots, logo, flyers, docs, product photos).
-- Uploads go to a new **private** `assessment-uploads` bucket, scoped by `user_id/conversation_id/…`. Anonymous users get a client-generated session id kept in `localStorage` and stored on the conversation row.
-- Each share becomes a system-authored assistant turn: "Shared: website https://… + 2 screenshots" so the model sees it.
-- Signed URLs generated server-side when the model needs to reference an image.
+Flow:
+- Intro turn from AI
+- 8–10 questions with structured multi-choice + one open follow-up per pillar
+- Progress bar (5 pillars)
+- End: name + email inputs
+- Submit → generates report server-side, triggers OTP if enabled
 
-## 3. Growth Review generation + email
-- New CTA on Route A end: "Prepare my Growth Review".
-- Progress screen (client-only, staged text): "Reviewing your business…", "Identifying growth opportunities…", "Preparing recommendations…", "Building your Growth Review…".
-- Behind the scenes, new server route `/api/growth-review` (createFileRoute server handler) calls Lovable AI with the full transcript + shared assets metadata and returns a structured JSON review: `{ executive_summary, strengths[], opportunities[], priority_recommendations[], next_steps[], suggested_services[] }`.
-- Email capture screen: "Where should we send your report?" → single email input + "Send My Growth Review" button.
-- Server sends a branded HTML email via the existing Gmail connector (reuse pattern from `notify-customer.functions.ts`), with sections rendered from the JSON review, footer CTA "Book a Human Consultation".
-- Store the review in a new `growth_reviews` table linked to `conversation_id`, `user_id` (nullable), `email`, `review_json`, `created_at` so it becomes the seed of the customer profile database.
+## 3. Email verification (togglable)
 
-## 4. Data model additions (single migration)
-- `assessment_uploads` table: id, conversation_id, user_id (nullable), session_id (text, nullable), kind (`url` | `file`), value (text url or storage path), label, created_at. RLS: owner (by user_id or session_id via header) can read/insert; admin all.
-- `growth_reviews` table: id, conversation_id, user_id (nullable), email, business_name (nullable), industry (nullable), review_json (jsonb), sent_at, created_at. RLS as above.
-- Extend `conversations` with `route` (`A|B|C|D`), `session_id` (text, nullable), `business_name`, `industry`.
-- Storage: create private `assessment-uploads` bucket + policies mirroring `receipts`.
-- Add all required GRANTs.
+- `app_config.require_email_verification` boolean, editable from Admin.
+- When ON: submit → 6-digit code emailed via Gmail connector → verify screen → report unlocks.
+- When OFF: skip straight to report page.
+- Codes: 10-min expiry, max 5 attempts, hashed in DB, resend allowed after 60s.
 
-## 5. Admin dashboard additions
-- New "Growth Reviews" panel on `/admin` listing recent reviews with email, business name, route taken, and a modal to view the JSON review + shared assets.
-- Existing conversations list stays; add route badge.
+## 4. Personalized report (`/report/$token`)
 
-## 6. Homepage
-- No structural change. Keep the two entry paths but update the primary CTA copy to "Start Free Business Assessment" pointing to `/advisor` (already does). Secondary copy for expert path unchanged.
+Access via unguessable token in URL (crypto-random 32 chars) — no login required. Rendered on-site with premium HIPROFEET styling. Sections:
+- **Customer Acquisition Score** (big number 0-100 + pillar breakdown chart)
+- Key strengths (3-4)
+- Biggest bottlenecks (3-4)
+- Missed opportunities (3-4)
+- Priority recommendations (3, ordered)
+- **Primary CTA card**: "Book a Strategy Session with a Hiprofeet Growth Strategist"
+  - Shows: ~~₦15,000~~ **₦4,500 introductory rate**
+  - Single button → WhatsApp `+2349014244117` with prefilled message including their name, business, score, top bottleneck
+- No pricing shown before this point.
 
-## Technical notes
-- Reuse existing `parseReply` and CTA card component.
-- Route-selection UI = a new `<WelcomeGate />` inside `advisor.tsx`; once a route is picked it's persisted on the conversation row so refresh restores state.
-- Progress screen uses `framer-motion` staged text (existing dep).
-- All new server work is `createFileRoute` server handlers under `src/routes/api.*` — no edge functions, matches the current pattern.
-- Email send uses the same Gmail connector call pattern as `notify-customer.functions.ts` (forward to `hiprofitafrica2021@gmail.com` + the visitor's email).
+Email version (Gmail) contains the link + a text summary + same CTA.
 
-## Out of scope (can be follow-ups)
-- Long-term "6 months later" relationship marketing automation.
-- Rich in-app rendering of the Growth Review (email-first for now; can add `/review/:id` page next).
-- Multi-language / voice input.
+## 5. Consultation request tracking
 
-Confirm and I'll build it in one pass: migration → shared UI (welcome gate, share sheet, progress screen) → server routes (`/api/growth-review`, upload signing, email send) → admin panel.
+Clicking the WhatsApp CTA:
+- POST `/api/consultation-request` first (server logs consultation_requests row with diagnosis_id + intent timestamp)
+- Then opens WhatsApp
+
+Admin can see which diagnoses converted to consultation clicks.
+
+## 6. Admin dashboard additions
+
+New tabs alongside existing Overview / Orders:
+- **Diagnoses** — table: name, email, business, score, verification status, source, created_at, "View report" link
+- **Consultations** — table: name, business, score, requested_at, status (new/contacted/booked/closed), notes, WhatsApp button, mark-status control
+- **Funnel** — 4-step funnel numbers: started → completed diagnosis → verified email → clicked book. Conversion % between steps. Bottleneck breakdown (aggregate scores across pillars).
+- **Settings** — verification on/off toggle (writes `app_config`)
+
+Existing Overview keeps stats, existing Orders tab stays for legacy customers.
+
+## 7. Existing services
+
+- `/services` — new dedicated page listing the 12 services (moved from homepage)
+- `/order/*`, `/orders`, `/admin` orders tab — unchanged
+- `/advisor` — redirects to `/diagnosis`
+- Footer: "For existing HIPROFEET clients →"
+
+## Data model (single migration)
+
+```sql
+diagnoses            id, session_token, name, email, business_name, industry,
+                     revenue_band, answers jsonb, score int, report jsonb,
+                     status, verified_at, report_token unique, source, ip,
+                     created_at, updated_at
+
+email_verifications  id, diagnosis_id, email, code_hash, expires_at,
+                     verified_at, attempts, created_at
+
+consultation_requests id, diagnosis_id, clicked_at, status, admin_notes,
+                     created_at, updated_at
+
+app_config           id 'singleton', require_email_verification bool,
+                     updated_at
+```
+
+RLS: all locked to admin-only via `has_role`. Report page reads via server function using `report_token` — no client-side reads of `diagnoses`. All new tables get GRANTs + admin RLS.
+
+## Files
+
+```text
+migration                                 4 tables + policies + config seed
+src/routes/index.tsx                      rebuild — single CTA
+src/components/home-sections.tsx          rebuild — Hero/HowItWorks/FAQ only
+src/routes/diagnosis.tsx                  new — conversational flow + verify UI
+src/routes/report.$token.tsx              new — personalized report page
+src/routes/services.tsx                   new — moved services grid
+src/routes/advisor.tsx                    replace with redirect to /diagnosis
+src/routes/api.diagnosis.chat.ts          AI adaptive questions
+src/routes/api.diagnosis.finalize.ts      score + build report + OTP send
+src/routes/api.diagnosis.verify.ts        code check + report email + unlock
+src/routes/api.diagnosis.resend.ts        resend OTP w/ cooldown
+src/routes/api.consultation.request.ts    log click + return WhatsApp URL
+src/lib/report-generation.ts              server-only: scoring + AI report
+src/lib/hcas-config.ts                    server-only: verification flag reader
+src/routes/admin.tsx                      add Diagnoses/Consultations/Funnel/Settings tabs
+src/components/layout.tsx                 footer: existing-clients link, nav simplify
+```
+
+## Out of scope (V1)
+
+- Auth-gated report page (token URL is sufficient for V1; can add later)
+- In-app calendar / Google Calendar sync (WhatsApp handoff replaces this)
+- Analytics beyond in-admin funnel (no GA/PostHog yet)
+- Follow-up drip emails referencing the assessment (email 1 only; sequence is V2)
+- Migrating existing chat history/growth reviews (kept as historical data; new flow uses new tables)
+
+Confirm and I'll build it in one pass: migration → homepage → diagnosis flow → verification → report page → admin extensions → services move → footer.
