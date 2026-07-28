@@ -22,6 +22,7 @@ import { Route as ApiGrowthReviewRouteImport } from './routes/api.growth-review'
 import { Route as ApiAdvisorRouteImport } from './routes/api.advisor'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as ApiDiagnosisSplatRouteImport } from './routes/api.diagnosis.$'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const SuccessRoute = SuccessRouteImport.update({
@@ -91,6 +92,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiDiagnosisSplatRoute = ApiDiagnosisSplatRouteImport.update({
+  id: '/api/diagnosis/$',
+  path: '/api/diagnosis/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/api/growth-review': typeof ApiGrowthReviewRoute
   '/order/$id': typeof OrderIdRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/diagnosis/$': typeof ApiDiagnosisSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
     | '/api/growth-review'
     | '/order/$id'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/api/growth-review'
     | '/order/$id'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   id:
     | '__root__'
     | '/'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/api/growth-review'
     | '/order/$id'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/diagnosis/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -213,6 +225,7 @@ export interface RootRouteChildren {
   ApiGrowthReviewRoute: typeof ApiGrowthReviewRoute
   OrderIdRoute: typeof OrderIdRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiDiagnosisSplatRoute: typeof ApiDiagnosisSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -308,6 +321,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/diagnosis/$': {
+      id: '/api/diagnosis/$'
+      path: '/api/diagnosis/$'
+      fullPath: '/api/diagnosis/$'
+      preLoaderRoute: typeof ApiDiagnosisSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -334,6 +354,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiGrowthReviewRoute: ApiGrowthReviewRoute,
   OrderIdRoute: OrderIdRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiDiagnosisSplatRoute: ApiDiagnosisSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
