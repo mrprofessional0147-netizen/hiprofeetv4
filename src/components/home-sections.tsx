@@ -608,11 +608,12 @@ export function Services() {
 
 /* ─────────────────────────  FAQ  ───────────────────────── */
 const FAQ_ITEMS = [
-  { q: "Is the growth audit really free?", a: "Yes — entirely. No login, no card, no email capture required. Our revenue comes only from operators who choose to commission execution. You're welcome to take the diagnosis and apply it yourself; that path is free in perpetuity." },
-  { q: "How is this different from ChatGPT?", a: "General-purpose models give global, generic advice. HIPROFEET is calibrated on Nigerian SMB patterns — WhatsApp commerce, naira-economy pricing, local trust signals, and 200+ documented diagnoses. It also returns a specific intervention with a specific naira figure, not open-ended suggestions." },
-  { q: "How quickly does your team execute?", a: "Most services deliver within 2–5 working days. Brand identity ships in 1–2. Sales support engages within 24 hours. Every service page states the exact delivery window." },
-  { q: "How do payments work?", a: "Direct bank transfer to our Nigerian Union Bank account. Upload the receipt, we verify within hours, and execution begins. No international cards, no dollar conversions." },
-  { q: "What if I don't want to commission a service?", a: "Entirely acceptable. The audit is genuinely obligation-free. Many founders use it for clarity before deciding any next move — that alone is the point." },
+  { q: "Is the diagnosis really free?", a: "Yes — entirely. No card, no obligation. We only earn when an operator chooses to book a strategy session or commission execution. Take the report and act on it yourself if you prefer; that path stays free." },
+  { q: "What exactly do I get at the end?", a: "A private report page: your Customer Acquisition Score out of 100, your five pillar scores, your strengths, the bottleneck costing you most, and a prioritised 30-day action plan written for your business — not a template." },
+  { q: "How long does it take?", a: "Median completion is 2.4 minutes. It's a short guided conversation, not a form — you answer in your own words, in English or pidgin." },
+  { q: "How is this different from ChatGPT?", a: "General models give global, generic advice. HIPROFEET is calibrated on Nigerian SMB patterns — WhatsApp commerce, naira pricing, local trust signals — and returns a scored diagnosis with a specific bottleneck, not open-ended suggestions." },
+  { q: "Is my business information private?", a: "Yes. Your answers and report are tied to your link alone. We never sell, share, or publish your numbers, and you can request deletion at any time." },
+  { q: "What happens after the report?", a: "If you want a human to go deeper, you can book a strategy session with a HIPROFEET growth strategist directly from your report. There is no pressure to — most operators start by applying the plan themselves." },
 ];
 
 export function FAQ() {
@@ -675,15 +676,15 @@ export function FinalCTA() {
             Each week unmeasured<br />is another week your<br /><em className="text-gradient-animate bg-gradient-to-r from-amber via-sky-2 to-amber bg-clip-text not-italic text-transparent">constraint compounds.</em>
           </h2>
           <p className="mt-5 text-lg font-light leading-[1.78] text-white/65">
-            A three-minute audit today. A five-day execution sprint this week. A measurably different trajectory next month.
+            Three minutes today. A scored, written diagnosis in your inbox. A clearer decision this week about where your next naira goes.
           </p>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="mt-8 inline-block">
-            <Link to="/advisor" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
-              Start Free Business Assessment <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+            <Link to="/diagnosis" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
+              Start Your Free Diagnosis <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
             </Link>
           </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {["Assessment always free", "No signup required", "Execution from ₦8,000", "Delivered in 2–5 days"].map((c) => (
+            {["Always free", "No card, no signup", "2.4 min median", "Private report link"].map((c) => (
               <div key={c} className="flex items-center gap-2 text-sm font-light text-white/65">
                 <span className="text-[15px] font-bold text-amber">✓</span>{c}
               </div>
