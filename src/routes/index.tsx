@@ -24,10 +24,12 @@ function Index() {
       <main>
         <Hero />
         <Ticker />
+        <Positioning />
         <TrustBar />
         <ProductPreview />
         <HowItWorks />
         <Testimonials />
+        <Qualifier />
         <FAQ />
         <FinalCTA />
       </main>
