@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav, Footer, FloatingChatCTA } from "@/components/layout";
 import { ScrollProgress } from "@/components/motion";
-import { Hero, Ticker, TrustBar, ProductPreview, Testimonials, HowItWorks, FAQ, FinalCTA } from "@/components/home-sections";
+import { Hero, Ticker, TrustBar, ProductPreview, Testimonials, HowItWorks, Positioning, Qualifier, FAQ, FinalCTA } from "@/components/home-sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,10 +24,12 @@ function Index() {
       <main>
         <Hero />
         <Ticker />
+        <Positioning />
         <TrustBar />
         <ProductPreview />
         <HowItWorks />
         <Testimonials />
+        <Qualifier />
         <FAQ />
         <FinalCTA />
       </main>

@@ -695,3 +695,129 @@ export function FinalCTA() {
     </section>
   );
 }
+
+/* ─────────────────────────  POSITIONING (problem → agitate → solution)  ───────────────────────── */
+const POSITION_PILLARS = [
+  { k: "01", t: "Attention that fits the feed", d: "Content and ad angles built for how Nigerians actually scroll Instagram, TikTok, WhatsApp and Facebook — not recycled Western templates." },
+  { k: "02", t: "A path from view to chat", d: "We close the gap between a viewer and a paying customer: profile, offer, DM flow and WhatsApp follow-up working as one system." },
+  { k: "03", t: "Numbers you can act on", d: "Every social naira is tracked to a conversation and a sale, so you stop guessing which post, page or platform is actually feeding revenue." },
+];
+
+export function Positioning() {
+  return (
+    <section className="relative overflow-hidden bg-ink px-5 py-24">
+      <div aria-hidden className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-sky/10 blur-3xl" />
+      <div className="container-page relative">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+          <Reveal>
+            <div className="mb-4 inline-flex items-center gap-2.5">
+              <div className="h-[2.5px] w-5 rounded-full bg-sky" />
+              <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-sky">Where We Specialise</div>
+            </div>
+            <h2 className="font-display text-[clamp(30px,5vw,48px)] font-bold leading-[1.12] text-white">
+              You have followers.<br />
+              <em className="text-sky">You don't have customers.</em>
+            </h2>
+            <p className="mt-6 text-lg font-light leading-[1.8] text-white/70">
+              Most Nigerian businesses are not invisible — they're unconverted. You post consistently, you get likes, maybe a few DMs, and still the month closes short. Another quiet month passes, competitors with worse products take your buyers, and you begin to think social media simply doesn't work for your kind of business.
+            </p>
+            <p className="mt-4 text-lg font-light leading-[1.8] text-white/70">
+              It works. What's missing is a <span className="font-semibold text-white">customer acquisition system</span> underneath the content. That is the one thing HIPROFEET does: we diagnose and fix how businesses turn social media attention into paying customers.
+            </p>
+          </Reveal>
+
+          <Stagger className="space-y-4">
+            {POSITION_PILLARS.map((p) => (
+              <MotionItem
+                key={p.k}
+                variants={itemVariants}
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="flex gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md transition hover:border-sky/35 hover:bg-white/[0.07]"
+              >
+                <div className="font-display text-[13px] font-bold tracking-[2px] text-sky">{p.k}</div>
+                <div>
+                  <div className="font-display text-[17px] font-bold text-white">{p.t}</div>
+                  <p className="mt-2 text-[14px] font-light leading-[1.75] text-white/65">{p.d}</p>
+                </div>
+              </MotionItem>
+            ))}
+          </Stagger>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────  QUALIFIER  ───────────────────────── */
+const FIT_YES = [
+  "You already sell something people pay for, online or offline",
+  "You're active on at least one social platform but sales don't match the effort",
+  "You can act on a plan within 30 days — yourself or with a team",
+  "You want a clear diagnosis before spending more on ads or content",
+];
+
+const FIT_NO = [
+  "You want overnight virality or a guaranteed follower number",
+  "You have no offer yet and are still deciding what to sell",
+  "You're looking for the cheapest vendor, not the right diagnosis",
+  "You won't share honest numbers about how your business performs",
+];
+
+export function Qualifier() {
+  return (
+    <section className="bg-ink px-5 py-24">
+      <div className="container-page">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2.5">
+            <div className="h-[2.5px] w-5 rounded-full bg-amber" />
+            <div className="text-[11px] font-bold uppercase tracking-[3.5px] text-amber">Fit Check</div>
+            <div className="h-[2.5px] w-5 rounded-full bg-amber" />
+          </div>
+          <h2 className="font-display text-[clamp(30px,5vw,44px)] font-bold leading-[1.14] text-white">
+            Is this diagnosis <em className="text-amber">for you?</em>
+          </h2>
+          <p className="mt-4 text-base font-light leading-[1.8] text-white/60">
+            We'd rather you know in 20 seconds than waste 3 minutes.
+          </p>
+        </div>
+
+        <Stagger className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2" stagger={0.1}>
+          <MotionItem variants={itemVariants} className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.06] p-7">
+            <div className="text-[11px] font-bold uppercase tracking-[2.5px] text-emerald-300">This is for you if</div>
+            <ul className="mt-5 space-y-3.5">
+              {FIT_YES.map((f) => (
+                <li key={f} className="flex gap-3 text-[15px] font-light leading-[1.7] text-white/80">
+                  <span className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-emerald-500/25 text-[11px] font-bold text-emerald-300">✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </MotionItem>
+
+          <MotionItem variants={itemVariants} className="rounded-2xl border border-white/10 bg-white/[0.03] p-7">
+            <div className="text-[11px] font-bold uppercase tracking-[2.5px] text-white/45">This isn't for you if</div>
+            <ul className="mt-5 space-y-3.5">
+              {FIT_NO.map((f) => (
+                <li key={f} className="flex gap-3 text-[15px] font-light leading-[1.7] text-white/55">
+                  <span className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-white/10 text-[11px] font-bold text-white/50">–</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </MotionItem>
+        </Stagger>
+
+        <Reveal>
+          <div className="mx-auto mt-10 max-w-4xl text-center">
+            <Link
+              to="/diagnosis"
+              className="inline-flex items-center gap-2 rounded-full bg-amber px-8 py-4 font-display text-[15px] font-bold text-ink shadow-lg transition hover:brightness-110"
+            >
+              Sounds like me — start the free diagnosis
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
