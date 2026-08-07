@@ -286,21 +286,26 @@ export function ProductPreview() {
 
             {/* Side panel */}
             <div className="border-t border-white/10 bg-white/[0.02] p-6 md:border-t-0 md:border-l">
-              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Recommended Intervention</div>
-              <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-amber/30 bg-amber/10 p-4">
-                <div className="text-2xl">✉️</div>
-                <div className="mt-2 font-display text-base font-bold text-white">Email + DM Automation</div>
-                <div className="mt-1 text-[11px] text-white/55">Recover the 68% currently lost in follow-up.</div>
-                <div className="mt-3 flex items-end justify-between border-t border-white/10 pt-3">
-                  <div>
-                    <div className="font-display text-lg font-bold text-white">₦20,000</div>
-                    <div className="text-[10px] text-white/45">2–3 days delivery</div>
-                  </div>
-                  <span className="rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold text-white">Deploy</span>
+              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Your Report Preview</div>
+              <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-sky/30 bg-sky/10 p-4">
+                <div className="text-[10px] font-semibold uppercase tracking-[2px] text-sky">Customer Acquisition Score</div>
+                <div className="mt-1 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-bold leading-none text-white">42</span>
+                  <span className="text-sm text-white/45">/100</span>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {[["Awareness", 62], ["Acquisition", 48], ["Conversion", 31], ["Retention", 22], ["Measurement", 45]].map(([k, v]) => (
+                    <div key={k as string}>
+                      <div className="flex justify-between text-[10px] text-white/55"><span>{k}</span><span>{v}</span></div>
+                      <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full rounded-full bg-gradient-to-r from-sky to-amber" style={{ width: `${v}%` }} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
               <div className="mt-5 space-y-2 text-[12px] text-white/55">
-                {["Confidential by default", "English, pidgin, or formal", "Findings saved to your account"].map((t) => (
+                {["Strengths, bottlenecks, opportunities", "A prioritised 30-day action plan", "Private link — yours alone"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
                     <span className="text-amber">✓</span>{t}
                   </div>
