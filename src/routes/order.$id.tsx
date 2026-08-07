@@ -140,7 +140,7 @@ function OrderPage() {
         const { error: redeemErr } = await supabase.rpc("redeem_coupon", {
           _code: appliedCoupon.code,
           _service_id: svc.id,
-          _platform: platformForCoupon,
+          _platform: platformForCoupon ?? "",
         });
         if (redeemErr) throw new Error(redeemErr.message || "Coupon could not be claimed");
       }

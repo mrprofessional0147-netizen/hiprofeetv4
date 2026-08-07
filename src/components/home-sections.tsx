@@ -9,7 +9,8 @@ import founder4 from "@/assets/founder-4.jpg";
 import founder5 from "@/assets/founder-5.jpg";
 import lagosSkyline from "@/assets/lagos-skyline.jpg";
 
-const TICKER = ["Growth Diagnostics", "Strategy Consultation", "Facebook Ads", "Instagram Ads", "TikTok Ads", "Website Development", "Google Reviews", "Facebook Reviews", "Video Testimonials", "Audience Growth", "Email Automation", "Brand Identity", "Sales Support"];
+/* The five pillars the diagnosis scores — reinforces methodology, not a service list */
+const TICKER = ["Awareness", "Acquisition", "Conversion", "Retention", "Measurement", "Offer Clarity", "Follow-up Systems", "Pricing Position", "Channel Fit", "Repeat Purchase"];
 
 /* ─────────────────────────  HERO  ───────────────────────── */
 export function Hero() {
@@ -87,19 +88,6 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55"
-          >
-            {["No card required", "Naira-priced", "Built for Nigerian operators"].map((c) => (
-              <div key={c} className="flex items-center gap-2">
-                <span className="text-sky">✓</span>
-                {c}
-              </div>
-            ))}
-          </motion.div>
-          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.05, duration: 0.6 }}
@@ -175,10 +163,10 @@ export function Hero() {
             transition={{ delay: 1.1, duration: 0.6 }}
             className="float-card absolute left-1 top-6 flex items-center gap-2 rounded-2xl border border-sky/20 bg-white/95 px-3 py-2 shadow-2xl sm:-left-2 sm:top-10 sm:gap-3 sm:px-4 sm:py-3"
           >
-            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky/20 text-sm sm:h-9 sm:w-9 sm:text-base">📈</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky/20 text-sm sm:h-9 sm:w-9 sm:text-base">🧭</div>
             <div>
-              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">3.2×</div>
-              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Avg revenue lift</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">5 pillars</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Scored in your report</div>
             </div>
           </motion.div>
           <motion.div
@@ -188,10 +176,10 @@ export function Hero() {
             className="float-card absolute right-1 bottom-20 flex items-center gap-2 rounded-2xl border border-amber/20 bg-white/95 px-3 py-2 shadow-2xl sm:-right-2 sm:bottom-24 sm:gap-3 sm:px-4 sm:py-3"
             style={{ animationDelay: "1.6s" }}
           >
-            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⚡</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⏱</div>
             <div>
-              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2–5d</div>
-              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Delivery window</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2.4 min</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Median completion</div>
             </div>
           </motion.div>
         </motion.div>
@@ -224,7 +212,7 @@ export function TrustBar() {
     <section className="bg-ink-2 px-5 py-10">
       <div className="container-page">
         <p className="text-center text-[11px] font-semibold uppercase tracking-[3px] text-white/40">
-          Working with operators across Nigeria
+          Diagnoses completed by operators in
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           {cities.map((c) => (
@@ -298,21 +286,26 @@ export function ProductPreview() {
 
             {/* Side panel */}
             <div className="border-t border-white/10 bg-white/[0.02] p-6 md:border-t-0 md:border-l">
-              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Recommended Intervention</div>
-              <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-amber/30 bg-amber/10 p-4">
-                <div className="text-2xl">✉️</div>
-                <div className="mt-2 font-display text-base font-bold text-white">Email + DM Automation</div>
-                <div className="mt-1 text-[11px] text-white/55">Recover the 68% currently lost in follow-up.</div>
-                <div className="mt-3 flex items-end justify-between border-t border-white/10 pt-3">
-                  <div>
-                    <div className="font-display text-lg font-bold text-white">₦20,000</div>
-                    <div className="text-[10px] text-white/45">2–3 days delivery</div>
-                  </div>
-                  <span className="rounded-full bg-amber px-3 py-1.5 text-[10px] font-bold text-white">Deploy</span>
+              <div className="text-[10px] font-semibold uppercase tracking-[2px] text-white/40">Your Report Preview</div>
+              <motion.div whileHover={{ y: -3 }} className="mt-3 rounded-xl border border-sky/30 bg-sky/10 p-4">
+                <div className="text-[10px] font-semibold uppercase tracking-[2px] text-sky">Customer Acquisition Score</div>
+                <div className="mt-1 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-bold leading-none text-white">42</span>
+                  <span className="text-sm text-white/45">/100</span>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {[["Awareness", 62], ["Acquisition", 48], ["Conversion", 31], ["Retention", 22], ["Measurement", 45]].map(([k, v]) => (
+                    <div key={k as string}>
+                      <div className="flex justify-between text-[10px] text-white/55"><span>{k}</span><span>{v}</span></div>
+                      <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full rounded-full bg-gradient-to-r from-sky to-amber" style={{ width: `${v}%` }} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
               <div className="mt-5 space-y-2 text-[12px] text-white/55">
-                {["Confidential by default", "English, pidgin, or formal", "Findings saved to your account"].map((t) => (
+                {["Strengths, bottlenecks, opportunities", "A prioritised 30-day action plan", "Private link — yours alone"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
                     <span className="text-amber">✓</span>{t}
                   </div>
@@ -615,11 +608,12 @@ export function Services() {
 
 /* ─────────────────────────  FAQ  ───────────────────────── */
 const FAQ_ITEMS = [
-  { q: "Is the growth audit really free?", a: "Yes — entirely. No login, no card, no email capture required. Our revenue comes only from operators who choose to commission execution. You're welcome to take the diagnosis and apply it yourself; that path is free in perpetuity." },
-  { q: "How is this different from ChatGPT?", a: "General-purpose models give global, generic advice. HIPROFEET is calibrated on Nigerian SMB patterns — WhatsApp commerce, naira-economy pricing, local trust signals, and 200+ documented diagnoses. It also returns a specific intervention with a specific naira figure, not open-ended suggestions." },
-  { q: "How quickly does your team execute?", a: "Most services deliver within 2–5 working days. Brand identity ships in 1–2. Sales support engages within 24 hours. Every service page states the exact delivery window." },
-  { q: "How do payments work?", a: "Direct bank transfer to our Nigerian Union Bank account. Upload the receipt, we verify within hours, and execution begins. No international cards, no dollar conversions." },
-  { q: "What if I don't want to commission a service?", a: "Entirely acceptable. The audit is genuinely obligation-free. Many founders use it for clarity before deciding any next move — that alone is the point." },
+  { q: "Is the diagnosis really free?", a: "Yes — entirely. No card, no obligation. We only earn when an operator chooses to book a strategy session or commission execution. Take the report and act on it yourself if you prefer; that path stays free." },
+  { q: "What exactly do I get at the end?", a: "A private report page: your Customer Acquisition Score out of 100, your five pillar scores, your strengths, the bottleneck costing you most, and a prioritised 30-day action plan written for your business — not a template." },
+  { q: "How long does it take?", a: "Median completion is 2.4 minutes. It's a short guided conversation, not a form — you answer in your own words, in English or pidgin." },
+  { q: "How is this different from ChatGPT?", a: "General models give global, generic advice. HIPROFEET is calibrated on Nigerian SMB patterns — WhatsApp commerce, naira pricing, local trust signals — and returns a scored diagnosis with a specific bottleneck, not open-ended suggestions." },
+  { q: "Is my business information private?", a: "Yes. Your answers and report are tied to your link alone. We never sell, share, or publish your numbers, and you can request deletion at any time." },
+  { q: "What happens after the report?", a: "If you want a human to go deeper, you can book a strategy session with a HIPROFEET growth strategist directly from your report. There is no pressure to — most operators start by applying the plan themselves." },
 ];
 
 export function FAQ() {
@@ -682,15 +676,15 @@ export function FinalCTA() {
             Each week unmeasured<br />is another week your<br /><em className="text-gradient-animate bg-gradient-to-r from-amber via-sky-2 to-amber bg-clip-text not-italic text-transparent">constraint compounds.</em>
           </h2>
           <p className="mt-5 text-lg font-light leading-[1.78] text-white/65">
-            A three-minute audit today. A five-day execution sprint this week. A measurably different trajectory next month.
+            Three minutes today. A scored, written diagnosis in your inbox. A clearer decision this week about where your next naira goes.
           </p>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="mt-8 inline-block">
-            <Link to="/advisor" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
-              Start Free Business Assessment <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+            <Link to="/diagnosis" className="cta-pulse inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-8 py-[18px] text-[16px] font-bold text-white shadow-[0_6px_24px_oklch(0.68_0.17_55/.4)]">
+              Start Your Free Diagnosis <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
             </Link>
           </motion.div>
           <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {["Assessment always free", "No signup required", "Execution from ₦8,000", "Delivered in 2–5 days"].map((c) => (
+            {["Always free", "No card, no signup", "2.4 min median", "Private report link"].map((c) => (
               <div key={c} className="flex items-center gap-2 text-sm font-light text-white/65">
                 <span className="text-[15px] font-bold text-amber">✓</span>{c}
               </div>
