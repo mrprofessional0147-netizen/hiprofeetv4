@@ -9,7 +9,8 @@ import founder4 from "@/assets/founder-4.jpg";
 import founder5 from "@/assets/founder-5.jpg";
 import lagosSkyline from "@/assets/lagos-skyline.jpg";
 
-const TICKER = ["Growth Diagnostics", "Strategy Consultation", "Facebook Ads", "Instagram Ads", "TikTok Ads", "Website Development", "Google Reviews", "Facebook Reviews", "Video Testimonials", "Audience Growth", "Email Automation", "Brand Identity", "Sales Support"];
+/* The five pillars the diagnosis scores — reinforces methodology, not a service list */
+const TICKER = ["Awareness", "Acquisition", "Conversion", "Retention", "Measurement", "Offer Clarity", "Follow-up Systems", "Pricing Position", "Channel Fit", "Repeat Purchase"];
 
 /* ─────────────────────────  HERO  ───────────────────────── */
 export function Hero() {
@@ -87,19 +88,6 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-white/55"
-          >
-            {["No card required", "Naira-priced", "Built for Nigerian operators"].map((c) => (
-              <div key={c} className="flex items-center gap-2">
-                <span className="text-sky">✓</span>
-                {c}
-              </div>
-            ))}
-          </motion.div>
-          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.05, duration: 0.6 }}
@@ -175,10 +163,10 @@ export function Hero() {
             transition={{ delay: 1.1, duration: 0.6 }}
             className="float-card absolute left-1 top-6 flex items-center gap-2 rounded-2xl border border-sky/20 bg-white/95 px-3 py-2 shadow-2xl sm:-left-2 sm:top-10 sm:gap-3 sm:px-4 sm:py-3"
           >
-            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky/20 text-sm sm:h-9 sm:w-9 sm:text-base">📈</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky/20 text-sm sm:h-9 sm:w-9 sm:text-base">🧭</div>
             <div>
-              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">3.2×</div>
-              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Avg revenue lift</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">5 pillars</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Scored in your report</div>
             </div>
           </motion.div>
           <motion.div
@@ -188,10 +176,10 @@ export function Hero() {
             className="float-card absolute right-1 bottom-20 flex items-center gap-2 rounded-2xl border border-amber/20 bg-white/95 px-3 py-2 shadow-2xl sm:-right-2 sm:bottom-24 sm:gap-3 sm:px-4 sm:py-3"
             style={{ animationDelay: "1.6s" }}
           >
-            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⚡</div>
+            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber/15 text-sm sm:h-9 sm:w-9 sm:text-base">⏱</div>
             <div>
-              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2–5d</div>
-              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Delivery window</div>
+              <div className="font-display text-base font-bold leading-none text-t-dark sm:text-lg">2.4 min</div>
+              <div className="mt-1 text-[9px] text-t-soft sm:text-[10px]">Median completion</div>
             </div>
           </motion.div>
         </motion.div>
@@ -224,7 +212,7 @@ export function TrustBar() {
     <section className="bg-ink-2 px-5 py-10">
       <div className="container-page">
         <p className="text-center text-[11px] font-semibold uppercase tracking-[3px] text-white/40">
-          Working with operators across Nigeria
+          Diagnoses completed by operators in
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           {cities.map((c) => (
