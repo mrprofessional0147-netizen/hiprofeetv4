@@ -1,6 +1,23 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import mark from "@/assets/hiprofeet-mark.jpg.asset.json";
+
+export const BRAND_MARK = mark.url;
+
+/** Reusable brand lockup — the mark is the memorability anchor, the wordmark carries the name. */
+export function BrandMark({ size = 34, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img
+      src={BRAND_MARK}
+      alt="HIPROFEET logo"
+      width={size}
+      height={size}
+      className={`rounded-full ring-1 ring-sky/40 shadow-[0_0_18px_oklch(0.78_0.13_230/.35)] ${className}`}
+      style={{ width: size, height: size }}
+    />
+  );
+}
 
 export function Nav() {
   const loc = useLocation();
@@ -25,8 +42,11 @@ export function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 h-16 border-b border-white/10 bg-[oklch(0.18_0.04_260/0.88)] backdrop-blur-2xl">
       <div className="container-page flex h-full items-center justify-between gap-3">
-        <Link to="/" className="font-display text-[22px] font-bold tracking-tight text-amber">
-          HIPRO<span>FEET</span>
+        <Link to="/" className="group flex items-center gap-2.5">
+          <BrandMark size={34} className="transition group-hover:scale-105" />
+          <span className="font-display text-[20px] font-bold leading-none tracking-tight text-amber sm:text-[22px]">
+            HIPRO<span>FEET</span>
+          </span>
         </Link>
         <div className="hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/45 md:flex">
           <span className="pulse-dot inline-block h-[7px] w-[7px] rounded-full bg-emerald-400" />
@@ -144,7 +164,10 @@ export function FloatingChatCTA() {
 export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-[#050B18] px-5 py-10 text-center">
-      <div className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></div>
+      <div className="flex items-center justify-center gap-2.5">
+        <BrandMark size={40} />
+        <span className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></span>
+      </div>
       <p className="mt-2 text-xs leading-relaxed text-white/30">
         Business Growth Intelligence for Nigerian founders. Diagnose precisely. Execute professionally.
       </p>

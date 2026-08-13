@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { BrandMark } from "@/components/layout";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
@@ -103,8 +104,11 @@ function AuthPage() {
       >
         {/* Header */}
         <div className="mb-8 text-center">
-          <Link to="/" className="inline-block font-display text-[28px] font-bold tracking-tight text-amber">
-            HIPRO<span>FEET</span>
+          <Link to="/" className="inline-flex items-center gap-3">
+            <BrandMark size={44} />
+            <span className="font-display text-[28px] font-bold tracking-tight text-amber">
+              HIPRO<span>FEET</span>
+            </span>
           </Link>
           <p className="mt-2 text-sm text-white/50">
             {mode === "signup" && "Create your operator account"}
