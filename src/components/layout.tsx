@@ -42,8 +42,11 @@ export function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 h-16 border-b border-white/10 bg-[oklch(0.18_0.04_260/0.88)] backdrop-blur-2xl">
       <div className="container-page flex h-full items-center justify-between gap-3">
-        <Link to="/" className="font-display text-[22px] font-bold tracking-tight text-amber">
-          HIPRO<span>FEET</span>
+        <Link to="/" className="group flex items-center gap-2.5">
+          <BrandMark size={34} className="transition group-hover:scale-105" />
+          <span className="font-display text-[20px] font-bold leading-none tracking-tight text-amber sm:text-[22px]">
+            HIPRO<span>FEET</span>
+          </span>
         </Link>
         <div className="hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/45 md:flex">
           <span className="pulse-dot inline-block h-[7px] w-[7px] rounded-full bg-emerald-400" />
