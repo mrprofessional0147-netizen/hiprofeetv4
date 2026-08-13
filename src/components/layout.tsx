@@ -1,6 +1,23 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import mark from "@/assets/hiprofeet-mark.jpg.asset.json";
+
+export const BRAND_MARK = mark.url;
+
+/** Reusable brand lockup — the mark is the memorability anchor, the wordmark carries the name. */
+export function BrandMark({ size = 34, className = "" }: { size?: number; className?: string }) {
+  return (
+    <img
+      src={BRAND_MARK}
+      alt="HIPROFEET logo"
+      width={size}
+      height={size}
+      className={`rounded-full ring-1 ring-sky/40 shadow-[0_0_18px_oklch(0.78_0.13_230/.35)] ${className}`}
+      style={{ width: size, height: size }}
+    />
+  );
+}
 
 export function Nav() {
   const loc = useLocation();
