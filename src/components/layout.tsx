@@ -164,7 +164,10 @@ export function FloatingChatCTA() {
 export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-[#050B18] px-5 py-10 text-center">
-      <div className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></div>
+      <div className="flex items-center justify-center gap-2.5">
+        <BrandMark size={40} />
+        <span className="font-display text-xl font-bold text-amber">HIPRO<em className="not-italic">FEET</em></span>
+      </div>
       <p className="mt-2 text-xs leading-relaxed text-white/30">
         Business Growth Intelligence for Nigerian founders. Diagnose precisely. Execute professionally.
       </p>
